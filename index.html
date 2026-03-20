@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <!-- GOOGLE ADSENSE START -->
-    <!-- Paste your Google AdSense code (the <script> tag) right here. --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673"
-
-     crossorigin="anonymous"></script>
-    <!-- GOOGLE ADSENSE END -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CubeLL • Accurate OLL Detection & AI Coach</title>
+    
+    <!-- GOOGLE ADSENSE START -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673" crossorigin="anonymous"></script>
+    <!-- GOOGLE ADSENSE END -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -59,23 +59,26 @@
 <body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20">
     <div class="max-w-md mx-auto">
         <div class="bg-zinc-900 border-b border-zinc-800 px-6 py-5 flex items-center gap-3 sticky top-0 z-50">
-            <div class="w-10 h-10 bg-orange-500 text-zinc-950 rounded-3xl flex items-center justify-center text-2xl font-black"><i class="fa-solid fa-cube"></i></div>
+            <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_15px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-2xl font-black"><i class="fa-solid fa-cube"></i></div>
             <div class="flex-1">
-                <h1 class="text-3xl font-bold tracking-tighter">CubeLL</h1>
-                <p class="text-xs text-orange-400 -mt-1">Accurate detection & AI Coach</p>
+                <h1 class="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">CubeLL</h1>
+                <p class="text-xs text-orange-400 -mt-1">Accurate speed cubing last layer detection & AI Coach</p>
             </div>
         </div>
 
         <div class="px-6 pt-6 pb-4 flex gap-3 bg-zinc-900 border-b border-zinc-800">
-            <button onclick="switchTab(0)" id="tab-oll" class="flex-1 py-4 rounded-3xl font-semibold text-xl bg-orange-500 text-zinc-950">OLL (57)</button>
-            <button onclick="switchTab(1)" id="tab-pll" class="flex-1 py-4 rounded-3xl font-semibold text-xl bg-zinc-800 text-zinc-400">PLL (21)</button>
+            <button onclick="switchTab(0)" id="tab-oll" class="flex-1 py-4 rounded-3xl font-semibold text-xl bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
+            <button id="tab-pll" class="flex-1 py-4 rounded-3xl font-semibold text-sm sm:text-lg bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-70" title="Coming Soon!">PLL (Coming Soon)</button>
         </div>
 
         <!-- OLL Content -->
         <div id="content-oll" class="tab-content px-6">
             <div class="mt-6">
-                <h2 class="text-3xl font-bold tracking-tighter text-orange-400">OLL / Custom</h2>
-                <p class="text-zinc-400 text-sm mt-1">Orange on top.<br>Tap U face + sides (sides toggle orange/clear).<br>Detect finds exact case + AUF even if rotated.</p>
+                <h2 class="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">OLL Pattern Recognition</h2>
+                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                    Hold your cube with the yellow face on top. Tap the squares below to match your top layer's pattern, then press <strong>DETECT MATCH</strong> to find the exact algorithm!<br>
+                    <a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need help? Read the detailed guide.</a>
+                </p>
             </div>
 
             <div class="cross-container mt-6">
@@ -88,7 +91,7 @@
             <div class="text-center text-[10px] text-zinc-500 tracking-widest mb-2 mt-4">BACK ↑ LEFT U RIGHT FRONT ↓</div>
 
             <div class="flex justify-center mt-8">
-                <button onclick="submitOLL()" class="w-full max-w-xs bg-orange-500 hover:bg-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-2xl shadow-orange-500/30 active:scale-95 flex items-center justify-center gap-3">
+                <button onclick="submitOLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
                     <i class="fa-solid fa-magic"></i>
                     DETECT MATCH
                 </button>
@@ -97,8 +100,8 @@
             <div id="oll-result" class="hidden mt-10 bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
                 <div class="flex justify-between items-center">
                     <div>
-                        <div id="oll-alg-name" class="text-2xl font-bold text-orange-400"></div>
-                        <div id="oll-alg-id" class="text-xs text-orange-300"></div>
+                        <div id="oll-alg-name" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500"></div>
+                        <div id="oll-alg-id" class="text-xs text-orange-400"></div>
                     </div>
                 </div>
                 <div id="oll-desc" class="mt-3 text-zinc-400 text-sm leading-tight"></div>
@@ -124,24 +127,29 @@
 
                 <div class="grid grid-cols-2 gap-4 mt-10">
                     <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95">RESET</button>
-                    <button onclick="switchTab(1)" class="py-5 bg-orange-500 hover:bg-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95">GO TO PLL</button>
+                    <button onclick="alert('PLL detection is coming soon!')" class="py-5 bg-zinc-800 text-zinc-500 rounded-2xl font-bold cursor-not-allowed">PLL (COMING SOON)</button>
                 </div>
             </div>
 
-            <div class="mt-12">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="text-lg font-semibold">FULL DB Cases</div>
-                    <input id="oll-search" onkeyup="filterOLL()" placeholder="Search shape..." class="bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-40 focus:outline-none">
+            <div class="mt-12 bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                <button onclick="toggleOllList()" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                    <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                    <i id="oll-list-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                </button>
+                <div id="oll-list-content" class="hidden px-6 pb-6">
+                    <div class="flex items-center justify-end mb-4 pt-4 border-t border-zinc-800 mt-2">
+                        <input id="oll-search" onkeyup="filterOLL()" placeholder="Search shape..." class="bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200">
+                    </div>
+                    <div id="oll-list" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
                 </div>
-                <div id="oll-list" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-10"></div>
             </div>
         </div>
 
         <!-- PLL Content -->
         <div id="content-pll" class="tab-content hidden px-6">
             <div class="mt-6">
-                <h2 class="text-3xl font-bold tracking-tighter text-orange-400">PLL</h2>
-                <p class="text-zinc-400 text-sm mt-1">All orange on top.<br>Tap sides to cycle colors.</p>
+                <h2 class="text-3xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">PLL</h2>
+                <p class="text-zinc-400 text-sm mt-1">All yellow/orange on top.<br>Tap sides to cycle colors.</p>
             </div>
 
             <div class="cross-container mt-6">
@@ -154,7 +162,7 @@
             <div class="text-center text-[10px] text-zinc-500 tracking-widest mb-2 mt-4">BACK ↑ LEFT U RIGHT FRONT ↓</div>
 
             <div class="flex justify-center mt-8">
-                <button onclick="submitPLL()" class="w-full max-w-xs bg-orange-500 hover:bg-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-2xl shadow-orange-500/30 active:scale-95 flex items-center justify-center gap-3">
+                <button onclick="submitPLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
                     <i class="fa-solid fa-magic"></i>
                     DETECT MATCH
                 </button>
@@ -163,8 +171,8 @@
             <div id="pll-result" class="hidden mt-10 bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
                 <div class="flex justify-between items-center">
                     <div>
-                        <div id="pll-alg-name" class="text-2xl font-bold text-orange-400"></div>
-                        <div id="pll-alg-id" class="text-xs text-orange-300"></div>
+                        <div id="pll-alg-name" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500"></div>
+                        <div id="pll-alg-id" class="text-xs text-orange-400"></div>
                     </div>
                 </div>
                 <div id="pll-desc" class="mt-3 text-zinc-400 text-sm leading-tight"></div>
@@ -186,12 +194,20 @@
                 <div id="pll-list" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-10"></div>
             </div>
         </div>
+
+        <!-- Footer / Legal Navigation -->
+        <div class="mt-16 text-center w-full pb-8">
+            <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-zinc-500 font-medium">
+                <a href="howto.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">How to Use</a>
+                <a href="privacy.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Privacy Policy</a>
+                <a href="contact.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Contact</a>
+            </div>
+        </div>
     </div>
 
     <script>
-        const U_COLOR = '#f97316';
-        const YELLOW = '#facc15';
-        const SIDE_COLORS = ['#3b82f6', '#f1f5f9', '#22c55e', YELLOW];
+        const GRADIENT_BG = 'linear-gradient(135deg, #facc15 0%, #f97316 100%)';
+        const SIDE_COLORS = ['#3b82f6', '#f1f5f9', '#22c55e', GRADIENT_BG];
 
         let ollUState = Array(9).fill(0); ollUState[4] = 1;
         let ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
@@ -200,7 +216,7 @@
         // FULL 57 OLL Database
         const ollCases = [
             {id:1, name:"Dot 1", recog:"Pure dot (no edges oriented)", algs:["R U2 R2 F R F' U2 R' F R F'"], uMask:"00000000"},
-            {id:2, name:"Dot 2", recog:"Pure dot (no edges oriented)", algs:["[F R U R' U' F'] [f R U R' U' f']"], uMask:"00000000011010011111"},
+            {id:2, name:"OLL 2", recog:"Pure dot (no edges oriented)", algs:["[F R U R' U' F'] [f R U R' U' f']"], uMask:"00000000011010011111"},
             {id:3, name:"Dot 3", recog:"Pure dot (no edges oriented)", algs:["(f R U R' U' f') U' (F R U R' U' F')", "r' R2 U R' U r U2 r' U M'"], uMask:"00000001110110010011"},
             {id:4, name:"Dot 4", recog:"Pure dot (no edges oriented)", algs:["M U' r U2 r' U' R U' R' M'"], uMask:"00000000"},
             {id:5, name:"Square 1", recog:"2x2 square top-left", algs:["l' U2 L U L' U l"], uMask:"11010000000110011001"},
@@ -292,9 +308,9 @@
                 const sq = document.createElement('div');
                 sq.className = 'cube-square';
                 if (isOLL) {
-                    sq.style.backgroundColor = (i === 4 || ollUState[i]) ? U_COLOR : 'transparent';
-                    sq.onclick = () => { if (i !== 4) { ollUState[i] = 1 - ollUState[i]; sq.style.backgroundColor = ollUState[i] ? U_COLOR : 'transparent'; } };
-                } else sq.style.backgroundColor = U_COLOR;
+                    sq.style.background = (i === 4 || ollUState[i]) ? GRADIENT_BG : 'transparent';
+                    sq.onclick = () => { if (i !== 4) { ollUState[i] = 1 - ollUState[i]; sq.style.background = ollUState[i] ? GRADIENT_BG : 'transparent'; } };
+                } else sq.style.background = GRADIENT_BG;
                 uGrid.appendChild(sq);
             }
             uCont.appendChild(uGrid);
@@ -309,17 +325,17 @@
                     const sq = document.createElement('div');
                     sq.className = 'cube-square';
                     if (isOLL) {
-                        sq.style.backgroundColor = sideState[side][i] ? U_COLOR : 'transparent';
+                        sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
                         sq.onclick = () => {
                             sideState[side][i] = sideState[side][i] ? 0 : 1;
-                            sq.style.backgroundColor = sideState[side][i] ? U_COLOR : 'transparent';
+                            sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
                         };
                     } else {
-                        sq.style.backgroundColor = SIDE_COLORS[sideState[side][i]];
+                        sq.style.background = SIDE_COLORS[sideState[side][i]];
                         if (SIDE_COLORS[sideState[side][i]] === '#f1f5f9') sq.classList.add('white-square');
                         sq.onclick = () => {
                             sideState[side][i] = (sideState[side][i] + 1) % 4;
-                            sq.style.backgroundColor = SIDE_COLORS[sideState[side][i]];
+                            sq.style.background = SIDE_COLORS[sideState[side][i]];
                             sq.classList.toggle('white-square', SIDE_COLORS[sideState[side][i]] === '#f1f5f9');
                         };
                     }
@@ -362,7 +378,7 @@
                 for (let i = 0; i < 3; i++) {
                     const s = document.createElement('div'); s.className = 'mini-square';
                     const st = isOLL ? localSides[stateKey][i] : pllSides[stateKey][i];
-                    s.style.backgroundColor = isOLL ? (st ? U_COLOR : 'transparent') : SIDE_COLORS[st];
+                    s.style.background = isOLL ? (st ? GRADIENT_BG : 'transparent') : SIDE_COLORS[st];
                     strip.appendChild(s);
                 }
                 grid.appendChild(strip);
@@ -380,7 +396,7 @@
             uGrid.style.display = 'grid'; uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)'; uGrid.style.gap = '3px';
             for (let i = 0; i < 9; i++) {
                 const s = document.createElement('div'); s.className = 'mini-square';
-                s.style.backgroundColor = isOLL ? ((i===4 || localUState[i]) ? U_COLOR : 'transparent') : U_COLOR;
+                s.style.background = isOLL ? ((i===4 || localUState[i]) ? GRADIENT_BG : 'transparent') : GRADIENT_BG;
                 uGrid.appendChild(s);
             }
             uWrap.appendChild(uGrid);
@@ -546,10 +562,10 @@
             const pos = [0,1,2,3,5,6,7,8];
             let uHTML = '';
             for (let i = 0; i < 9; i++) {
-                if (i === 4) uHTML += `<div class="mini-square" style="background:${U_COLOR}"></div>`;
+                if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
                 else {
                     const idx = pos.indexOf(i);
-                    const val = idx >= 0 && uMask[idx] === '1' ? U_COLOR : '#3f3f46';
+                    const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : '#3f3f46';
                     uHTML += `<div class="mini-square" style="background:${val}"></div>`;
                 }
             }
@@ -583,7 +599,7 @@
                     visualHTML = generateFullMini(c.uMask);
                 } else {
                     visualHTML = `<div class="list-mini mt-3 grid gap-1 transform scale-75 origin-left" style="grid-template-columns:repeat(3,26px); width:fit-content">`;
-                    for (let i = 0; i < 9; i++) visualHTML += `<div class="mini-square" style="background:${U_COLOR}"></div>`;
+                    for (let i = 0; i < 9; i++) visualHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
                     visualHTML += `</div>`;
                 }
 
@@ -592,7 +608,7 @@
                 d.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <span class="font-mono text-[10px] font-bold tracking-widest text-orange-500 uppercase bg-orange-500/10 px-2 py-1 rounded-md mb-1 inline-block">${typePrefix}</span>
+                            <span class="font-mono text-[10px] font-bold tracking-widest text-zinc-900 bg-gradient-to-r from-yellow-400 to-orange-500 px-2 py-1 rounded-md mb-1 inline-block">${typePrefix}</span>
                             <div class="font-bold text-lg mt-1 text-zinc-100">${c.name}</div>
                         </div>
                     </div>
@@ -617,12 +633,19 @@
             document.querySelectorAll('#oll-list > div').forEach(el => el.style.display = el.textContent.toLowerCase().includes(term) ? 'block' : 'none');
         }
 
+        function toggleOllList() {
+            const content = document.getElementById('oll-list-content');
+            const chevron = document.getElementById('oll-list-chevron');
+            content.classList.toggle('hidden');
+            chevron.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
         function switchTab(n) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.getElementById(n === 0 ? 'content-oll' : 'content-pll').classList.remove('hidden');
             
-            document.getElementById('tab-oll').className = n === 0 ? "flex-1 py-4 rounded-3xl font-bold text-xl bg-orange-500 text-zinc-950 shadow-lg shadow-orange-500/20" : "flex-1 py-4 rounded-3xl font-semibold text-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition";
-            document.getElementById('tab-pll').className = n === 1 ? "flex-1 py-4 rounded-3xl font-bold text-xl bg-orange-500 text-zinc-950 shadow-lg shadow-orange-500/20" : "flex-1 py-4 rounded-3xl font-semibold text-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition";
+            document.getElementById('tab-oll').className = n === 0 ? "flex-1 py-4 rounded-3xl font-bold text-xl bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50" : "flex-1 py-4 rounded-3xl font-semibold text-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition";
+            document.getElementById('tab-pll').className = n === 1 ? "flex-1 py-4 rounded-3xl font-bold text-xl bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50" : "flex-1 py-4 rounded-3xl font-semibold text-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white transition";
         }
 
         window.onload = () => {
