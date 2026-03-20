@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Cube Trainer - OLL Recognition</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673"
-     crossorigin="anonymous"></script>
+    
     <!-- GOOGLE ADSENSE START -->
-    <!-- Paste your Google AdSense code (the <script> tag) right here. 
-         It usually looks like: <script async src="...client=ca-pub-XXXX"></script> -->
+    <!-- Paste your Google AdSense code (the <script> tag) right here. --><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673"
+
+     crossorigin="anonymous"></script>
     <!-- GOOGLE ADSENSE END -->
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,7 +26,10 @@
             <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 mb-2">
                 <i class="fa-solid fa-cube mr-2"></i>AI Cube Trainer
             </h1>
-            <p class="text-zinc-400 text-sm">Tap the stickers to match your top layer.</p>
+            <p class="text-zinc-400 text-sm mb-2">Tap the stickers to match your top layer.</p>
+            <a href="howto.html" class="text-orange-400/80 hover:text-orange-300 text-xs font-medium underline underline-offset-4 transition-colors">
+                New to OLL? Read the detailed guide here.
+            </a>
         </div>
 
         <!-- Interactive Cube UI -->
@@ -63,6 +66,257 @@
                         <div class="w-12 h-12 rounded-md bg-zinc-600 cube-btn cursor-pointer" onclick="toggleU(8, this)"></div>
                     </div>
 
+                    <!-- Right Edge -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="w-4 h-12 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('right', 0, this)"></div>
+                        <div class="w-4 h-12 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('right', 1, this)"></div>
+                        <div class="w-4 h-12 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('right', 2, this)"></div>
+                    </div>
+                </div>
+
+                <!-- Front Edge (Bottom) -->
+                <div class="flex justify-center mt-1.5 gap-1.5">
+                    <div class="w-12 h-4 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('front', 0, this)"></div>
+                    <div class="w-12 h-4 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('front', 1, this)"></div>
+                    <div class="w-12 h-4 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('front', 2, this)"></div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Controls -->
+        <div class="flex gap-4 mb-8">
+            <button onclick="clearGrid()" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold py-3 px-4 rounded-xl transition duration-200">
+                <i class="fa-solid fa-trash-can mr-2"></i> Clear
+            </button>
+        </div>
+
+        <!-- Results Area -->
+        <div id="result-container" class="hidden flex-col gap-4">
+            <!-- Populated via JS -->
+        </div>
+
+        <!-- MANUAL AD UNIT PLACEMENT (Optional) -->
+        <div class="my-8 flex justify-center">
+            <!-- Paste Ad Unit Code Here -->
+        </div>
+
+        <!-- Footer / Legal Navigation -->
+        <div class="mt-12 text-center w-full pb-4">
+            <div class="text-orange-400/80 text-sm font-medium mb-4">
+                <i class="fa-solid fa-sparkles mr-1"></i> PLL detection and algorithm training coming soon!
+            </div>
+            <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-zinc-500 font-medium">
+                <a href="index.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Trainer</a>
+                <a href="howto.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">How to Use</a>
+                <a href="privacy.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Privacy Policy</a>
+                <a href="contact.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Contact</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // State Management
+        let ollUState = [false, false, false, false, true, false, false, false, false];
+        let ollSideState = {
+            back: [false, false, false],
+            right: [false, false, false],
+            front: [false, false, false],
+            left: [false, false, false]
+        };
+
+        const activeColor = 'bg-yellow-400';
+        const inactiveColor = 'bg-zinc-600';
+
+        // OLL Database
+        const ollCases = [
+            {id:1, name:"OLL 1", recog:"...", algs:["..."], uMask:"00000000"},
+            {id:2, name:"OLL 2", recog:"...", algs:["..."], uMask:"00000000"},
+            {id:3, name:"Dot 3", recog:"Pure dot (no edges oriented)", algs:["(f R U R' U' f') U' (F R U R' U' F')", "r' R2 U R' U r U2 r' U M'"], uMask:"00000001110110010011"},
+            {id:4, name:"OLL 4", recog:"...", algs:["..."], uMask:"00000000"},
+            {id:5, name:"Square 1", recog:"2x2 square top-left", algs:["l' U2 L U L' U l"], uMask:"11010000000110011001"},
+            {id:6, name:"OLL 6", recog:"...", algs:["..."], uMask:"00110000"},
+            {id:7, name:"OLL 7", recog:"...", algs:["..."], uMask:"10001000"},
+            {id:8, name:"OLL 8", recog:"...", algs:["..."], uMask:"10010010"},
+            {id:9, name:"OLL 9", recog:"...", algs:["..."], uMask:"11110000"},
+            {id:10, name:"Fish 2", recog:"Fish mirror (left)", algs:["[R U R' U] [R' F R F'] [R U2 R']", "[R U R'] y R' F R U' R' F' R"], uMask:"00110010110010001001"},
+            {id:11, name:"OLL 11", recog:"...", algs:["..."], uMask:"01010000"},
+            {id:12, name:"OLL 12", recog:"...", algs:["..."], uMask:"00101000"},
+            {id:13, name:"OLL 13", recog:"...", algs:["..."], uMask:"10001010"},
+            {id:14, name:"OLL 14", recog:"...", algs:["..."], uMask:"01000101"},
+            {id:15, name:"OLL 15", recog:"...", algs:["..."], uMask:"11001000"},
+            {id:16, name:"OLL 16", recog:"...", algs:["..."], uMask:"00110010"},
+            {id:17, name:"OLL 17", recog:"...", algs:["..."], uMask:"00000000"},
+            {id:18, name:"OLL 18", recog:"...", algs:["..."], uMask:"00000000"},
+            {id:19, name:"Dot 7", recog:"Pure dot (no edges oriented)", algs:["[r' R] U [R U R' U'] r [R2' F R F']", "M U [R U R' U'] M' [R' F R F']"], uMask:"10100000010011010011"},
+            {id:20, name:"OLL 20", recog:"...", algs:["..."], uMask:"00000000"},
+            {id:21, name:"Cross H", recog:"Full cross H (all edges + corners oriented)", algs:["R U2 R' U' R U R' U' R U' R'", "(y) R U R' U [R U' R' U] [R U2 R']", "F [R U R' U'] [R U R' U'] [R U R' U'] F'"], uMask:"01011010101000101000"},
+            {id:22, name:"Cross Pi", recog:"Full cross Pi", algs:["R U2' [R2 U'] [R2 U'] R2 U2' R", "R U2 R2 U' R2 U' R2 U2 R"], uMask:"01011010001000001101"},
+            {id:23, name:"Superman", recog:"Full cross headlights", algs:["R2 D [R' U2 R] D' [R' U2 R']"], uMask:"11111010000000101000"},
+            {id:24, name:"Cross T", recog:"Full cross T", algs:["l' U' L U R U' [r' F]"], uMask:"11011110001000001000"},
+            {id:25, name:"Cross Bowtie", recog:"Full cross bowtie", algs:["[R' F R B'] [R' F' R B]", "F' r U R' U' r' F R"], uMask:"11011011000100100000"},
+            {id:26, name:"AntiSune", recog:"Mirror of the Sune algorithm. Distinguished from the Sune by the side the non-oriented corners are facing. Easy to recognize after placing the oriented corner at the back.", algs:["R' U' R U' R' U2 R", "(y) R U2 R' U' R U' R'"], uMask:"11011010001001100000"},
+            {id:27, name:"Sune", recog:"The most recognized OLL algorithm.", algs:["L U L' U [L U2 L']", "(y2) R U R' U [R U2' R']"], uMask:"01111010100000001001"},
+            {id:28, name:"Arrow", recog:"All corners oriented, edges flipped", algs:["M' U M U2 M' U M", "r U R' U' M U R U' r'"], uMask:"10101111010000000010"},
+            {id:29, name:"OLL 29", recog:"...", algs:["..."], uMask:"11010100"},
+            {id:30, name:"OLL 30", recog:"...", algs:["..."], uMask:"10101100"},
+            {id:31, name:"OLL 31", recog:"...", algs:["..."], uMask:"11100100"},
+            {id:32, name:"OLL 32", recog:"...", algs:["..."], uMask:"00100111"},
+            {id:33, name:"T", recog:"T shape", algs:["[R U R' U'] [R' F R F']", "R U R' U' R' F R F'"], uMask:"00111001110000110000"},
+            {id:34, name:"OLL 34", recog:"...", algs:["..."], uMask:"00011101"},
+            {id:35, name:"OLL 35", recog:"...", algs:["..."], uMask:"11110000"},
+            {id:36, name:"OLL 36", recog:"...", algs:["..."], uMask:"10010011"},
+            {id:37, name:"Fish 4", recog:"Fish mirror", algs:["F R U' R' U' R U R' F'", "R U2 R' U' F' R U R' U' R' F R2 U' R' U'"], uMask:"11010001000110110000"},
+            {id:38, name:"OLL 38", recog:"...", algs:["..."], uMask:"00101110"},
+            {id:39, name:"OLL 39", recog:"...", algs:["..."], uMask:"00111100"},
+            {id:40, name:"OLL 40", recog:"...", algs:["..."], uMask:"00100111"},
+            {id:41, name:"OLL 41", recog:"...", algs:["..."], uMask:"11010100"},
+            {id:42, name:"OLL 42", recog:"...", algs:["..."], uMask:"10101100"},
+            {id:43, name:"OLL 43", recog:"...", algs:["..."], uMask:"11100100"},
+            {id:44, name:"OLL 44", recog:"...", algs:["..."], uMask:"00100111"},
+            {id:45, name:"OLL 45", recog:"...", algs:["..."], uMask:"11101000"},
+            {id:46, name:"C Shape 2", recog:"Recognized by the stickers bar, to be faced to the right.", algs:["R' U' [R' F R F'] U R"], uMask:"11000110000111000010"},
+            {id:47, name:"OLL 47", recog:"...", algs:["..."], uMask:"11100100"},
+            {id:48, name:"OLL 48", recog:"...", algs:["..."], uMask:"00100111"},
+            {id:49, name:"L Shape 5", recog:"Recognized by having bar & a block (also no headlights). Bar is facing to the left.", algs:["[R' F R' F'] R2 U2' y [R' F R F']", "r U' r' U' r U r' y R' U R F U R U' R2 F' R"], uMask:"01001000001000011111"},
+            {id:50, name:"OLL 50", recog:"...", algs:["..."], uMask:"01000101"},
+            {id:51, name:"OLL 51", recog:"...", algs:["..."], uMask:"11111100"},
+            {id:52, name:"OLL 52", recog:"...", algs:["..."], uMask:"01000010"},
+            {id:53, name:"OLL 53", recog:"...", algs:["..."], uMask:"00101001"},
+            {id:54, name:"OLL 54", recog:"...", algs:["..."], uMask:"10010100"},
+            {id:55, name:"OLL 55", recog:"...", algs:["..."], uMask:"11111100"},
+            {id:56, name:"OLL 56", recog:"...", algs:["..."], uMask:"11111111"},
+            {id:57, name:"OLL 57", recog:"...", algs:["..."], uMask:"11111111"}
+        ];
+
+        // Interaction
+        function toggleU(idx, el) {
+            if(idx === 4) return;
+            ollUState[idx] = !ollUState[idx];
+            el.classList.toggle(activeColor);
+            el.classList.toggle(inactiveColor);
+            submitOLL();
+        }
+
+        function toggleSide(side, idx, el) {
+            ollSideState[side][idx] = !ollSideState[side][idx];
+            el.classList.toggle(activeColor);
+            el.classList.toggle(inactiveColor);
+            submitOLL();
+        }
+
+        function clearGrid() {
+            ollUState = [false, false, false, false, true, false, false, false, false];
+            for(let key in ollSideState) ollSideState[key] = [false, false, false];
+            document.querySelectorAll('.cube-btn').forEach(el => {
+                if(!el.innerHTML.includes('crosshairs')) {
+                    el.classList.remove(activeColor);
+                    el.classList.add(inactiveColor);
+                }
+            });
+            document.getElementById('result-container').classList.add('hidden');
+        }
+
+        function rotateMask(mask) {
+            if (mask.length !== 20 && mask.length !== 8) return mask;
+            let u = mask.substring(0, 8);
+            let newU = u[5] + u[3] + u[0] + u[6] + u[1] + u[7] + u[4] + u[2];
+            if (mask.length === 8) return newU;
+            let b = mask.substring(8, 11);
+            let r = mask.substring(11, 14);
+            let f = mask.substring(14, 17);
+            let l = mask.substring(17, 20);
+            return newU + l + b + r + f;
+        }
+
+        function buildAlgBlock(alg) {
+            return `
+                <div class="bg-black/60 border border-zinc-800 p-4 rounded-xl mb-2">
+                    <div class="font-mono text-orange-300 text-sm font-semibold tracking-wide">${alg}</div>
+                </div>
+            `;
+        }
+
+        function submitOLL() {
+            let uVals = [0,1,2,3,5,6,7,8].map(i => ollUState[i] ? '1' : '0');
+            let bVals = ollSideState.back.map(v => v ? '1' : '0');
+            let rVals = ollSideState.right.map(v => v ? '1' : '0');
+            let fVals = ollSideState.front.map(v => v ? '1' : '0');
+            let lVals = ollSideState.left.map(v => v ? '1' : '0');
+            let userMask = [...uVals, ...bVals, ...rVals, ...fVals, ...lVals].join('');
+            let match = null;
+            let auf = 0;
+            let currentMask = userMask;
+
+            for (let r = 0; r < 4; r++) {
+                for (let c of ollCases) {
+                    if (c.uMask.length === 20 && c.uMask === currentMask) {
+                        match = c; auf = r; break;
+                    }
+                }
+                if (match) break;
+                currentMask = rotateMask(currentMask);
+            }
+
+            if (!match) {
+                currentMask = userMask;
+                for (let r = 0; r < 4; r++) {
+                    for (let c of ollCases) {
+                        if (c.uMask.length === 8 && c.uMask === currentMask.substring(0, 8)) {
+                            match = c; auf = r; break;
+                        }
+                    }
+                    if (match) break;
+                    currentMask = rotateMask(currentMask);
+                }
+            }
+
+            const resContainer = document.getElementById('result-container');
+            resContainer.classList.remove('hidden');
+
+            if (userMask === "00000000000000000000") {
+                resContainer.innerHTML = `<div class="text-zinc-500 text-center italic mt-4">Draw a pattern to begin</div>`;
+                return;
+            }
+
+            if (!match || match.uMask.length === 8) {
+                let textTitle = match ? "Incomplete DB Entry" : "Pattern Not Found";
+                let exactStr = match ? `Your DB only has the 8-bit top face for <strong>${match.name}</strong>.` : `This exact pattern isn't in your array yet.`;
+                resContainer.innerHTML = `
+                    <div class="bg-red-950/40 border border-red-900/50 p-5 rounded-2xl">
+                        <div class="text-red-400 font-bold mb-1"><i class="fa-solid fa-triangle-exclamation mr-2"></i>${textTitle}</div>
+                        <div class="text-zinc-300 text-sm mb-3">${exactStr} Use this 20-bit mask:</div>
+                        <div class="bg-black/60 p-3 rounded text-center text-orange-300 font-mono tracking-widest break-all select-all">"${userMask}"</div>
+                    </div>
+                `;
+                return;
+            }
+
+            let rotationText = ["Correct Angle", "Rotate 90° CW", "Rotate 180°", "Rotate 90° CCW"][auf];
+            let algsHTML = match.algs.map(a => buildAlgBlock(a)).join('');
+            resContainer.innerHTML = `
+                <div class="bg-zinc-900/80 border border-zinc-700/50 p-5 rounded-2xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">OLL ${match.id}</div>
+                            <h2 class="text-2xl font-bold text-white">${match.name}</h2>
+                        </div>
+                        <div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> ${rotationText}
+                        </div>
+                    </div>
+                    <p class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-3 rounded-xl">
+                        <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i>${match.recog}
+                    </p>
+                    <div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>
+                    ${algsHTML}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
                     <!-- Right Edge -->
                     <div class="flex flex-col gap-1.5">
                         <div class="w-4 h-12 rounded-sm bg-zinc-600 cube-btn cursor-pointer" onclick="toggleSide('right', 0, this)"></div>
