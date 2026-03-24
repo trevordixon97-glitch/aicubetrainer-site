@@ -29,7 +29,7 @@
         .side-strip { display: flex; gap: 8px; justify-content: center; }
         .vertical-strip { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
         
-        .cross-container {
+        .cross-container, .list-preview {
             display: grid;
             grid-template-areas:
                 ". top ."
@@ -42,7 +42,7 @@
             margin: 0 auto;
         }
         
-        /* New Perfect Symmetry Layout for Miniatures */
+        /* Perfect Symmetry Layout for Miniatures */
         .mini-cross-container {
             display: grid;
             grid-template-areas:
@@ -137,9 +137,8 @@
                 <div class="mt-8 border-t border-zinc-800 pt-6">
                     <div class="flex justify-between items-start w-full">
                         <div class="flex flex-col items-center flex-1">
-                            <div class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8">Your Pattern</div>
+                            <div id="oll-secret-copy" class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy">Your Pattern</div>
                             <div id="oll-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
-                            <div id="oll-user-mask" class="text-[9px] text-zinc-500 font-mono mt-2 cursor-pointer hover:text-orange-400 transition-colors px-2 py-1 bg-zinc-950 rounded-md border border-zinc-800" title="Tap to copy this exact mask" onclick="navigator.clipboard.writeText(this.innerText); alert('Copied 20-bit mask! You can paste this in the code to make this angle the permanent base angle.');"></div>
                         </div>
                         <div id="oll-correct-container" class="flex flex-col items-center flex-1">
                             <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
@@ -715,18 +714,14 @@
             }
 
             if (!match || match.uMask.length === 8) {
-                let textTitle = match ? "Incomplete DB Entry" : "Pattern Not Found";
-                let exactStr = match ? `Your DB only has the 8-bit top face for <strong>${match.name}</strong>. Multiple patterns share this top face, causing detection bugs.` : `This exact pattern isn't in your array yet.`;
+                let textTitle = match ? "Incomplete Pattern" : "Pattern Not Found";
+                let exactStr = match ? `We found a partial match for <strong>${match.name}</strong>, but need more details. Please fill in the side stickers.` : `We couldn't recognize this pattern. Please double-check your stickers and try again.`;
                 
                 match = {
                     id:"?", name: textTitle, algs:[], isHelper: true,
                     helperText: `
-                        <div class="text-sm mt-1 text-zinc-300 mb-4">
-                            ${exactStr} To fix it, replace the old 8-bit mask in your array with this 20-bit mask:
-                        </div>
-                        <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-800 flex justify-between items-center mb-4">
-                            <span class="text-xs text-orange-400 font-mono tracking-widest break-all">"${userMask}"</span>
-                            <button onclick="navigator.clipboard.writeText('${userMask}'); alert('Copied mask!');" class="text-zinc-500 hover:text-white ml-3"><i class="fa-solid fa-copy"></i></button>
+                        <div class="text-sm mt-1 text-zinc-300 mb-4 leading-relaxed">
+                            ${exactStr}
                         </div>
                     `
                 };
@@ -735,7 +730,7 @@
             const res = document.getElementById('oll-result');
             res.classList.remove('hidden');
             document.getElementById('oll-alg-name').textContent = match.name;
-            document.getElementById('oll-alg-id').textContent = match.isHelper ? "DEVELOPER HELPER" : `OLL ${match.id} ${auf ? '(AUF ' + auf + '×U)' : ''}`;
+            document.getElementById('oll-alg-id').textContent = match.isHelper ? "" : `OLL ${match.id} ${auf ? '(AUF ' + auf + '×U)' : ''}`;
             
             if (match.isHelper) {
                 document.getElementById('oll-desc').innerHTML = match.helperText;
@@ -744,18 +739,25 @@
                 document.getElementById('oll-desc').innerHTML = `
                     <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
                         <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
-                        <div><i class="fa-solid fa-hand text-blue-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
+                        <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
                     </div>
                 `;
             }
 
             const container = document.getElementById('oll-algs-container');
             container.innerHTML = '';
-            container.innerHTML = `<div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>`;
+            if (!match.isHelper) {
+                container.innerHTML = `<div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>`;
+            }
             match.algs.forEach(alg => container.appendChild(buildAlgBlock(alg)));
 
             renderPreview(true, 'oll-preview');
-            document.getElementById('oll-user-mask').innerText = userMask;
+            
+            // Secret copy handler attached to "Your Pattern" title
+            document.getElementById('oll-secret-copy').onclick = () => {
+                navigator.clipboard.writeText(userMask);
+                alert('Copied 20-bit mask: ' + userMask);
+            };
             
             if (!match.isHelper) {
                 renderPreview(true, 'oll-correct-preview', match.uMask);
@@ -801,13 +803,9 @@
                 let baseSig = getPllSignature(pllArrows);
                 resContainer.innerHTML = `
                     <div class="bg-red-950/40 border border-red-900/50 p-6 rounded-3xl shadow-xl">
-                        <div class="text-red-400 font-bold mb-1 text-lg"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pattern Not Found</div>
-                        <div class="text-sm mt-1 text-zinc-300 mb-4">
-                            This specific arrow pattern isn't in your PLL array yet. You can use this developer signature to add it:
-                        </div>
-                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 flex justify-between items-center mb-6">
-                            <span class="text-sm text-orange-400 font-mono tracking-widest break-all">"${baseSig}"</span>
-                            <button onclick="navigator.clipboard.writeText('${baseSig}'); alert('Copied PLL signature!');" class="text-zinc-400 hover:text-white ml-3 transition-colors"><i class="fa-solid fa-copy text-xl"></i></button>
+                        <div class="text-red-400 font-bold mb-1 text-lg cursor-pointer inline-block" onclick="navigator.clipboard.writeText('${baseSig}'); alert('Copied PLL signature!');"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pattern Not Found</div>
+                        <div class="text-sm mt-2 text-zinc-300 mb-6 leading-relaxed">
+                            We couldn't recognize this arrow pattern. Please double-check your swaps and try again.
                         </div>
                         <div class="grid grid-cols-2 gap-4 mt-6">
                             <button onclick="resetPLL()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
@@ -835,7 +833,7 @@
                     </div>
                     <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
                         <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
-                        <div><i class="fa-solid fa-hand text-blue-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${match.hold}</div>
+                        <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${match.hold}</div>
                     </div>
                     <div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>
                     <div class="space-y-4">${algsHTML}</div>
@@ -843,9 +841,8 @@
                     <div class="mt-8 border-t border-zinc-800 pt-6">
                         <div class="flex justify-between items-start w-full">
                             <div class="flex flex-col items-center flex-1">
-                                <div class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8">Your Pattern</div>
+                                <div class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy" onclick="navigator.clipboard.writeText('${getPllSignature(pllArrows)}'); alert('Copied PLL signature: ${getPllSignature(pllArrows)}');">Your Pattern</div>
                                 <div id="pll-preview" class="origin-top relative" style="height: 120px;"></div>
-                                <div class="text-[9px] text-zinc-500 font-mono mt-2 cursor-pointer hover:text-orange-400 transition-colors px-2 py-1 bg-zinc-950 rounded-md border border-zinc-800" title="Tap to copy this signature" onclick="navigator.clipboard.writeText('${getPllSignature(pllArrows)}'); alert('Copied PLL signature!');">${getPllSignature(pllArrows)}</div>
                             </div>
                             <div class="flex flex-col items-center flex-1">
                                 <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
@@ -984,7 +981,7 @@
                         </div>
                         <div class="text-xs text-zinc-400 mt-2 mb-2 leading-relaxed">
                             <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${c.recog}<br>
-                            <i class="fa-solid fa-hand text-blue-400 mr-2 mt-2"></i><strong class="text-zinc-200">Hold:</strong> ${c.hold || "Match the pattern to the correct angle shown below."}
+                            <i class="fa-solid fa-hand text-emerald-400 mr-2 mt-2"></i><strong class="text-zinc-200">Hold:</strong> ${c.hold || "Match the pattern to the correct angle shown below."}
                         </div>
                         ${visualHTML}
                         ${algHTML}
