@@ -29,7 +29,6 @@
         .side-strip { display: flex; gap: 8px; justify-content: center; }
         .vertical-strip { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
         
-        /* UPDATED: Perfect symmetrical grid spacing */
         .cross-container, .list-preview {
             display: grid;
             grid-template-areas:
@@ -52,6 +51,7 @@
             padding: 10px; 
             border-radius: 16px; 
             box-sizing: border-box;
+            position: relative; 
         }
 
         .preview-container {
@@ -65,7 +65,7 @@
 <body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20">
     <div class="max-w-2xl mx-auto w-full pt-8 sm:pt-12">
         
-        <!-- UPDATED: Desktop-friendly centered header -->
+        <!-- Desktop-friendly centered header -->
         <div class="px-6 pb-8 flex flex-col items-center text-center gap-4">
             <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-3xl font-black shrink-0">
                 <i class="fa-solid fa-cube"></i>
@@ -76,19 +76,19 @@
             </div>
         </div>
 
-        <!-- UPDATED: Clean layout for tabs without gray backgrounds -->
-        <div class="px-6 pb-6 flex justify-center gap-4 max-w-md mx-auto">
+        <!-- Clean layout for tabs -->
+        <div class="px-6 pb-6 flex justify-center gap-4 max-w-lg mx-auto">
             <button onclick="switchTab(0)" id="tab-oll" class="flex-1 py-3.5 rounded-2xl font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
-            <button id="tab-pll" class="flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 cursor-not-allowed opacity-70" title="Coming Soon!">PLL (Coming Soon)</button>
+            <button onclick="switchTab(1)" id="tab-pll" class="flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
         </div>
 
         <!-- OLL Content -->
-        <div id="content-oll" class="tab-content px-6 max-w-lg mx-auto">
+        <div id="content-oll" class="tab-content px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
                 <h2 class="text-2xl font-bold tracking-tight text-white">OLL Pattern Recognition</h2>
                 <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
-                    After completing the first two layers, hold your cube with the last layer you need to solve on top. Tap the squares below to match your top layer's pattern, then press <strong>DETECT MATCH</strong> to find the exact algorithm!<br>
-                    <a href="howto.html" class="inline-block mt-2 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read the detailed guide.</a>
+                    After completing the first two layers, hold your cube with the last layer you need to solve on top. Tap the squares below to match your top layer's pattern, then press <strong>DETECT MATCH</strong> to find the exact algorithm!
+                    <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
                 </p>
             </div>
 
@@ -136,30 +136,42 @@
 
                 <div class="grid grid-cols-2 gap-4 mt-10">
                     <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95">RESET</button>
-                    <button onclick="alert('PLL detection is coming soon!')" class="py-5 bg-zinc-800 text-zinc-500 rounded-2xl font-bold cursor-not-allowed">PLL (COMING SOON)</button>
+                    <button onclick="switchTab(1)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95">GO TO PLL</button>
                 </div>
             </div>
 
-            <div class="mt-12 bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                <button onclick="toggleOllList()" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                    <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
-                    <i id="oll-list-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                </button>
-                <div id="oll-list-content" class="hidden px-6 pb-6">
-                    <div class="flex items-center justify-end mb-4 pt-4 border-t border-zinc-800 mt-2">
-                        <input id="oll-search" onkeyup="filterOLL()" placeholder="Search shape..." class="bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200">
+            <!-- OLL Tab Lists -->
+            <div class="mt-12 space-y-4">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-oll-list', 'oll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                        <i id="oll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-oll-list" class="hidden px-6 pb-6">
+                        <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
+                        <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
                     </div>
-                    <div id="oll-list" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-pll-list', 'oll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
+                        <i id="oll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-pll-list" class="hidden px-6 pb-6">
+                        <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
+                        <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- PLL Content -->
-        <div id="content-pll" class="tab-content hidden px-6 max-w-lg mx-auto">
+        <div id="content-pll" class="tab-content hidden px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
                 <h2 class="text-2xl font-bold tracking-tight text-white">PLL Pattern Recognition</h2>
                 <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
-                    All yellow/orange on top.<br>Tap sides to cycle colors.
+                    Permutation of the Last Layer (PLL) is the final step. The entire top face is now yellow, but the pieces need to swap places. Tap the two squares on the center grid to indicate which pieces need to swap, then press <strong>DETECT MATCH</strong>!
+                    <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
                 </p>
             </div>
 
@@ -178,35 +190,37 @@
                 </button>
             </div>
 
-            <div id="pll-result" class="hidden mt-10 bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <div id="pll-alg-name" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500"></div>
-                        <div id="pll-alg-id" class="text-xs text-orange-400"></div>
-                    </div>
-                </div>
-                <div id="pll-desc" class="mt-3 text-zinc-400 text-sm leading-tight"></div>
-                <div id="pll-hold" class="mt-2 text-zinc-400 text-sm leading-tight"></div>
-                <div id="pll-algs-container" class="mt-6 space-y-4"></div>
-
-                <div class="mt-8 border-t border-zinc-800 pt-6">
-                    <div class="text-sm text-zinc-400 mb-3 text-center">Your exact pattern</div>
-                    <div id="pll-preview" class="preview-container"></div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-4 mt-10">
-                    <button onclick="resetPLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95">RESET PATTERN</button>
-                </div>
+            <div id="pll-result" class="hidden mt-10">
+                <!-- Dynamically populated -->
             </div>
 
-            <div class="mt-12 bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden p-6">
-                <div class="text-lg font-semibold text-zinc-100 mb-4 border-b border-zinc-800 pb-4">FULL 21 PLL Cases</div>
-                <div id="pll-list" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+            <!-- PLL Tab Lists (Reversed order) -->
+            <div class="mt-12 space-y-4">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-pll-list', 'pll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
+                        <i id="pll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-pll-list" class="hidden px-6 pb-6">
+                        <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
+                        <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-oll-list', 'pll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                        <i id="pll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-oll-list" class="hidden px-6 pb-6">
+                        <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
+                        <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Footer / Legal Navigation -->
-        <div class="mt-16 text-center w-full pb-8">
+        <div class="mt-16 text-center w-full pb-8 border-t border-zinc-900 pt-8">
             <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-zinc-500 font-medium">
                 <a href="howto.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">How to Use</a>
                 <a href="privacy.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Privacy Policy</a>
@@ -221,9 +235,12 @@
 
         let ollUState = Array(9).fill(0); ollUState[4] = 1;
         let ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+        
         let pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+        let pllArrows = [];
+        let pllTapStartIdx = null;
+        let pllDragStartIdx = null;
 
-        // FULL 57 OLL Database
         const ollCases = [
             {id:1, name:"Dot 1", recog:"Pure dot (no edges oriented)", algs:["R U2 [R2' F R F'] U2' [R' F R F']"], uMask:"00000000010111010111"},
             {id:2, name:"OLL 2", recog:"Pure dot (no edges oriented)", algs:["[F R U R' U' F'] [f R U R' U' f']"], uMask:"00000000011010011111"},
@@ -284,15 +301,29 @@
             {id:57, name:"Mummy", recog:"Corners oriented", algs:["[R U R' U'] M' [U R U' r']"], uMask:"10111101010000010000"}
         ];
 
+        // 21 PLL Cases with intelligent signatures
         const pllCases = [
-            {id: "H", name: "H Perm", recog: "Opposite edges swapped", hold: "Any orientation", algs: ["M2 U M2 U2 M2 U M2"]},
-            {id: "Ua", name: "Ua Perm", recog: "3 edges CCW", hold: "Solved bar in back", algs: ["R U' R U R U R U' R' U' R2"]},
-            {id: "Ub", name: "Ub Perm", recog: "3 edges CW", hold: "Solved bar in back", algs: ["R2 U R U R' U' R' U' R' U R'"]},
-            {id: "Z", name: "Z Perm", recog: "Adjacent edges swapped", hold: "Swapped edges Front/Right", algs: ["M2 U M2 U M' U2 M2 U2 M'"]},
-            {id: "Aa", name: "Aa Perm", recog: "Headlights, 2x2 block", hold: "Headlights in back", algs: ["x R' U R' D2 R U' R' D2 R2"]},
-            {id: "Ab", name: "Ab Perm", recog: "Headlights, 2x2 block", hold: "Headlights in back", algs: ["x R2 D2 R U R' D2 R U' R"]},
-            {id: "F", name: "F Perm", recog: "Full block, adjacent corners", hold: "Block on left", algs: ["R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R"]},
-            {id: "Ja", name: "Ja Perm", recog: "Block on left, adjacent corners swap", hold: "Block on left", algs: ["[R' U L'] U2 [R U' R' U2] [L R U']"]}
+            {id: "H", name: "H Perm", recog: "Opposite edges swapped", hold: "Any orientation", algs: ["M2 U M2 U2 M2 U M2"], arrows: "1-7,3-5"},
+            {id: "Ua", name: "Ua Perm", recog: "3 edges CCW", hold: "Solved bar in back", algs: ["[R U' R] U R U R U' R' U' R2", "(y2) R2 U' R' U' R U R U R U' R"], arrows: "3->7,5->3,7->5"},
+            {id: "Ub", name: "Ub Perm", recog: "3 edges CW", hold: "Solved bar in back", algs: ["R2 U R U R' U' R' U' R' U R'", "(y2) R' U R' U' R' U' R' U R U R2"], arrows: "3->5,5->7,7->3"},
+            {id: "Z", name: "Z Perm", recog: "Adjacent edges swapped", hold: "Swapped edges Front/Right", algs: ["M2 U M2 U M' U2 M2 U2 M' U2", "(y) [U R' U'] R U' R U R U' R' U R U [R2 U' R' U]"], arrows: "1-3,5-7"},
+            {id: "Aa", name: "Aa Perm", recog: "Headlights, 2x2 block", hold: "Headlights in back", algs: ["l' U R' D2 R U' R' D2 R2"], arrows: "0->2,2->8,8->0"},
+            {id: "Ab", name: "Ab Perm", recog: "Headlights, 2x2 block", hold: "Headlights in back", algs: ["l U' R D2 R' U R D2 R2"], arrows: "2->6,6->8,8->2"},
+            {id: "E", name: "E Perm", recog: "No solved bars/headlights", hold: "Align corners", algs: ["x' [R U' R' D] [R U R' D'] [R U R' D] [R U' R' D']", "(y) x' [R U' R' D] [R U R' D'] [R U R' D] [R U' R' D']"], arrows: "0-6,2-8"},
+            {id: "T", name: "T Perm", recog: "Headlights on left, 2x2 block", hold: "Headlights on left", algs: ["[R U R' U'] R' F R2 U' R' U' [R U R' F']"], arrows: "2-8,3-5"},
+            {id: "F", name: "F Perm", recog: "Full block, adjacent corners", hold: "Block on left", algs: ["[R' U R U'] R2 y' [R' U' R U] y x [R U R' U'] [R2 x U']", "R' U2 R' d' R' F' R2 U' R' U R' F R U' F"], arrows: "0-2,3-5"},
+            {id: "Ja", name: "Ja Perm", recog: "Block on left, adjacent corners swap", hold: "Block on left", algs: ["[R' U L'] U2 [R U' R' U2] [L R U']", "(y) L' U' L F L' U' L U L F' L2 U L U"], arrows: "0-2,1-3"},
+            {id: "Jb", name: "Jb Perm", recog: "Block on right, adjacent corners swap", hold: "Block on right", algs: ["[R U R' F'] [R U R' U' R' F] [R2 U' R' U']"], arrows: "2-8,5-7"},
+            {id: "Ra", name: "Ra Perm", recog: "Headlights on back, block front-left", hold: "Headlights in back", algs: ["[L U2' L' U2'] L F' L' U' L U L F L2' U", "(y) [R U R' F'] R U2 R' U2 R' F R U R U2 R' U'"], arrows: "0-2,3-7"},
+            {id: "Rb", name: "Rb Perm", recog: "Headlights on back, block front-right", hold: "Headlights in back", algs: ["[R' U2 R U2] R' F R U R' U' R' F' R2 U'"], arrows: "0-2,5-7"},
+            {id: "V", name: "V Perm", recog: "2x2 block", hold: "Block front-left", algs: ["[R' U R' U'] [x2 y'] [R' U R' U'] [l R U'] [R' U R] U", "[R' U R' d'] R' F' R2 U' R' U R' F R F"], arrows: "0-8,1-5"},
+            {id: "Y", name: "Y Perm", recog: "Two 2x1 blocks", hold: "Corners swap front-left/back-right", algs: ["[F R U' R' U' R U R' F'] [R U R' U'] [R' F R F']"], arrows: "0-8,1-3"},
+            {id: "Na", name: "Na Perm", recog: "Two 2x2 blocks", hold: "Blocks on left/right", algs: ["{L U' R U2 L' U R'} {L U' R U2 L' U R'} U", "(y) {L U' R U2 L' U R'} {L U' R U2 L' U R'} U'", "(y) [R U' R' U] l U F U' R' F' R U' R U l' U R'", "(z) D R' U R2 D' R D U' R' U R2 D' R U' R", "{R' U L' U2 R U' L} {R' U L' U2 R U' L} U'"], arrows: "0-8,1-7"},
+            {id: "Nb", name: "Nb Perm", recog: "Two 2x2 blocks", hold: "Blocks front/back", algs: ["(y) {R' U L' U2 R U' L} {R' U L' U2 R U' L} U", "(z) U' R D' R2' U R' D U' R D' R2' U R' D R'", "(y) R' U R' F R F' R U' R' F' U F R U R' U' R"], arrows: "1-7,2-6"},
+            {id: "Ga", name: "Ga Perm", recog: "Headlights left, block front-right", hold: "Headlights left", algs: ["[R2 u] R' U R' U' R u' R2 y' [R' U R]"], arrows: "0->2,1->3,2->6,3->5,5->1,6->0"},
+            {id: "Gb", name: "Gb Perm", recog: "Headlights left, block back-right", hold: "Headlights left", algs: ["[L' U' L] y' {R2 u R' U R U' R u' R2}", "(y2) [R' U' R] y {R2 u R' U R U' R u' R2}"], arrows: "0->8,1->5,2->0,5->7,7->1,8->2"},
+            {id: "Gc", name: "Gc Perm", recog: "Headlights left, block front-left", hold: "Headlights left", algs: ["[R2 u'] R U' R U R' u R2 y [R U' R']"], arrows: "0->6,3->5,5->7,6->8,7->3,8->0"},
+            {id: "Gd", name: "Gd Perm", recog: "Headlights left, block back-left", hold: "Headlights left", algs: ["[R U R'] y' R2 u' R U' R' U R' u R2"], arrows: "0->2,1->3,2->6,3->7,6->0,7->1"}
         ];
 
         function rotateMask(mask) {
@@ -307,10 +338,87 @@
             return u + b + r + f + l;
         }
 
+        // Generates the correct undirected/directed signature
+        function getPllSignature(arrows) {
+            let degree = {};
+            arrows.forEach(a => {
+                degree[a.from] = (degree[a.from] || 0) + 1;
+                degree[a.to] = (degree[a.to] || 0) + 1;
+            });
+            
+            return arrows.map(a => {
+                if (degree[a.from] === 1 && degree[a.to] === 1) {
+                    return Math.min(a.from, a.to) + '-' + Math.max(a.from, a.to);
+                } else {
+                    return a.from + '->' + a.to;
+                }
+            }).sort().join(',');
+        }
+
+        // Centralized SVG Arrow Drawer for thick, white, black-outlined arrows
+        function drawArrows(svgElement, arrowsToDraw, isMini) {
+            if (!svgElement) return;
+            
+            let degree = {};
+            arrowsToDraw.forEach(a => {
+                degree[a.from] = (degree[a.from] || 0) + 1;
+                degree[a.to] = (degree[a.to] || 0) + 1;
+            });
+
+            let html = `
+                <defs>
+                    <marker id="arrow-start-${isMini}" markerWidth="5" markerHeight="5" refX="1.5" refY="2.5" orient="auto-start-reverse" overflow="visible">
+                        <polygon points="0 0, 5 2.5, 0 5" fill="#ffffff" stroke="#000000" stroke-width="0.3" stroke-linejoin="round"/>
+                    </marker>
+                    <marker id="arrow-end-${isMini}" markerWidth="5" markerHeight="5" refX="3.5" refY="2.5" orient="auto" overflow="visible">
+                        <polygon points="0 0, 5 2.5, 0 5" fill="#ffffff" stroke="#000000" stroke-width="0.3" stroke-linejoin="round"/>
+                    </marker>
+                </defs>
+            `;
+            
+            let paths = '';
+            arrowsToDraw.forEach(arr => {
+                let isSwap = (degree[arr.from] === 1 && degree[arr.to] === 1);
+                let size = isMini ? 29 : 60;
+                let offset = isMini ? 19 : 36;
+                
+                let x1 = offset + (arr.from % 3) * size;
+                let y1 = offset + Math.floor(arr.from / 3) * size;
+                let x2 = offset + (arr.to % 3) * size;
+                let y2 = offset + Math.floor(arr.to / 3) * size;
+                
+                let dx = x2 - x1;
+                let dy = y2 - y1;
+                let len = Math.sqrt(dx*dx + dy*dy);
+                
+                if (len > 0) {
+                    let rs = isSwap ? (isMini ? 12 : 20) / len : (isMini ? 5 : 10) / len;
+                    let re = (isMini ? 12 : 20) / len;
+                    
+                    let sx = x1 + dx * rs;
+                    let sy = y1 + dy * rs;
+                    let ex = x2 - dx * re;
+                    let ey = y2 - dy * re;
+                    
+                    let markers = `marker-end="url(#arrow-end-${isMini})"`;
+                    if (isSwap) {
+                        markers = `marker-start="url(#arrow-start-${isMini})" marker-end="url(#arrow-end-${isMini})"`;
+                    }
+
+                    // Black Outline underneath
+                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#000000" stroke-width="${isMini ? 5 : 8}" stroke-linecap="round" />`;
+                    // White Center
+                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-width="${isMini ? 3 : 5}" stroke-linecap="round" ${markers} />`;
+                }
+            });
+            svgElement.innerHTML = html + paths;
+        }
+
         function createNet(isOLL) {
             const prefix = isOLL ? 'oll' : 'pll';
             const uCont = document.getElementById(prefix + '-u');
             uCont.innerHTML = '';
+            
             const uGrid = document.createElement('div');
             uGrid.style.display = 'grid';
             uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
@@ -318,14 +426,28 @@
             
             for (let i = 0; i < 9; i++) {
                 const sq = document.createElement('div');
-                sq.className = 'cube-square';
+                sq.className = isOLL ? 'cube-square' : 'cube-square pll-u-square';
+                if (!isOLL) sq.dataset.index = i;
+
                 if (isOLL) {
                     sq.style.background = (i === 4 || ollUState[i]) ? GRADIENT_BG : 'transparent';
                     sq.onclick = () => { if (i !== 4) { ollUState[i] = 1 - ollUState[i]; sq.style.background = ollUState[i] ? GRADIENT_BG : 'transparent'; } };
-                } else sq.style.background = GRADIENT_BG;
+                } else {
+                    sq.style.background = GRADIENT_BG; 
+                }
                 uGrid.appendChild(sq);
             }
             uCont.appendChild(uGrid);
+
+            if (!isOLL) {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("id", "pll-svg");
+                svg.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none");
+                svg.style.zIndex = "10";
+                uCont.appendChild(svg);
+                drawArrows(svg, pllArrows, false);
+                renderPllGrid();
+            }
 
             const sideState = isOLL ? ollSideState : pllSides;
             ['back','left','right','front'].forEach(side => {
@@ -343,13 +465,10 @@
                             sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
                         };
                     } else {
-                        sq.style.background = SIDE_COLORS[sideState[side][i]];
-                        if (SIDE_COLORS[sideState[side][i]] === '#f1f5f9') sq.classList.add('white-square');
-                        sq.onclick = () => {
-                            sideState[side][i] = (sideState[side][i] + 1) % 4;
-                            sq.style.background = SIDE_COLORS[sideState[side][i]];
-                            sq.classList.toggle('white-square', SIDE_COLORS[sideState[side][i]] === '#f1f5f9');
-                        };
+                        sq.style.background = 'transparent';
+                        sq.style.borderColor = '#3f3f46';
+                        sq.style.cursor = 'default';
+                        sq.onclick = null;
                     }
                     wrapper.appendChild(sq);
                 }
@@ -357,7 +476,81 @@
             });
         }
 
-        function renderPreview(isOLL, containerId, maskString = null) {
+        function initPllInteractions() {
+            const uFace = document.getElementById('pll-u');
+            
+            uFace.addEventListener('pointerdown', (e) => {
+                let sq = e.target.closest('.pll-u-square');
+                if (sq) {
+                    pllDragStartIdx = parseInt(sq.dataset.index);
+                    e.target.setPointerCapture(e.pointerId);
+                }
+            });
+
+            document.addEventListener('pointerup', (e) => {
+                if (pllDragStartIdx !== null) {
+                    let el = document.elementFromPoint(e.clientX, e.clientY);
+                    let dropSq = el ? el.closest('.pll-u-square') : null;
+                    
+                    if (dropSq) {
+                        let dropIdx = parseInt(dropSq.dataset.index);
+                        if (dropIdx === pllDragStartIdx) {
+                            if (pllTapStartIdx === null) {
+                                pllTapStartIdx = dropIdx; 
+                            } else {
+                                if (pllTapStartIdx !== dropIdx) togglePllArrow(pllTapStartIdx, dropIdx); 
+                                pllTapStartIdx = null;
+                            }
+                        } else {
+                            togglePllArrow(pllDragStartIdx, dropIdx);
+                            pllTapStartIdx = null; 
+                        }
+                    } else {
+                        pllTapStartIdx = null; 
+                    }
+                    pllDragStartIdx = null;
+                    renderPllGrid();
+                    drawArrows(document.getElementById('pll-svg'), pllArrows, false);
+                }
+            });
+
+            uFace.addEventListener('touchmove', (e) => {
+                if (pllDragStartIdx !== null) e.preventDefault();
+            }, { passive: false });
+        }
+
+        function togglePllArrow(from, to) {
+            if (from === to) return;
+            // Since it's drawn sequentially, just track from/to exactly. The signature handles deduplication.
+            let idx = pllArrows.findIndex(arr => (arr.from === from && arr.to === to) || (arr.from === to && arr.to === from));
+            if (idx >= 0) {
+                pllArrows.splice(idx, 1);
+            } else {
+                pllArrows.push({from, to});
+            }
+        }
+
+        function renderPllGrid() {
+            let activeIndices = new Set();
+            if (pllTapStartIdx !== null) activeIndices.add(pllTapStartIdx);
+            pllArrows.forEach(arr => {
+                activeIndices.add(arr.from);
+                activeIndices.add(arr.to);
+            });
+
+            document.querySelectorAll('.pll-u-square').forEach((sq) => {
+                let idx = parseInt(sq.dataset.index);
+                if (activeIndices.has(idx)) {
+                    sq.style.boxShadow = '0 0 12px 2px rgba(255,255,255,0.4), inset 0 0 0 1px rgba(255,255,255,0.8)'; 
+                    sq.style.borderColor = 'rgba(255,255,255,0.9)';
+                } else {
+                    sq.style.boxShadow = 'none';
+                    sq.style.borderColor = '#52525b';
+                }
+            });
+        }
+
+        function renderPreview(isOLL, containerId, maskString = null, arrowArray = null) {
             const cont = document.getElementById(containerId);
             cont.innerHTML = '';
             const grid = document.createElement('div');
@@ -389,8 +582,14 @@
                 if (isVertical) strip.style.flexDirection = 'column';
                 for (let i = 0; i < 3; i++) {
                     const s = document.createElement('div'); s.className = 'mini-square';
-                    const st = isOLL ? localSides[stateKey][i] : pllSides[stateKey][i];
-                    s.style.background = isOLL ? (st ? GRADIENT_BG : 'transparent') : SIDE_COLORS[st];
+                    if (isOLL) {
+                        const st = localSides[stateKey][i];
+                        s.style.background = st ? GRADIENT_BG : 'transparent';
+                        s.style.borderColor = '#52525b';
+                    } else {
+                        s.style.background = 'transparent';
+                        s.style.borderColor = '#3f3f46';
+                    }
                     strip.appendChild(s);
                 }
                 grid.appendChild(strip);
@@ -404,6 +603,8 @@
             const uWrap = document.createElement('div');
             uWrap.style.gridColumn = '2 / 3'; uWrap.style.gridRow = '2 / 3';
             uWrap.style.background = '#27272a'; uWrap.style.padding = '6px'; uWrap.style.borderRadius = '12px';
+            uWrap.style.position = 'relative';
+
             const uGrid = document.createElement('div');
             uGrid.style.display = 'grid'; uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)'; uGrid.style.gap = '3px';
             for (let i = 0; i < 9; i++) {
@@ -412,6 +613,18 @@
                 uGrid.appendChild(s);
             }
             uWrap.appendChild(uGrid);
+
+            if (!isOLL) {
+                let arrowsToDraw = arrowArray || pllArrows;
+                if (arrowsToDraw.length > 0) {
+                    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    svg.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none");
+                    svg.style.zIndex = "10";
+                    drawArrows(svg, arrowsToDraw, true);
+                    uWrap.appendChild(svg);
+                }
+            }
+
             grid.appendChild(uWrap);
             cont.appendChild(grid);
         }
@@ -428,6 +641,19 @@
                 </div>
             `;
             return div;
+        }
+
+        function buildAlgBlockString(alg) {
+            return `
+                <div class="bg-black/60 border border-zinc-800 p-4 rounded-2xl">
+                    <div class="font-mono text-orange-300 text-sm font-semibold tracking-wide">${alg}</div>
+                    <div class="flex gap-2 mt-4">
+                        <button onclick="copyAlg(this)" class="w-full text-[11px] font-bold tracking-wider bg-zinc-800 hover:bg-zinc-700 text-zinc-300 py-2.5 rounded-xl transition">
+                            <i class="fa-solid fa-copy mr-1"></i> COPY
+                        </button>
+                    </div>
+                </div>
+            `;
         }
 
         function submitOLL() {
@@ -492,11 +718,18 @@
             if (match.isHelper) {
                 document.getElementById('oll-desc').innerHTML = match.helperText;
             } else {
-                document.getElementById('oll-desc').innerHTML = `<strong class="text-zinc-200">Recognition:</strong> ${match.recog}`;
+                let holdStr = match.hold || "Match the pattern to the correct angle shown below.";
+                document.getElementById('oll-desc').innerHTML = `
+                    <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
+                        <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
+                        <div><i class="fa-solid fa-hand text-blue-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
+                    </div>
+                `;
             }
 
             const container = document.getElementById('oll-algs-container');
             container.innerHTML = '';
+            container.innerHTML = `<div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>`;
             match.algs.forEach(alg => container.appendChild(buildAlgBlock(alg)));
 
             renderPreview(true, 'oll-preview');
@@ -519,31 +752,108 @@
         }
 
         function submitPLL() {
-            const bm = pllSides.back[1]; const lm = pllSides.left[1]; const rm = pllSides.right[1]; const fm = pllSides.front[1];
+            const resContainer = document.getElementById('pll-result');
+            resContainer.classList.remove('hidden');
 
-            let match = pllCases[0];
-            if (bm === rm && lm === fm && bm !== lm) match = pllCases.find(c => c.id === "H") || pllCases[0];
-            else if (bm === lm && rm === fm && bm !== rm) match = pllCases.find(c => c.id === "Ua") || pllCases[1];
-            else if (bm === fm && lm === rm && bm !== lm) match = pllCases.find(c => c.id === "Ub") || pllCases[2];
-            else if (bm === fm && lm === rm && bm === lm) match = pllCases.find(c => c.id === "Z") || pllCases[3];
-            else if (bm === lm) match = pllCases.find(c => c.id === "Aa") || pllCases[4];
-            else if (bm === rm) match = pllCases.find(c => c.id === "Ab") || pllCases[5];
-            else if (bm === fm) match = pllCases.find(c => c.id === "F") || pllCases[6];
-            else match = pllCases.find(c => c.id === "Ja") || pllCases[0];
+            if (pllArrows.length === 0) {
+                resContainer.innerHTML = `<div class="text-zinc-500 text-center italic mt-4 py-6">Draw an arrow pattern to begin</div>`;
+                return;
+            }
 
-            const res = document.getElementById('pll-result');
-            res.classList.remove('hidden');
-            document.getElementById('pll-alg-name').textContent = match.name;
-            document.getElementById('pll-alg-id').textContent = `PLL ${match.id}`;
-            document.getElementById('pll-desc').innerHTML = `<strong class="text-zinc-200">Recognition:</strong> ${match.recog}`;
-            document.getElementById('pll-hold').innerHTML = `<strong class="text-zinc-200">Hold the cube so:</strong><br>${match.hold}`;
+            let match = null;
+            let auf = 0;
+            let currentArrows = JSON.parse(JSON.stringify(pllArrows));
 
-            const container = document.getElementById('pll-algs-container');
-            container.innerHTML = '';
-            match.algs.forEach(alg => container.appendChild(buildAlgBlock(alg)));
+            for (let r = 0; r < 4; r++) {
+                let sig = getPllSignature(currentArrows);
+                match = pllCases.find(c => c.arrows && c.arrows === sig);
+                if (match) { auf = r; break; }
 
-            renderPreview(false, 'pll-preview');
-            setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                const rotMap = [2, 5, 8, 1, 4, 7, 0, 3, 6];
+                currentArrows = currentArrows.map(a => {
+                    return {from: rotMap[a.from], to: rotMap[a.to]};
+                });
+            }
+
+            if (!match) {
+                let baseSig = getPllSignature(pllArrows);
+                resContainer.innerHTML = `
+                    <div class="bg-red-950/40 border border-red-900/50 p-6 rounded-3xl shadow-xl">
+                        <div class="text-red-400 font-bold mb-1 text-lg"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pattern Not Found</div>
+                        <div class="text-sm mt-1 text-zinc-300 mb-4">
+                            This specific arrow pattern isn't in your PLL array yet. You can use this developer signature to add it:
+                        </div>
+                        <div class="bg-zinc-950 p-4 rounded-xl border border-zinc-800 flex justify-between items-center mb-6">
+                            <span class="text-sm text-orange-400 font-mono tracking-widest break-all">"${baseSig}"</span>
+                            <button onclick="navigator.clipboard.writeText('${baseSig}'); alert('Copied PLL signature!');" class="text-zinc-400 hover:text-white ml-3 transition-colors"><i class="fa-solid fa-copy text-xl"></i></button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-6">
+                            <button onclick="resetPLL()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
+                            <button onclick="switchTab(0)" class="w-full py-4 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => resContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                return;
+            }
+
+            let rotationText = ["Correct Angle", "Rotate 90° CW", "Rotate 180°", "Rotate 90° CCW"][auf];
+            let algsHTML = match.algs.map(a => buildAlgBlockString(a)).join('');
+
+            resContainer.innerHTML = `
+                <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 shadow-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">PLL ${match.id}</div>
+                            <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">${match.name}</h2>
+                        </div>
+                        <div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> ${rotationText}
+                        </div>
+                    </div>
+                    <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
+                        <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
+                        <div><i class="fa-solid fa-hand text-blue-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${match.hold}</div>
+                    </div>
+                    <div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>
+                    <div class="space-y-4">${algsHTML}</div>
+                    
+                    <div class="mt-8 border-t border-zinc-800 pt-6">
+                        <div class="flex justify-between items-start w-full">
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8">Your Pattern</div>
+                                <div id="pll-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
+                                <div class="text-[9px] text-zinc-500 font-mono mt-2 cursor-pointer hover:text-orange-400 transition-colors px-2 py-1 bg-zinc-950 rounded-md border border-zinc-800" title="Tap to copy this signature" onclick="navigator.clipboard.writeText('${getPllSignature(pllArrows)}'); alert('Copied PLL signature!');">${getPllSignature(pllArrows)}</div>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
+                                <div id="pll-correct-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
+                            </div>
+                        </div>
+                        ${auf > 0 ? `<div class="text-center text-xs text-orange-400 mt-2 bg-orange-500/10 py-2 rounded-xl border border-orange-500/20"><i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle</div>` : ''}
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-10">
+                        <button onclick="resetPLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
+                        <button onclick="switchTab(0)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
+                    </div>
+                </div>
+            `;
+
+            renderPreview(false, 'pll-preview', null, pllArrows);
+            
+            let correctArrows = match.arrows ? match.arrows.split(',').filter(x=>x).map(s => {
+                if (s.includes('->')) {
+                    let parts = s.split('->');
+                    return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                } else {
+                    let parts = s.split('-');
+                    return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                }
+            }) : [];
+            renderPreview(false, 'pll-correct-preview', null, correctArrows);
+
+            setTimeout(() => resContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
         }
 
         function copyAlg(btn) {
@@ -563,6 +873,9 @@
 
         function resetPLL() {
             pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+            pllArrows = [];
+            pllTapStartIdx = null;
+            pllDragStartIdx = null;
             createNet(false);
             document.getElementById('pll-result').classList.add('hidden');
         }
@@ -589,11 +902,8 @@
             `;
         }
 
-        function populateLists() {
-            const createListItem = (c, isOLL) => {
-                const d = document.createElement('div');
-                d.className = 'bg-zinc-900 border border-zinc-800 rounded-3xl p-5 hover:border-orange-500/30 transition';
-                
+        function generateListHtml(cases, isOLL) {
+            return cases.map(c => {
                 let algHTML = c.algs.map(a => `
                     <div class="bg-black/40 border border-zinc-800 rounded-2xl p-3 mt-3">
                         <div class="font-mono text-orange-300 text-xs tracking-wide">${a}</div>
@@ -614,37 +924,48 @@
 
                 const typePrefix = isOLL ? (typeof c.id === 'number' ? `OLL ${c.id}` : `OLL • ${c.id}`) : `PLL ${c.id}`;
 
-                d.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="font-mono text-[10px] font-bold tracking-widest text-zinc-900 bg-gradient-to-r from-yellow-400 to-orange-500 px-2 py-1 rounded-md mb-1 inline-block">${typePrefix}</span>
-                            <div class="font-bold text-lg mt-1 text-zinc-100">${c.name}</div>
+                return `
+                    <div class="list-item-wrapper bg-zinc-900 border border-zinc-800 rounded-3xl p-5 hover:border-orange-500/30 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-mono text-[10px] font-bold tracking-widest text-zinc-900 bg-gradient-to-r from-yellow-400 to-orange-500 px-2 py-1 rounded-md mb-1 inline-block">${typePrefix}</span>
+                                <div class="font-bold text-lg mt-1 text-zinc-100">${c.name}</div>
+                            </div>
                         </div>
+                        <div class="text-xs text-zinc-400 mt-2 mb-2 leading-relaxed">
+                            <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${c.recog}<br>
+                            <i class="fa-solid fa-hand text-blue-400 mr-2 mt-2"></i><strong class="text-zinc-200">Hold:</strong> ${c.hold || "Match the pattern to the correct angle shown below."}
+                        </div>
+                        ${visualHTML}
+                        ${algHTML}
                     </div>
-                    <div class="text-xs text-zinc-400 mt-2 mb-2 leading-relaxed">${c.recog}</div>
-                    ${visualHTML}
-                    ${algHTML}
                 `;
-                return d;
-            };
-
-            const ollCont = document.getElementById('oll-list');
-            ollCont.innerHTML = '';
-            ollCases.forEach(c => ollCont.appendChild(createListItem(c, true)));
-
-            const pllCont = document.getElementById('pll-list');
-            pllCont.innerHTML = '';
-            pllCases.forEach(c => pllCont.appendChild(createListItem(c, false)));
+            }).join('');
         }
 
-        function filterOLL() {
-            const term = document.getElementById('oll-search').value.toLowerCase();
-            document.querySelectorAll('#oll-list > div').forEach(el => el.style.display = el.textContent.toLowerCase().includes(term) ? 'block' : 'none');
+        function populateLists() {
+            const ollHtml = generateListHtml(ollCases, true);
+            const pllHtml = generateListHtml(pllCases, false);
+            
+            document.querySelectorAll('.oll-list-container').forEach(el => el.innerHTML = ollHtml);
+            document.querySelectorAll('.pll-list-container').forEach(el => el.innerHTML = pllHtml);
         }
 
-        function toggleOllList() {
-            const content = document.getElementById('oll-list-content');
-            const chevron = document.getElementById('oll-list-chevron');
+        function filterList(inputEl, listSelector, syncClass) {
+            const term = inputEl.value.toLowerCase();
+            document.querySelectorAll(listSelector).forEach(container => {
+                container.querySelectorAll('.list-item-wrapper').forEach(item => {
+                    item.style.display = item.textContent.toLowerCase().includes(term) ? 'block' : 'none';
+                });
+            });
+            document.querySelectorAll(syncClass).forEach(syncEl => {
+                if (syncEl !== inputEl) syncEl.value = inputEl.value;
+            });
+        }
+
+        function toggleList(contentId, chevronId) {
+            const content = document.getElementById(contentId);
+            const chevron = document.getElementById(chevronId);
             content.classList.toggle('hidden');
             chevron.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
         }
@@ -652,6 +973,9 @@
         function switchTab(n) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.getElementById(n === 0 ? 'content-oll' : 'content-pll').classList.remove('hidden');
+            
+            document.getElementById('tab-oll').className = n === 0 ? "flex-1 py-3.5 rounded-2xl font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50" : "flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
+            document.getElementById('tab-pll').className = n === 1 ? "flex-1 py-3.5 rounded-2xl font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50" : "flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
         }
 
         window.onload = () => {
@@ -662,6 +986,7 @@
 
             createNet(true);
             createNet(false);
+            initPllInteractions();
             populateLists();
             switchTab(0);
         };
