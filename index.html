@@ -29,7 +29,7 @@
         .side-strip { display: flex; gap: 8px; justify-content: center; }
         .vertical-strip { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
         
-        .cross-container, .list-preview {
+        .cross-container {
             display: grid;
             grid-template-areas:
                 ". top ."
@@ -41,10 +41,26 @@
             width: fit-content; 
             margin: 0 auto;
         }
+        
+        /* New Perfect Symmetry Layout for Miniatures */
+        .mini-cross-container {
+            display: grid;
+            grid-template-areas:
+                ". top ."
+                "left center right"
+                ". bottom .";
+            gap: 6px; 
+            justify-content: center;
+            align-items: center;
+            width: fit-content; 
+            margin: 0 auto;
+        }
+
         .back-strip  { grid-area: top; }
         .left-strip  { grid-area: left; }
         .right-strip { grid-area: right; }
         .front-strip { grid-area: bottom; }
+        
         .u-face { 
             grid-area: center; 
             background: #27272a; 
@@ -53,12 +69,13 @@
             box-sizing: border-box;
             position: relative; 
         }
-
-        .preview-container {
-            display: grid;
-            grid-template-columns: 36px 104px 36px;
-            grid-template-rows: 36px 104px 36px;
-            gap: 6px; width: fit-content; margin: 0 auto;
+        .mini-u-face {
+            grid-area: center; 
+            background: #27272a; 
+            padding: 6px; 
+            border-radius: 12px; 
+            box-sizing: border-box;
+            position: relative; 
         }
     </style>
 </head>
@@ -301,7 +318,6 @@
             {id:57, name:"Mummy", recog:"Corners oriented", algs:["[R U R' U'] M' [U R U' r']"], uMask:"10111101010000010000"}
         ];
 
-        // 21 PLL Cases with intelligent signatures
         const pllCases = [
             {id: "H", name: "H Perm", recog: "Opposite edges swapped", hold: "Any orientation", algs: ["M2 U M2 U2 M2 U M2"], arrows: "1-7,3-5"},
             {id: "Ua", name: "Ua Perm", recog: "3 edges CCW", hold: "Solved bar in back", algs: ["[R U' R] U R U R U' R' U' R2", "(y2) R2 U' R' U' R U R U R U' R"], arrows: "3->7,5->3,7->5"},
@@ -355,23 +371,31 @@
             }).sort().join(',');
         }
 
-        // Centralized SVG Arrow Drawer for thick, white, black-outlined arrows
-        function drawArrows(svgElement, arrowsToDraw, isMini) {
-            if (!svgElement) return;
-            
+        // Generates SVG string for arrows so it can be cleanly injected anywhere
+        function getArrowsSvgString(arrowsToDraw, isMini) {
             let degree = {};
             arrowsToDraw.forEach(a => {
                 degree[a.from] = (degree[a.from] || 0) + 1;
                 degree[a.to] = (degree[a.to] || 0) + 1;
             });
 
+            let uid = Math.random().toString(36).substr(2, 9);
+            
+            // Miniature arrowheads are specifically scaled to be tiny and precise
+            let mWidth = isMini ? 3 : 5;
+            let mHeight = isMini ? 3 : 5;
+            let rX = isMini ? 1.5 : 1.5;
+            let rY = isMini ? 1.5 : 2.5;
+            let pts = isMini ? "0 0, 3 1.5, 0 3" : "0 0, 5 2.5, 0 5";
+            let sw = isMini ? 0.4 : 0.3;
+
             let html = `
                 <defs>
-                    <marker id="arrow-start-${isMini}" markerWidth="5" markerHeight="5" refX="1.5" refY="2.5" orient="auto-start-reverse" overflow="visible">
-                        <polygon points="0 0, 5 2.5, 0 5" fill="#ffffff" stroke="#000000" stroke-width="0.3" stroke-linejoin="round"/>
+                    <marker id="start-${uid}" markerWidth="${mWidth}" markerHeight="${mHeight}" refX="${rX}" refY="${rY}" orient="auto-start-reverse" overflow="visible">
+                        <polygon points="${pts}" fill="#ffffff" stroke="#000000" stroke-width="${sw}" stroke-linejoin="round"/>
                     </marker>
-                    <marker id="arrow-end-${isMini}" markerWidth="5" markerHeight="5" refX="3.5" refY="2.5" orient="auto" overflow="visible">
-                        <polygon points="0 0, 5 2.5, 0 5" fill="#ffffff" stroke="#000000" stroke-width="0.3" stroke-linejoin="round"/>
+                    <marker id="end-${uid}" markerWidth="${mWidth}" markerHeight="${mHeight}" refX="${rX+1}" refY="${rY}" orient="auto" overflow="visible">
+                        <polygon points="${pts}" fill="#ffffff" stroke="#000000" stroke-width="${sw}" stroke-linejoin="round"/>
                     </marker>
                 </defs>
             `;
@@ -392,26 +416,25 @@
                 let len = Math.sqrt(dx*dx + dy*dy);
                 
                 if (len > 0) {
-                    let rs = isSwap ? (isMini ? 12 : 20) / len : (isMini ? 5 : 10) / len;
-                    let re = (isMini ? 12 : 20) / len;
+                    // Small offset ratio to bring lines right to the center without overlap
+                    let rs = isSwap ? (isMini ? 6 : 20) / len : (isMini ? 3 : 10) / len;
+                    let re = (isMini ? 6 : 20) / len;
                     
                     let sx = x1 + dx * rs;
                     let sy = y1 + dy * rs;
                     let ex = x2 - dx * re;
                     let ey = y2 - dy * re;
                     
-                    let markers = `marker-end="url(#arrow-end-${isMini})"`;
-                    if (isSwap) {
-                        markers = `marker-start="url(#arrow-start-${isMini})" marker-end="url(#arrow-end-${isMini})"`;
-                    }
+                    let markers = `marker-end="url(#end-${uid})"`;
+                    if (isSwap) markers = `marker-start="url(#start-${uid})" marker-end="url(#end-${uid})"`;
 
                     // Black Outline underneath
-                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#000000" stroke-width="${isMini ? 5 : 8}" stroke-linecap="round" />`;
+                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#000000" stroke-width="${isMini ? 3.5 : 8}" stroke-linecap="round" />`;
                     // White Center
-                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-width="${isMini ? 3 : 5}" stroke-linecap="round" ${markers} />`;
+                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-width="${isMini ? 2 : 5}" stroke-linecap="round" ${markers} />`;
                 }
             });
-            svgElement.innerHTML = html + paths;
+            return html + paths;
         }
 
         function createNet(isOLL) {
@@ -445,7 +468,7 @@
                 svg.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none");
                 svg.style.zIndex = "10";
                 uCont.appendChild(svg);
-                drawArrows(svg, pllArrows, false);
+                svg.innerHTML = getArrowsSvgString(pllArrows, false);
                 renderPllGrid();
             }
 
@@ -510,7 +533,7 @@
                     }
                     pllDragStartIdx = null;
                     renderPllGrid();
-                    drawArrows(document.getElementById('pll-svg'), pllArrows, false);
+                    document.getElementById('pll-svg').innerHTML = getArrowsSvgString(pllArrows, false);
                 }
             });
 
@@ -521,7 +544,7 @@
 
         function togglePllArrow(from, to) {
             if (from === to) return;
-            // Since it's drawn sequentially, just track from/to exactly. The signature handles deduplication.
+            // Track purely drawn from/to
             let idx = pllArrows.findIndex(arr => (arr.from === from && arr.to === to) || (arr.from === to && arr.to === from));
             if (idx >= 0) {
                 pllArrows.splice(idx, 1);
@@ -550,11 +573,13 @@
             });
         }
 
+        // Consolidated preview generator using identical symmetric mini-grid for everything
         function renderPreview(isOLL, containerId, maskString = null, arrowArray = null) {
             const cont = document.getElementById(containerId);
             cont.innerHTML = '';
+            
             const grid = document.createElement('div');
-            grid.className = "preview-container";
+            grid.className = "mini-cross-container transform scale-[0.65] sm:scale-75 origin-top";
 
             let localUState = isOLL ? [...ollUState] : null;
             let localSides = isOLL ? ollSideState : pllSides;
@@ -575,11 +600,10 @@
                 }
             }
 
-            const createStrip = (gridCol, gridRow, stateKey, isVertical) => {
+            const createStrip = (areaName, stateKey, isVertical) => {
                 const strip = document.createElement('div');
-                strip.style.gridColumn = gridCol; strip.style.gridRow = gridRow;
-                strip.style.display = 'flex'; strip.style.gap = '6px';
-                if (isVertical) strip.style.flexDirection = 'column';
+                strip.style.gridArea = areaName;
+                strip.className = isVertical ? 'vertical-strip' : 'side-strip';
                 for (let i = 0; i < 3; i++) {
                     const s = document.createElement('div'); s.className = 'mini-square';
                     if (isOLL) {
@@ -595,15 +619,13 @@
                 grid.appendChild(strip);
             };
 
-            createStrip('2 / 3', '1 / 2', 'back', false);
-            createStrip('1 / 2', '2 / 3', 'left', true);
-            createStrip('3 / 4', '2 / 3', 'right', true);
-            createStrip('2 / 3', '3 / 4', 'front', false);
+            createStrip('top', 'back', false);
+            createStrip('left', 'left', true);
+            createStrip('right', 'right', true);
+            createStrip('bottom', 'front', false);
 
             const uWrap = document.createElement('div');
-            uWrap.style.gridColumn = '2 / 3'; uWrap.style.gridRow = '2 / 3';
-            uWrap.style.background = '#27272a'; uWrap.style.padding = '6px'; uWrap.style.borderRadius = '12px';
-            uWrap.style.position = 'relative';
+            uWrap.className = 'mini-u-face';
 
             const uGrid = document.createElement('div');
             uGrid.style.display = 'grid'; uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)'; uGrid.style.gap = '3px';
@@ -620,7 +642,7 @@
                     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
                     svg.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none");
                     svg.style.zIndex = "10";
-                    drawArrows(svg, arrowsToDraw, true);
+                    svg.innerHTML = getArrowsSvgString(arrowsToDraw, true);
                     uWrap.appendChild(svg);
                 }
             }
@@ -822,12 +844,12 @@
                         <div class="flex justify-between items-start w-full">
                             <div class="flex flex-col items-center flex-1">
                                 <div class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8">Your Pattern</div>
-                                <div id="pll-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
+                                <div id="pll-preview" class="origin-top relative" style="height: 120px;"></div>
                                 <div class="text-[9px] text-zinc-500 font-mono mt-2 cursor-pointer hover:text-orange-400 transition-colors px-2 py-1 bg-zinc-950 rounded-md border border-zinc-800" title="Tap to copy this signature" onclick="navigator.clipboard.writeText('${getPllSignature(pllArrows)}'); alert('Copied PLL signature!');">${getPllSignature(pllArrows)}</div>
                             </div>
                             <div class="flex flex-col items-center flex-1">
                                 <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
-                                <div id="pll-correct-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
+                                <div id="pll-correct-preview" class="origin-top relative" style="height: 120px;"></div>
                             </div>
                         </div>
                         ${auf > 0 ? `<div class="text-center text-xs text-orange-400 mt-2 bg-orange-500/10 py-2 rounded-xl border border-orange-500/20"><i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle</div>` : ''}
@@ -892,12 +914,12 @@
                 }
             }
             return `
-                <div class="list-preview transform scale-75 origin-left">
-                    <div class="back-strip side-strip"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-                    <div class="left-strip vertical-strip"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-                    <div class="u-face" style="padding:6px"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
-                    <div class="right-strip vertical-strip"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-                    <div class="front-strip side-strip"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+                <div class="mini-cross-container transform scale-75 origin-left">
+                    <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+                    <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+                    <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
+                    <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+                    <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
                 </div>
             `;
         }
@@ -917,9 +939,37 @@
                 if (isOLL) {
                     visualHTML = generateFullMini(c.uMask);
                 } else {
-                    visualHTML = `<div class="list-mini mt-3 grid gap-1 transform scale-75 origin-left" style="grid-template-columns:repeat(3,26px); width:fit-content">`;
-                    for (let i = 0; i < 9; i++) visualHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
-                    visualHTML += `</div>`;
+                    let uHTML = '';
+                    for (let i = 0; i < 9; i++) {
+                        uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
+                    }
+                    
+                    let arrowArray = [];
+                    if (c.arrows) {
+                        arrowArray = c.arrows.split(',').filter(x=>x).map(s => {
+                            if (s.includes('->')) {
+                                let parts = s.split('->');
+                                return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                            } else {
+                                let parts = s.split('-');
+                                return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                            }
+                        });
+                    }
+                    
+                    let svgHTML = '';
+                    if (arrowArray.length > 0) {
+                        svgHTML = `<svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10;">${getArrowsSvgString(arrowArray, true)}</svg>`;
+                    }
+
+                    visualHTML = `
+                    <div class="mini-cross-container transform scale-75 origin-left mt-3">
+                        <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                        <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                        <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div>${svgHTML}</div>
+                        <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                        <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                    </div>`;
                 }
 
                 const typePrefix = isOLL ? (typeof c.id === 'number' ? `OLL ${c.id}` : `OLL • ${c.id}`) : `PLL ${c.id}`;
