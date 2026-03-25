@@ -207,11 +207,11 @@
                     <div class="flex justify-between items-start w-full">
                         <div class="flex flex-col items-center flex-1">
                             <div id="oll-secret-copy" class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy">Your Pattern</div>
-                            <div id="oll-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
+                            <div id="oll-preview" class="origin-top relative" style="height: 120px;"></div>
                         </div>
                         <div id="oll-correct-container" class="flex flex-col items-center flex-1">
                             <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
-                            <div id="oll-correct-preview" class="transform scale-[0.65] sm:scale-75 origin-top"></div>
+                            <div id="oll-correct-preview" class="origin-top relative" style="height: 120px;"></div>
                         </div>
                     </div>
                     <div id="oll-rotation-warning" class="text-center text-xs text-orange-400 mt-2 hidden bg-orange-500/10 py-2 rounded-xl border border-orange-500/20">
@@ -1250,20 +1250,36 @@
             const pos = [0,1,2,3,5,6,7,8];
             let uHTML = '';
             for (let i = 0; i < 9; i++) {
-                if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
+                if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}; border-color:#52525b"></div>`;
                 else {
                     const idx = pos.indexOf(i);
-                    const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : '#3f3f46';
-                    uHTML += `<div class="mini-square" style="background:${val}"></div>`;
+                    const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : 'transparent';
+                    uHTML += `<div class="mini-square" style="background:${val}; border-color:#52525b"></div>`;
                 }
             }
+            
+            const getStripHTML = (startIdx) => {
+                let html = '';
+                for(let i=0; i<3; i++) {
+                    const isActive = uMask.length === 20 && uMask[startIdx + i] === '1';
+                    const bg = isActive ? GRADIENT_BG : 'transparent';
+                    html += `<div class="mini-square" style="background:${bg}; border-color:#52525b"></div>`;
+                }
+                return html;
+            };
+
+            const backHTML = getStripHTML(8);
+            const rightHTML = getStripHTML(11);
+            const frontHTML = getStripHTML(14);
+            const leftHTML = getStripHTML(17);
+
             return `
-                <div class="mini-cross-container transform scale-75 origin-left">
-                    <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-                    <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+                <div class="mini-cross-container transform scale-75 origin-left mt-3">
+                    <div class="side-strip" style="grid-area: top;">${backHTML}</div>
+                    <div class="vertical-strip" style="grid-area: left;">${leftHTML}</div>
                     <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
-                    <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-                    <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+                    <div class="vertical-strip" style="grid-area: right;">${rightHTML}</div>
+                    <div class="side-strip" style="grid-area: bottom;">${frontHTML}</div>
                 </div>
             `;
         }
