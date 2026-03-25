@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI Speed Cube Trainer • Accurate OLL Detection & AI Coach</title>
     
+    <!-- Link the newly created Favicon -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
     <!-- GOOGLE ADSENSE START -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673" crossorigin="anonymous"></script>
     <!-- GOOGLE ADSENSE END -->
@@ -93,14 +96,33 @@
             </div>
         </div>
 
-        <!-- Clean layout for tabs -->
-        <div class="px-6 pb-6 flex justify-center gap-4 max-w-lg mx-auto">
-            <button onclick="switchTab(0)" id="tab-oll" class="flex-1 py-3.5 rounded-2xl font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
-            <button onclick="switchTab(1)" id="tab-pll" class="flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
+        <!-- Clean layout for 3 tabs -->
+        <div class="px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-2xl mx-auto">
+            <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 sm:py-3.5 rounded-2xl font-semibold text-[11px] sm:text-base leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers<br class="sm:hidden">(F2L)</button>
+            <button onclick="switchTab(1)" id="tab-oll" class="flex-1 py-3 sm:py-3.5 rounded-2xl font-bold text-xs sm:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
+            <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 sm:py-3.5 rounded-2xl font-semibold text-xs sm:text-base bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
+        </div>
+
+        <!-- F2L Content -->
+        <div id="content-f2l" class="tab-content hidden px-6 max-w-xl mx-auto">
+            <div class="mt-2 text-center">
+                <h2 class="text-2xl font-bold tracking-tight text-white">First Two Layers (F2L)</h2>
+                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                    Insert your corner and edge pairs intuitively or learn advanced algorithms. <strong>F2L module in development!</strong>
+                </p>
+            </div>
+            
+            <div class="mt-12 bg-zinc-900/50 border border-zinc-800/50 p-10 rounded-3xl text-center flex flex-col items-center">
+                <div class="w-20 h-20 bg-zinc-800/50 rounded-2xl flex items-center justify-center text-4xl text-zinc-600 mb-6">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3 class="text-xl font-bold text-zinc-300">F2L Trainer Coming Soon</h3>
+                <p class="text-sm text-zinc-500 mt-3 max-w-sm">We are building an interactive 3D layout to help you master your First Two Layers pairs instantly.</p>
+            </div>
         </div>
 
         <!-- OLL Content -->
-        <div id="content-oll" class="tab-content px-6 max-w-xl mx-auto">
+        <div id="content-oll" class="tab-content hidden px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
                 <h2 class="text-2xl font-bold tracking-tight text-white">OLL Pattern Recognition</h2>
                 <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
@@ -117,10 +139,14 @@
                 <div class="front-strip side-strip" id="oll-front"></div>
             </div>
 
-            <div class="flex justify-center mt-10">
+            <!-- Quick Reset & Submit -->
+            <div class="flex flex-col items-center mt-10">
                 <button onclick="submitOLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
                     <i class="fa-solid fa-magic"></i>
                     DETECT MATCH
+                </button>
+                <button onclick="resetOLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
                 </button>
             </div>
 
@@ -151,13 +177,35 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-4 mt-10">
-                    <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95">RESET</button>
-                    <button onclick="switchTab(1)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95">GO TO PLL</button>
+                    <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET</button>
+                    <button onclick="switchTab(2)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO PLL</button>
                 </div>
             </div>
 
             <!-- OLL Tab Lists -->
             <div class="mt-12 space-y-4">
+                <!-- Favorites List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-fav-list', 'oll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite OLLs</div>
+                        <i id="oll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-fav-list" class="hidden px-6 pb-6">
+                        <div id="oll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+
+                <!-- History List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-hist-list', 'oll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> OLL History</div>
+                        <i id="oll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-hist-list" class="hidden px-6 pb-6">
+                        <div id="oll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('oll-tab-oll-list', 'oll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
                         <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
@@ -199,10 +247,14 @@
                 <div class="front-strip side-strip" id="pll-front"></div>
             </div>
 
-            <div class="flex justify-center mt-10">
+            <!-- Quick Reset & Submit -->
+            <div class="flex flex-col items-center mt-10">
                 <button onclick="submitPLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
                     <i class="fa-solid fa-magic"></i>
                     DETECT MATCH
+                </button>
+                <button onclick="resetPLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
                 </button>
             </div>
 
@@ -212,6 +264,28 @@
 
             <!-- PLL Tab Lists (Reversed order) -->
             <div class="mt-12 space-y-4">
+                <!-- Favorites List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-fav-list', 'pll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite PLLs</div>
+                        <i id="pll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-fav-list" class="hidden px-6 pb-6">
+                        <div id="pll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+
+                <!-- History List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-hist-list', 'pll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> PLL History</div>
+                        <i id="pll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-hist-list" class="hidden px-6 pb-6">
+                        <div id="pll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('pll-tab-pll-list', 'pll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
                         <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
@@ -238,7 +312,7 @@
         <!-- Footer / Legal Navigation -->
         <div class="mt-16 text-center w-full pb-8 border-t border-zinc-900 pt-8">
             <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-zinc-500 font-medium">
-                <a href="howto.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">How to Use</a>
+                <a href="howto.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">How to Use the Trainer</a>
                 <a href="privacy.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Privacy Policy</a>
                 <a href="contact.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">Contact</a>
             </div>
@@ -249,6 +323,7 @@
         const GRADIENT_BG = 'linear-gradient(135deg, #facc15 0%, #f97316 100%)';
         const SIDE_COLORS = ['#3b82f6', '#f1f5f9', '#22c55e', GRADIENT_BG];
 
+        // Core State
         let ollUState = Array(9).fill(0); ollUState[4] = 1;
         let ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
         
@@ -256,6 +331,15 @@
         let pllArrows = [];
         let pllTapStartIdx = null;
         let pllDragStartIdx = null;
+
+        // Session & Local Storage State
+        let ollHistory = [];
+        let pllHistory = [];
+        let favorites = JSON.parse(localStorage.getItem('cubeTrainerFavs')) || { oll: [], pll: [] };
+        
+        // Track currently viewed matches
+        let currentOllCase = null;
+        let currentPllCase = null;
 
         const ollCases = [
             {id:1, name:"Dot 1", recog:"Pure dot (no edges oriented)", algs:["R U2 [R2' F R F'] U2' [R' F R F']"], uMask:"00000000010111010111"},
@@ -317,6 +401,7 @@
             {id:57, name:"Mummy", recog:"Corners oriented", algs:["[R U R' U'] M' [U R U' r']"], uMask:"10111101010000010000"}
         ];
 
+        // 21 PLL Cases with intelligent signatures
         const pllCases = [
             {id: "H", name: "H Perm", recog: "Opposite edges swapped", hold: "Any orientation", algs: ["M2 U M2 U2 M2 U M2"], arrows: "1-7,3-5"},
             {id: "Ua", name: "Ua Perm", recog: "3 edges CCW", hold: "Solved bar in back", algs: ["[R U' R] U R U R U' R' U' R2", "(y2) R2 U' R' U' R U R U R U' R"], arrows: "3->7,5->3,7->5"},
@@ -341,10 +426,9 @@
             {id: "Gd", name: "Gd Perm", recog: "Headlights left, block back-left", hold: "Headlights left", algs: ["[R U R'] y' R2 u' R U' R' U R' u R2"], arrows: "0->2,1->3,2->6,3->7,6->0,7->1"}
         ];
 
+        // Core Utilities
         function rotateMask(mask) {
-            if (mask.length === 8) {
-                return mask[5] + mask[3] + mask[0] + mask[6] + mask[1] + mask[7] + mask[4] + mask[2];
-            }
+            if (mask.length === 8) return mask[5] + mask[3] + mask[0] + mask[6] + mask[1] + mask[7] + mask[4] + mask[2];
             const u = [mask[5], mask[3], mask[0], mask[6], mask[1], mask[7], mask[4], mask[2]].join('');
             const b = [mask[19], mask[18], mask[17]].join(''); 
             const r = [mask[8], mask[9], mask[10]].join('');   
@@ -353,7 +437,6 @@
             return u + b + r + f + l;
         }
 
-        // Generates the correct undirected/directed signature
         function getPllSignature(arrows) {
             let degree = {};
             arrows.forEach(a => {
@@ -362,15 +445,56 @@
             });
             
             return arrows.map(a => {
-                if (degree[a.from] === 1 && degree[a.to] === 1) {
-                    return Math.min(a.from, a.to) + '-' + Math.max(a.from, a.to);
-                } else {
-                    return a.from + '->' + a.to;
-                }
+                if (degree[a.from] === 1 && degree[a.to] === 1) return Math.min(a.from, a.to) + '-' + Math.max(a.from, a.to);
+                return a.from + '->' + a.to;
             }).sort().join(',');
         }
 
-        // Generates SVG string for arrows so it can be cleanly injected anywhere
+        // Favorites and History Logic
+        function saveFavorites() {
+            localStorage.setItem('cubeTrainerFavs', JSON.stringify(favorites));
+        }
+
+        function toggleFavorite(type) {
+            const currentCase = type === 'oll' ? currentOllCase : currentPllCase;
+            if (!currentCase || currentCase.isHelper) return;
+
+            const favArr = favorites[type];
+            const idx = favArr.indexOf(currentCase.id);
+            
+            if (idx > -1) favArr.splice(idx, 1);
+            else favArr.push(currentCase.id);
+            
+            saveFavorites();
+            renderFavorites(type);
+            updateFavoriteButton(type, currentCase);
+        }
+
+        function updateFavoriteButton(type, match) {
+            const btn = document.getElementById(`${type}-fav-btn`);
+            if (!btn) return;
+            
+            if (match && !match.isHelper) {
+                btn.style.display = 'block';
+                const isFav = favorites[type].includes(match.id);
+                btn.innerHTML = isFav ? '<i class="fa-solid fa-star text-yellow-400"></i>' : '<i class="fa-regular fa-star text-zinc-400 hover:text-yellow-400"></i>';
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+
+        function addToHistory(type, match) {
+            if (!match || match.isHelper) return;
+            const histArr = type === 'oll' ? ollHistory : pllHistory;
+            
+            if (histArr[0] !== match.id) {
+                histArr.unshift(match.id);
+                if (histArr.length > 10) histArr.pop();
+                renderHistory(type);
+            }
+        }
+
+        // GUI and Grid Logic
         function getArrowsSvgString(arrowsToDraw, isMini) {
             let degree = {};
             arrowsToDraw.forEach(a => {
@@ -379,8 +503,6 @@
             });
 
             let uid = Math.random().toString(36).substr(2, 9);
-            
-            // Miniature arrowheads are specifically scaled to be tiny and precise
             let mWidth = isMini ? 3 : 5;
             let mHeight = isMini ? 3 : 5;
             let rX = isMini ? 1.5 : 1.5;
@@ -405,31 +527,22 @@
                 let size = isMini ? 29 : 60;
                 let offset = isMini ? 19 : 36;
                 
-                let x1 = offset + (arr.from % 3) * size;
-                let y1 = offset + Math.floor(arr.from / 3) * size;
-                let x2 = offset + (arr.to % 3) * size;
-                let y2 = offset + Math.floor(arr.to / 3) * size;
-                
-                let dx = x2 - x1;
-                let dy = y2 - y1;
+                let x1 = offset + (arr.from % 3) * size; let y1 = offset + Math.floor(arr.from / 3) * size;
+                let x2 = offset + (arr.to % 3) * size;   let y2 = offset + Math.floor(arr.to / 3) * size;
+                let dx = x2 - x1; let dy = y2 - y1;
                 let len = Math.sqrt(dx*dx + dy*dy);
                 
                 if (len > 0) {
-                    // Small offset ratio to bring lines right to the center without overlap
                     let rs = isSwap ? (isMini ? 6 : 20) / len : (isMini ? 3 : 10) / len;
                     let re = (isMini ? 6 : 20) / len;
                     
-                    let sx = x1 + dx * rs;
-                    let sy = y1 + dy * rs;
-                    let ex = x2 - dx * re;
-                    let ey = y2 - dy * re;
+                    let sx = x1 + dx * rs; let sy = y1 + dy * rs;
+                    let ex = x2 - dx * re; let ey = y2 - dy * re;
                     
                     let markers = `marker-end="url(#end-${uid})"`;
                     if (isSwap) markers = `marker-start="url(#start-${uid})" marker-end="url(#end-${uid})"`;
 
-                    // Black Outline underneath
                     paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#000000" stroke-width="${isMini ? 3.5 : 8}" stroke-linecap="round" />`;
-                    // White Center
                     paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-width="${isMini ? 2 : 5}" stroke-linecap="round" ${markers} />`;
                 }
             });
@@ -442,9 +555,7 @@
             uCont.innerHTML = '';
             
             const uGrid = document.createElement('div');
-            uGrid.style.display = 'grid';
-            uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-            uGrid.style.gap = '8px';
+            uGrid.style.display = 'grid'; uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)'; uGrid.style.gap = '8px';
             
             for (let i = 0; i < 9; i++) {
                 const sq = document.createElement('div');
@@ -490,7 +601,6 @@
                         sq.style.background = 'transparent';
                         sq.style.borderColor = '#3f3f46';
                         sq.style.cursor = 'default';
-                        sq.onclick = null;
                     }
                     wrapper.appendChild(sq);
                 }
@@ -543,22 +653,15 @@
 
         function togglePllArrow(from, to) {
             if (from === to) return;
-            // Track purely drawn from/to
             let idx = pllArrows.findIndex(arr => (arr.from === from && arr.to === to) || (arr.from === to && arr.to === from));
-            if (idx >= 0) {
-                pllArrows.splice(idx, 1);
-            } else {
-                pllArrows.push({from, to});
-            }
+            if (idx >= 0) pllArrows.splice(idx, 1);
+            else pllArrows.push({from, to});
         }
 
         function renderPllGrid() {
             let activeIndices = new Set();
             if (pllTapStartIdx !== null) activeIndices.add(pllTapStartIdx);
-            pllArrows.forEach(arr => {
-                activeIndices.add(arr.from);
-                activeIndices.add(arr.to);
-            });
+            pllArrows.forEach(arr => { activeIndices.add(arr.from); activeIndices.add(arr.to); });
 
             document.querySelectorAll('.pll-u-square').forEach((sq) => {
                 let idx = parseInt(sq.dataset.index);
@@ -572,7 +675,6 @@
             });
         }
 
-        // Consolidated preview generator using identical symmetric mini-grid for everything
         function renderPreview(isOLL, containerId, maskString = null, arrowArray = null) {
             const cont = document.getElementById(containerId);
             cont.innerHTML = '';
@@ -692,9 +794,7 @@
 
             for (let r = 0; r < 4; r++) {
                 for (let c of ollCases) {
-                    if (c.uMask.length === 20 && c.uMask === currentMask) {
-                        match = c; auf = r; break;
-                    }
+                    if (c.uMask.length === 20 && c.uMask === currentMask) { match = c; auf = r; break; }
                 }
                 if (match) break;
                 currentMask = rotateMask(currentMask);
@@ -704,9 +804,7 @@
                 currentMask = userMask;
                 for (let r = 0; r < 4; r++) {
                     for (let c of ollCases) {
-                        if (c.uMask.length === 8 && c.uMask === currentMask.substring(0, 8)) {
-                            match = c; auf = r; break;
-                        }
+                        if (c.uMask.length === 8 && c.uMask === currentMask.substring(0, 8)) { match = c; auf = r; break; }
                     }
                     if (match) break;
                     currentMask = rotateMask(currentMask);
@@ -727,16 +825,34 @@
                 };
             }
 
+            currentOllCase = match;
+
             const res = document.getElementById('oll-result');
             res.classList.remove('hidden');
             document.getElementById('oll-alg-name').textContent = match.name;
-            document.getElementById('oll-alg-id').textContent = match.isHelper ? "" : `OLL ${match.id} ${auf ? '(AUF ' + auf + '×U)' : ''}`;
+            document.getElementById('oll-alg-id').textContent = match.isHelper ? "" : `OLL ${match.id}`;
             
+            let headerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">${match.isHelper ? "" : 'OLL ' + match.id}</div>
+                        <h2 class="text-2xl font-bold ${match.isHelper ? 'text-red-400 cursor-pointer' : 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500'}" 
+                            ${match.isHelper ? `onclick="navigator.clipboard.writeText('${userMask}'); alert('Copied developer mask!');"` : ''}>
+                            ${match.isHelper ? '<i class="fa-solid fa-triangle-exclamation mr-2"></i>' : ''}${match.name}
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button id="oll-fav-btn" onclick="toggleFavorite('oll')" class="text-xl transition-colors outline-none" style="display: ${match.isHelper ? 'none' : 'block'}"></button>
+                        ${auf > 0 ? `<div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700 hidden sm:block"><i class="fa-solid fa-rotate-right mr-1"></i> Rotate ${["", "90° CW", "180°", "90° CCW"][auf]}</div>` : ''}
+                    </div>
+                </div>
+            `;
+
             if (match.isHelper) {
-                document.getElementById('oll-desc').innerHTML = match.helperText;
+                document.getElementById('oll-desc').innerHTML = headerHTML + match.helperText;
             } else {
                 let holdStr = match.hold || "Match the pattern to the correct angle shown below.";
-                document.getElementById('oll-desc').innerHTML = `
+                document.getElementById('oll-desc').innerHTML = headerHTML + `
                     <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
                         <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
                         <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
@@ -753,17 +869,17 @@
 
             renderPreview(true, 'oll-preview');
             
-            // Secret copy handler attached to "Your Pattern" title
             document.getElementById('oll-secret-copy').onclick = () => {
                 navigator.clipboard.writeText(userMask);
-                alert('Copied 20-bit mask: ' + userMask);
+                alert('Copied developer 20-bit mask!');
             };
-            
+
             if (!match.isHelper) {
                 renderPreview(true, 'oll-correct-preview', match.uMask);
                 document.getElementById('oll-correct-container').style.display = 'flex';
                 if (auf > 0) {
                     document.getElementById('oll-rotation-warning').classList.remove('hidden');
+                    document.getElementById('oll-rotation-warning').innerHTML = `<i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle`;
                 } else {
                     document.getElementById('oll-rotation-warning').classList.add('hidden');
                 }
@@ -772,6 +888,8 @@
                 document.getElementById('oll-rotation-warning').classList.add('hidden');
             }
 
+            updateFavoriteButton('oll', match);
+            addToHistory('oll', match);
             setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
         }
 
@@ -803,13 +921,13 @@
                 let baseSig = getPllSignature(pllArrows);
                 resContainer.innerHTML = `
                     <div class="bg-red-950/40 border border-red-900/50 p-6 rounded-3xl shadow-xl">
-                        <div class="text-red-400 font-bold mb-1 text-lg cursor-pointer inline-block" onclick="navigator.clipboard.writeText('${baseSig}'); alert('Copied PLL signature!');"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pattern Not Found</div>
+                        <div class="text-red-400 font-bold mb-1 text-lg cursor-pointer inline-block" onclick="navigator.clipboard.writeText('${baseSig}'); alert('Copied developer PLL signature!');"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pattern Not Found</div>
                         <div class="text-sm mt-2 text-zinc-300 mb-6 leading-relaxed">
                             We couldn't recognize this arrow pattern. Please double-check your swaps and try again.
                         </div>
                         <div class="grid grid-cols-2 gap-4 mt-6">
                             <button onclick="resetPLL()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
-                            <button onclick="switchTab(0)" class="w-full py-4 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
+                            <button onclick="switchTab(1)" class="w-full py-4 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
                         </div>
                     </div>
                 `;
@@ -817,6 +935,7 @@
                 return;
             }
 
+            currentPllCase = match;
             let rotationText = ["Correct Angle", "Rotate 90° CW", "Rotate 180°", "Rotate 90° CCW"][auf];
             let algsHTML = match.algs.map(a => buildAlgBlockString(a)).join('');
 
@@ -827,8 +946,9 @@
                             <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">PLL ${match.id}</div>
                             <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">${match.name}</h2>
                         </div>
-                        <div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700">
-                            <i class="fa-solid fa-rotate-right mr-1"></i> ${rotationText}
+                        <div class="flex items-center gap-3">
+                            <button id="pll-fav-btn" onclick="toggleFavorite('pll')" class="text-xl transition-colors outline-none" title="Save to Favorites"></button>
+                            ${auf > 0 ? `<div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700 hidden sm:block"><i class="fa-solid fa-rotate-right mr-1"></i> ${rotationText}</div>` : ''}
                         </div>
                     </div>
                     <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
@@ -841,7 +961,7 @@
                     <div class="mt-8 border-t border-zinc-800 pt-6">
                         <div class="flex justify-between items-start w-full">
                             <div class="flex flex-col items-center flex-1">
-                                <div class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy" onclick="navigator.clipboard.writeText('${getPllSignature(pllArrows)}'); alert('Copied PLL signature: ${getPllSignature(pllArrows)}');">Your Pattern</div>
+                                <div id="pll-user-mask" class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy">Your Pattern</div>
                                 <div id="pll-preview" class="origin-top relative" style="height: 120px;"></div>
                             </div>
                             <div class="flex flex-col items-center flex-1">
@@ -854,7 +974,7 @@
                     
                     <div class="grid grid-cols-2 gap-4 mt-10">
                         <button onclick="resetPLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
-                        <button onclick="switchTab(0)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
+                        <button onclick="switchTab(1)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
                     </div>
                 </div>
             `;
@@ -863,15 +983,20 @@
             
             let correctArrows = match.arrows ? match.arrows.split(',').filter(x=>x).map(s => {
                 if (s.includes('->')) {
-                    let parts = s.split('->');
-                    return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                    let parts = s.split('->'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
                 } else {
-                    let parts = s.split('-');
-                    return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                    let parts = s.split('-'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
                 }
             }) : [];
             renderPreview(false, 'pll-correct-preview', null, correctArrows);
 
+            document.getElementById('pll-user-mask').onclick = () => {
+                navigator.clipboard.writeText(getPllSignature(pllArrows));
+                alert('Copied developer PLL signature!');
+            };
+
+            updateFavoriteButton('pll', match);
+            addToHistory('pll', match);
             setTimeout(() => resContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
         }
 
@@ -892,9 +1017,7 @@
 
         function resetPLL() {
             pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
-            pllArrows = [];
-            pllTapStartIdx = null;
-            pllDragStartIdx = null;
+            pllArrows = []; pllTapStartIdx = null; pllDragStartIdx = null;
             createNet(false);
             document.getElementById('pll-result').classList.add('hidden');
         }
@@ -921,7 +1044,8 @@
             `;
         }
 
-        function generateListHtml(cases, isOLL) {
+        function generateListHtml(cases, isOLL, emptyMessage = "Nothing to show.") {
+            if (!cases || cases.length === 0) return `<div class="text-zinc-500 text-sm text-center py-4 italic">${emptyMessage}</div>`;
             return cases.map(c => {
                 let algHTML = c.algs.map(a => `
                     <div class="bg-black/40 border border-zinc-800 rounded-2xl p-3 mt-3">
@@ -937,19 +1061,15 @@
                     visualHTML = generateFullMini(c.uMask);
                 } else {
                     let uHTML = '';
-                    for (let i = 0; i < 9; i++) {
-                        uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
-                    }
+                    for (let i = 0; i < 9; i++) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
                     
                     let arrowArray = [];
                     if (c.arrows) {
                         arrowArray = c.arrows.split(',').filter(x=>x).map(s => {
                             if (s.includes('->')) {
-                                let parts = s.split('->');
-                                return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                                let parts = s.split('->'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
                             } else {
-                                let parts = s.split('-');
-                                return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                                let parts = s.split('-'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
                             }
                         });
                     }
@@ -991,11 +1111,25 @@
         }
 
         function populateLists() {
-            const ollHtml = generateListHtml(ollCases, true);
-            const pllHtml = generateListHtml(pllCases, false);
+            document.querySelectorAll('.oll-list-container').forEach(el => el.innerHTML = generateListHtml(ollCases, true));
+            document.querySelectorAll('.pll-list-container').forEach(el => el.innerHTML = generateListHtml(pllCases, false));
             
-            document.querySelectorAll('.oll-list-container').forEach(el => el.innerHTML = ollHtml);
-            document.querySelectorAll('.pll-list-container').forEach(el => el.innerHTML = pllHtml);
+            renderHistory('oll'); renderHistory('pll');
+            renderFavorites('oll'); renderFavorites('pll');
+        }
+
+        function renderHistory(type) {
+            const db = type === 'oll' ? ollCases : pllCases;
+            const histArr = type === 'oll' ? ollHistory : pllHistory;
+            const casesToRender = histArr.map(id => db.find(c => c.id === id)).filter(c => c);
+            document.getElementById(`${type}-hist-container`).innerHTML = generateListHtml(casesToRender, type === 'oll', "No history for this session yet.");
+        }
+
+        function renderFavorites(type) {
+            const db = type === 'oll' ? ollCases : pllCases;
+            const favArr = favorites[type];
+            const casesToRender = favArr.map(id => db.find(c => c.id === id)).filter(c => c);
+            document.getElementById(`${type}-fav-container`).innerHTML = generateListHtml(casesToRender, type === 'oll', "No favorites saved yet.");
         }
 
         function filterList(inputEl, listSelector, syncClass) {
@@ -1019,23 +1153,23 @@
 
         function switchTab(n) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            document.getElementById(n === 0 ? 'content-oll' : 'content-pll').classList.remove('hidden');
             
-            document.getElementById('tab-oll').className = n === 0 ? "flex-1 py-3.5 rounded-2xl font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50" : "flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
-            document.getElementById('tab-pll').className = n === 1 ? "flex-1 py-3.5 rounded-2xl font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50" : "flex-1 py-3.5 rounded-2xl font-semibold text-sm sm:text-lg bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
+            const contents = ['content-f2l', 'content-oll', 'content-pll'];
+            document.getElementById(contents[n]).classList.remove('hidden');
+            
+            const activeClass = "flex-1 py-3 sm:py-3.5 rounded-2xl font-bold text-[11px] sm:text-base leading-tight bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50";
+            const inactiveClass = "flex-1 py-3 sm:py-3.5 rounded-2xl font-semibold text-[11px] sm:text-base leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
+            
+            document.getElementById('tab-f2l').className = n === 0 ? activeClass : inactiveClass;
+            document.getElementById('tab-oll').className = n === 1 ? activeClass : inactiveClass;
+            document.getElementById('tab-pll').className = n === 2 ? activeClass : inactiveClass;
         }
 
         window.onload = () => {
-            pllSides.back = [0,0,0];
-            pllSides.right = [1,1,1];
-            pllSides.front = [2,2,2];
-            pllSides.left = [3,3,3];
-
-            createNet(true);
-            createNet(false);
-            initPllInteractions();
-            populateLists();
-            switchTab(0);
+            pllSides.back = [0,0,0]; pllSides.right = [1,1,1]; pllSides.front = [2,2,2]; pllSides.left = [3,3,3];
+            createNet(true); createNet(false);
+            initPllInteractions(); populateLists(); 
+            switchTab(1); // Default to OLL
         };
     </script>
 </body>
