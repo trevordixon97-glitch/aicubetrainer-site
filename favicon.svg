@@ -8,10 +8,10 @@
     </defs>
     
     <!-- Background squircle matching the rounded-3xl Tailwind class -->
-    <rect width="512" height="512" rx="120" fill="url(#bgGrad)" />
+    <rect width="512" height="512" rx="140" fill="url(#bgGrad)" />
     
-    <!-- Exact FontAwesome 3D Solid Cube scaled and centered -->
-    <g transform="translate(106, 106) scale(0.58)">
+    <!-- Exact FontAwesome 3D Solid Cube perfectly centered using nested SVG bounds instead of transforms -->
+    <svg x="116" y="116" width="280" height="280" viewBox="0 0 512 512">
         <path fill="#09090b" d="M234.5 5.7c13.9-5 29.1-5 43.1 0l192 68.6C485 80 496 95.2 496 112V314.9c0 13.5-6.5 25.3-17.6 33.1L284 459.6c-17 11.9-38.9 11.9-55.9 0L33.6 348C22.5 340.2 16 328.4 16 314.9V112c0-16.8 11-32 26.4-37.7L234.5 5.7zM256 105.2l-149.5 53.4L256 212l149.5-53.4L256 105.2zm24 146.4v184.2l152-106.5V145.1L280 251.6zm-48 0L80 145.1v184.2l152 106.5V251.6z"/>
-    </g>
+    </svg>
 </svg>
