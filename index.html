@@ -6,14 +6,13 @@
     <title>AI Speed Cube Trainer • Accurate OLL Detection & AI Coach</title>
     
     <!-- FAVICON - exact same SVG as your header icon -->
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="32x32">
-<link rel="apple-touch-icon" href="favicon.svg" sizes="180x180">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="32x32">
+    <link rel="apple-touch-icon" href="favicon.svg" sizes="180x180">
 
-<!-- Force browser to refresh the favicon cache -->
-<link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+    <!-- Force browser to refresh the favicon cache -->
+    <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
     
-
     <!-- GOOGLE ADSENSE START -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673" crossorigin="anonymous"></script>
     <!-- GOOGLE ADSENSE END -->
@@ -51,7 +50,6 @@
             margin: 0 auto;
         }
         
-        /* Perfect Symmetry Layout for Miniatures */
         .mini-cross-container {
             display: grid;
             grid-template-areas:
@@ -88,25 +86,33 @@
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20">
+<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 relative">
+    
+    <!-- Floating Score Badge -->
+    <div class="absolute top-4 right-4 sm:top-8 sm:right-8 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex flex-col items-center shadow-lg cursor-pointer hover:border-yellow-500/50 transition-all z-50 hover:scale-105 active:scale-95" onclick="switchTab(3)">
+        <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Your Score</span>
+        <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 leading-none" id="header-score">0</span>
+    </div>
+
     <div class="max-w-2xl mx-auto w-full pt-8 sm:pt-12">
         
         <!-- Desktop-friendly centered header -->
-        <div class="px-6 pb-8 flex flex-col items-center text-center gap-4">
+        <div class="px-6 pb-8 flex flex-col items-center text-center gap-4 relative">
             <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-3xl font-black shrink-0">
                 <i class="fa-solid fa-cube"></i>
             </div>
             <div>
-                <h1 class="text-3xl sm:text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 leading-tight">AI Speed Cube Trainer</h1>
-                <p class="text-[10px] sm:text-xs text-orange-400/80 mt-1 uppercase tracking-widest font-semibold">Accurate last layer pattern detection & AI Coach</p>
+                <h1 class="text-3xl sm:text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 leading-tight pr-16 sm:pr-0">AI Speed Cube Trainer</h1>
+                <p class="text-[10px] sm:text-xs text-orange-400/80 mt-1 uppercase tracking-widest font-semibold pr-16 sm:pr-0">Accurate last layer pattern detection & AI Coach</p>
             </div>
         </div>
 
-        <!-- Clean layout for 3 tabs -->
-        <div class="px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-2xl mx-auto">
-            <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 sm:py-3.5 rounded-2xl font-semibold text-[11px] sm:text-base leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers <br class="sm:hidden">(F2L)</button>
-            <button onclick="switchTab(1)" id="tab-oll" class="flex-1 py-3 sm:py-3.5 rounded-2xl font-bold text-xs sm:text-base bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
-            <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 sm:py-3.5 rounded-2xl font-semibold text-xs sm:text-base bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
+        <!-- Clean layout for 4 tabs -->
+        <div class="px-4 sm:px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-3xl mx-auto">
+            <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers <br class="sm:hidden">(F2L)</button>
+            <button onclick="switchTab(1)" id="tab-oll" class="flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
+            <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
+            <button onclick="switchTab(3)" id="tab-rank" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition"><i class="fa-solid fa-trophy text-yellow-500 mb-1 sm:mb-0 sm:mr-1 block sm:inline"></i>Leaderboard</button>
         </div>
 
         <!-- F2L Content -->
@@ -124,6 +130,43 @@
                 </div>
                 <h3 class="text-xl font-bold text-zinc-300">F2L Trainer Coming Soon</h3>
                 <p class="text-sm text-zinc-500 mt-3 max-w-sm">We are building an interactive 3D layout to help you master your First Two Layers pairs instantly.</p>
+            </div>
+        </div>
+
+        <!-- Leaderboard / Rank Content -->
+        <div id="content-rank" class="tab-content hidden px-6 max-w-xl mx-auto">
+            <div class="mt-2 text-center">
+                <h2 class="text-2xl font-bold tracking-tight text-white">Global Leaderboard</h2>
+                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                    Compete against speedcubers worldwide! Detect OLL and PLL patterns to increase your score and climb the ranks.
+                </p>
+            </div>
+            
+            <!-- User Profile Setup -->
+            <div class="mt-8 bg-zinc-900 border border-zinc-800 p-6 rounded-3xl flex flex-col sm:flex-row gap-4 items-center shadow-xl">
+                <div class="flex-1 w-full">
+                    <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Your Competitor Name</label>
+                    <input type="text" id="username-input" value="SpeedCuber" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-orange-500 transition-colors font-bold text-lg" onchange="updateUsername(this.value)" autocomplete="off">
+                </div>
+                <div class="bg-black/40 border border-zinc-800 px-8 py-3 rounded-xl text-center w-full sm:w-auto shrink-0">
+                    <div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Total Score</div>
+                    <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="profile-score">0</div>
+                </div>
+            </div>
+
+            <!-- Leaderboard List -->
+            <div class="mt-8 bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-xl">
+                <div class="bg-zinc-950/50 border-b border-zinc-800 px-6 py-4 flex text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                    <div class="w-12 text-center">Rank</div>
+                    <div class="flex-1 pl-4">Cubers</div>
+                    <div class="w-20 text-right">Detected</div>
+                </div>
+                <div id="leaderboard-list" class="divide-y divide-zinc-800/50 relative">
+                    <!-- Populated by JS -->
+                    <div class="text-zinc-500 text-sm text-center py-8 italic" id="leaderboard-loading">
+                        <i class="fa-solid fa-spinner fa-spin mr-2"></i> Connecting to Global Database...
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -234,7 +277,7 @@
             <div class="mt-2 text-center">
                 <h2 class="text-2xl font-bold tracking-tight text-white">PLL Pattern Recognition</h2>
                 <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
-                    Permutation of the Last Layer (PLL) is the final step. The entire top face is now yellow, but the pieces need to swap places. Tap the two squares on the center grid to indicate which pieces need to swap, then press <strong>DETECT MATCH</strong>!
+                    Permutation of the Last Layer (PLL) is the final step. The entire top face is now orange, but the pieces need to swap places. Tap the two squares on the center grid to indicate which pieces need to swap, then press <strong>DETECT MATCH</strong>!
                     <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
                 </p>
             </div>
@@ -262,7 +305,7 @@
                 <!-- Dynamically populated -->
             </div>
 
-            <!-- PLL Tab Lists (Reversed order) -->
+            <!-- PLL Tab Lists -->
             <div class="mt-12 space-y-4">
                 <!-- Favorites List -->
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
@@ -336,6 +379,13 @@
         let ollHistory = [];
         let pllHistory = [];
         let favorites = JSON.parse(localStorage.getItem('cubeTrainerFavs')) || { oll: [], pll: [] };
+        
+        // Gamification Leaderboard State
+        let userScore = parseInt(localStorage.getItem('cubeTrainerScore') || "0");
+        let userName = localStorage.getItem('cubeTrainerName') || "SpeedCuber";
+        let hasScoredThisMatch = false; 
+        
+        let globalLeaderboard = [];
         
         // Track currently viewed matches
         let currentOllCase = null;
@@ -425,6 +475,164 @@
             {id: "Gc", name: "Gc Perm", recog: "Headlights left, block front-left", hold: "Headlights left", algs: ["[R2 u'] R U' R U R' u R2 y [R U' R']"], arrows: "0->6,3->5,5->7,6->8,7->3,8->0"},
             {id: "Gd", name: "Gd Perm", recog: "Headlights left, block back-left", hold: "Headlights left", algs: ["[R U R'] y' R2 u' R U' R' U R' u R2"], arrows: "0->2,1->3,2->6,3->7,6->0,7->1"}
         ];
+
+        // --- Firebase Global Integration ---
+        let db, auth, currentUser, appId, firestoreAPI;
+        
+        async function initCloud() {
+            try {
+                const fbApp = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js');
+                const fbAuth = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js');
+                firestoreAPI = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
+                
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+                if (!firebaseConfig) {
+                    console.log("No Firebase config found. Running locally.");
+                    renderLeaderboard(); // render local only
+                    return;
+                }
+
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const app = fbApp.initializeApp(firebaseConfig);
+                auth = fbAuth.getAuth(app);
+                db = firestoreAPI.getFirestore(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await fbAuth.signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await fbAuth.signInAnonymously(auth);
+                }
+
+                fbAuth.onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (user) {
+                        listenToLeaderboard();
+                    }
+                });
+            } catch (e) {
+                console.error("Cloud storage failed to initialize", e);
+                renderLeaderboard(); // fallback
+            }
+        }
+
+        function listenToLeaderboard() {
+            if (!currentUser || !db) return;
+            const lbRef = firestoreAPI.collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
+            
+            firestoreAPI.onSnapshot(lbRef, (snapshot) => {
+                globalLeaderboard = [];
+                let myDocFound = false;
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    globalLeaderboard.push(data);
+                    if (data.uid === currentUser.uid) {
+                        myDocFound = true;
+                        // Keep highest score
+                        if (data.score > userScore) {
+                            userScore = data.score;
+                            userName = data.name || "SpeedCuber";
+                            localStorage.setItem('cubeTrainerScore', userScore);
+                            localStorage.setItem('cubeTrainerName', userName);
+                            
+                            document.getElementById('username-input').value = userName;
+                            document.getElementById('header-score').innerText = userScore;
+                            document.getElementById('profile-score').innerText = userScore;
+                        }
+                    }
+                });
+
+                // If my doc isn't in the DB yet but I have a score locally, push it up
+                if (!myDocFound && userScore > 0) {
+                    updateCloudScore();
+                }
+
+                renderLeaderboard();
+            }, (error) => {
+                console.error("Error listening to leaderboard: ", error);
+            });
+        }
+
+        function updateCloudScore() {
+            if (!currentUser || !db) return;
+            const docRef = firestoreAPI.doc(db, 'artifacts', appId, 'public', 'data', 'leaderboard', currentUser.uid);
+            firestoreAPI.setDoc(docRef, {
+                uid: currentUser.uid,
+                name: userName,
+                score: userScore,
+                updatedAt: Date.now()
+            }, { merge: true }).catch(e => console.error("Error updating score: ", e));
+        }
+
+        // Gamification Functions
+        function updateUsername(newName) {
+            userName = newName.trim() || "SpeedCuber";
+            localStorage.setItem('cubeTrainerName', userName);
+            renderLeaderboard();
+            updateCloudScore();
+        }
+
+        function awardPoint() {
+            userScore++;
+            localStorage.setItem('cubeTrainerScore', userScore);
+            
+            document.getElementById('header-score').innerText = userScore;
+            document.getElementById('profile-score').innerText = userScore;
+            
+            // Pop animation on the header badge
+            const headerBadge = document.getElementById('header-score').parentElement;
+            headerBadge.classList.add('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
+            setTimeout(() => {
+                headerBadge.classList.remove('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
+            }, 300);
+
+            renderLeaderboard();
+            updateCloudScore();
+        }
+
+        function renderLeaderboard() {
+            let allPlayers = [...globalLeaderboard];
+            
+            // Ensure local user is always represented even if offline
+            if (!allPlayers.find(p => p.uid === (currentUser ? currentUser.uid : 'local'))) {
+                allPlayers.push({ name: userName, score: userScore, uid: currentUser ? currentUser.uid : 'local' });
+            }
+
+            // Flag the user for highlighting
+            allPlayers = allPlayers.map(p => ({
+                ...p,
+                isUser: p.uid === (currentUser ? currentUser.uid : 'local')
+            }));
+
+            // Sort by score
+            allPlayers.sort((a, b) => b.score - a.score);
+
+            const listContainer = document.getElementById('leaderboard-list');
+            listContainer.innerHTML = '';
+
+            allPlayers.slice(0, 20).forEach((player, index) => {
+                const rank = index + 1;
+                let rankColor = "text-zinc-500";
+                let rankIcon = rank;
+                
+                if (rank === 1) { rankColor = "text-yellow-400"; rankIcon = '<i class="fa-solid fa-crown"></i>'; }
+                else if (rank === 2) { rankColor = "text-zinc-300"; rankIcon = '<i class="fa-solid fa-medal"></i>'; }
+                else if (rank === 3) { rankColor = "text-amber-600"; rankIcon = '<i class="fa-solid fa-medal"></i>'; }
+
+                const isMe = player.isUser;
+                const bgClass = isMe ? "bg-orange-500/10 border-l-4 border-orange-500" : "hover:bg-zinc-800/30";
+                const nameColor = isMe ? "text-orange-400 font-bold" : "text-zinc-200";
+
+                const html = `
+                    <div class="flex items-center px-6 py-4 transition-colors ${bgClass}">
+                        <div class="w-12 text-center text-lg font-black ${rankColor}">${rankIcon}</div>
+                        <div class="flex-1 pl-4 text-base ${nameColor}">${player.name} ${isMe ? '<span class="ml-2 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-md uppercase tracking-wider">You</span>' : ''}</div>
+                        <div class="w-20 text-right font-mono font-bold text-zinc-300">${player.score}</div>
+                    </div>
+                `;
+                listContainer.innerHTML += html;
+            });
+        }
 
         // Core Utilities
         function rotateMask(mask) {
@@ -564,7 +772,10 @@
 
                 if (isOLL) {
                     sq.style.background = (i === 4 || ollUState[i]) ? GRADIENT_BG : 'transparent';
-                    sq.onclick = () => { if (i !== 4) { ollUState[i] = 1 - ollUState[i]; sq.style.background = ollUState[i] ? GRADIENT_BG : 'transparent'; } };
+                    sq.onclick = () => { 
+                        hasScoredThisMatch = false;
+                        if (i !== 4) { ollUState[i] = 1 - ollUState[i]; sq.style.background = ollUState[i] ? GRADIENT_BG : 'transparent'; } 
+                    };
                 } else {
                     sq.style.background = GRADIENT_BG; 
                 }
@@ -594,6 +805,7 @@
                     if (isOLL) {
                         sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
                         sq.onclick = () => {
+                            hasScoredThisMatch = false;
                             sideState[side][i] = sideState[side][i] ? 0 : 1;
                             sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
                         };
@@ -612,6 +824,7 @@
             const uFace = document.getElementById('pll-u');
             
             uFace.addEventListener('pointerdown', (e) => {
+                hasScoredThisMatch = false;
                 let sq = e.target.closest('.pll-u-square');
                 if (sq) {
                     pllDragStartIdx = parseInt(sq.dataset.index);
@@ -826,9 +1039,15 @@
             }
 
             currentOllCase = match;
+            if (!match.isHelper && !hasScoredThisMatch) {
+                awardPoint();
+                hasScoredThisMatch = true;
+            }
 
             const res = document.getElementById('oll-result');
             res.classList.remove('hidden');
+            document.getElementById('oll-alg-name').textContent = match.name;
+            document.getElementById('oll-alg-id').textContent = match.isHelper ? "" : `OLL ${match.id}`;
             
             let headerHTML = `
                 <div class="flex justify-between items-start mb-4">
@@ -934,6 +1153,11 @@
             }
 
             currentPllCase = match;
+            if (!hasScoredThisMatch) {
+                awardPoint();
+                hasScoredThisMatch = true;
+            }
+
             let rotationText = ["Correct Angle", "Rotate 90° CW", "Rotate 180°", "Rotate 90° CCW"][auf];
             let algsHTML = match.algs.map(a => buildAlgBlockString(a)).join('');
 
@@ -1007,6 +1231,7 @@
         }
 
         function resetOLL() {
+            hasScoredThisMatch = false;
             ollUState = Array(9).fill(0); ollUState[4] = 1;
             ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
             createNet(true);
@@ -1014,6 +1239,7 @@
         }
 
         function resetPLL() {
+            hasScoredThisMatch = false;
             pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
             pllArrows = []; pllTapStartIdx = null; pllDragStartIdx = null;
             createNet(false);
@@ -1108,14 +1334,6 @@
             }).join('');
         }
 
-        function populateLists() {
-            document.querySelectorAll('.oll-list-container').forEach(el => el.innerHTML = generateListHtml(ollCases, true));
-            document.querySelectorAll('.pll-list-container').forEach(el => el.innerHTML = generateListHtml(pllCases, false));
-            
-            renderHistory('oll'); renderHistory('pll');
-            renderFavorites('oll'); renderFavorites('pll');
-        }
-
         function renderHistory(type) {
             const db = type === 'oll' ? ollCases : pllCases;
             const histArr = type === 'oll' ? ollHistory : pllHistory;
@@ -1128,6 +1346,15 @@
             const favArr = favorites[type];
             const casesToRender = favArr.map(id => db.find(c => c.id === id)).filter(c => c);
             document.getElementById(`${type}-fav-container`).innerHTML = generateListHtml(casesToRender, type === 'oll', "No favorites saved yet.");
+        }
+
+        function populateLists() {
+            document.querySelectorAll('.oll-list-container').forEach(el => el.innerHTML = generateListHtml(ollCases, true));
+            document.querySelectorAll('.pll-list-container').forEach(el => el.innerHTML = generateListHtml(pllCases, false));
+            
+            renderHistory('oll'); renderHistory('pll');
+            renderFavorites('oll'); renderFavorites('pll');
+            renderLeaderboard();
         }
 
         function filterList(inputEl, listSelector, syncClass) {
@@ -1152,22 +1379,30 @@
         function switchTab(n) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             
-            const contents = ['content-f2l', 'content-oll', 'content-pll'];
+            const contents = ['content-f2l', 'content-oll', 'content-pll', 'content-rank'];
             document.getElementById(contents[n]).classList.remove('hidden');
             
-            const activeClass = "flex-1 py-3 sm:py-3.5 rounded-2xl font-bold text-[11px] sm:text-base leading-tight bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50";
-            const inactiveClass = "flex-1 py-3 sm:py-3.5 rounded-2xl font-semibold text-[11px] sm:text-base leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
+            const activeClass = "flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm leading-tight bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50";
+            const inactiveClass = "flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
             
             document.getElementById('tab-f2l').className = n === 0 ? activeClass : inactiveClass;
             document.getElementById('tab-oll').className = n === 1 ? activeClass : inactiveClass;
             document.getElementById('tab-pll').className = n === 2 ? activeClass : inactiveClass;
+            document.getElementById('tab-rank').className = n === 3 ? activeClass : inactiveClass;
         }
 
         window.onload = () => {
+            document.getElementById('header-score').innerText = userScore;
+            document.getElementById('profile-score').innerText = userScore;
+            document.getElementById('username-input').value = userName;
+            
             pllSides.back = [0,0,0]; pllSides.right = [1,1,1]; pllSides.front = [2,2,2]; pllSides.left = [3,3,3];
             createNet(true); createNet(false);
             initPllInteractions(); populateLists(); 
             switchTab(1); // Default to OLL
+            
+            // Connect to Global Database
+            initCloud();
         };
     </script>
 </body>
