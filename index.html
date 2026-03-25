@@ -993,123 +993,110 @@
         }
 
         function submitOLL() {
-            let uVals = [0,1,2,3,5,6,7,8].map(i => ollUState[i] ? '1' : '0');
-            let bVals = ollSideState.back.map(v => v ? '1' : '0');
-            let rVals = ollSideState.right.map(v => v ? '1' : '0');
-            let fVals = ollSideState.front.map(v => v ? '1' : '0');
-            let lVals = ollSideState.left.map(v => v ? '1' : '0');
-            
-            let userMask = [...uVals, ...bVals, ...rVals, ...fVals, ...lVals].join('');
-            
-            let match = null;
-            let auf = 0;
-            let currentMask = userMask;
-
-            for (let r = 0; r < 4; r++) {
-                for (let c of ollCases) {
-                    if (c.uMask.length === 20 && c.uMask === currentMask) { match = c; auf = r; break; }
-                }
-                if (match) break;
-                currentMask = rotateMask(currentMask);
-            }
-
-            if (!match) {
-                currentMask = userMask;
-                for (let r = 0; r < 4; r++) {
-                    for (let c of ollCases) {
-                        if (c.uMask.length === 8 && c.uMask === currentMask.substring(0, 8)) { match = c; auf = r; break; }
-                    }
-                    if (match) break;
-                    currentMask = rotateMask(currentMask);
-                }
-            }
-
-            if (!match || match.uMask.length === 8) {
-                let textTitle = match ? "Incomplete Pattern" : "Pattern Not Found";
-                let exactStr = match ? `We found a partial match for <strong>${match.name}</strong>, but need more details. Please fill in the side stickers.` : `We couldn't recognize this pattern. Please double-check your stickers and try again.`;
-                
-                match = {
-                    id:"?", name: textTitle, algs:[], isHelper: true,
-                    helperText: `
-                        <div class="text-sm mt-1 text-zinc-300 mb-4 leading-relaxed">
-                            ${exactStr}
-                        </div>
-                    `
-                };
-            }
-
-            currentOllCase = match;
-            if (!match.isHelper && !hasScoredThisMatch) {
-                awardPoint();
-                hasScoredThisMatch = true;
-            }
-
-            const res = document.getElementById('oll-result');
-            res.classList.remove('hidden');
-            document.getElementById('oll-alg-name').textContent = match.name;
-            document.getElementById('oll-alg-id').textContent = match.isHelper ? "" : `OLL ${match.id}`;
-            
-            let headerHTML = `
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">${match.isHelper ? "" : 'OLL ' + match.id}</div>
-                        <h2 class="text-2xl font-bold ${match.isHelper ? 'text-red-400 cursor-pointer' : 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500'}" 
-                            ${match.isHelper ? `onclick="navigator.clipboard.writeText('${userMask}'); alert('Copied developer mask!');"` : ''}>
-                            ${match.isHelper ? '<i class="fa-solid fa-triangle-exclamation mr-2"></i>' : ''}${match.name}
-                        </h2>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button id="oll-fav-btn" onclick="toggleFavorite('oll')" class="text-xl transition-colors outline-none" style="display: ${match.isHelper ? 'none' : 'block'}"></button>
-                        ${auf > 0 ? `<div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700 hidden sm:block"><i class="fa-solid fa-rotate-right mr-1"></i> Rotate ${["", "90° CW", "180°", "90° CCW"][auf]}</div>` : ''}
-                    </div>
-                </div>
-            `;
-
-            if (match.isHelper) {
-                document.getElementById('oll-desc').innerHTML = headerHTML + match.helperText;
-            } else {
-                let holdStr = match.hold || "Match the pattern to the correct angle shown below.";
-                document.getElementById('oll-desc').innerHTML = headerHTML + `
-                    <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
-                        <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
-                        <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
-                    </div>
-                `;
-            }
-
-            const container = document.getElementById('oll-algs-container');
-            container.innerHTML = '';
-            if (!match.isHelper) {
-                container.innerHTML = `<div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>`;
-            }
-            match.algs.forEach(alg => container.appendChild(buildAlgBlock(alg)));
-
-            renderPreview(true, 'oll-preview');
-            
-            document.getElementById('oll-secret-copy').onclick = () => {
-                navigator.clipboard.writeText(userMask);
-                alert('Copied developer 20-bit mask!');
-            };
-
-            if (!match.isHelper) {
-                renderPreview(true, 'oll-correct-preview', match.uMask);
-                document.getElementById('oll-correct-container').style.display = 'flex';
-                if (auf > 0) {
-                    document.getElementById('oll-rotation-warning').classList.remove('hidden');
-                    document.getElementById('oll-rotation-warning').innerHTML = `<i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle`;
-                } else {
-                    document.getElementById('oll-rotation-warning').classList.add('hidden');
-                }
-            } else {
-                document.getElementById('oll-correct-container').style.display = 'none';
-                document.getElementById('oll-rotation-warning').classList.add('hidden');
-            }
-
-            updateFavoriteButton('oll', match);
-            addToHistory('oll', match);
-            setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+    let uVals = [0,1,2,3,5,6,7,8].map(i => ollUState[i] ? '1' : '0');
+    let bVals = ollSideState.back.map(v => v ? '1' : '0');
+    let rVals = ollSideState.right.map(v => v ? '1' : '0');
+    let fVals = ollSideState.front.map(v => v ? '1' : '0');
+    let lVals = ollSideState.left.map(v => v ? '1' : '0');
+   
+    let userMask = [...uVals, ...bVals, ...rVals, ...fVals, ...lVals].join('');
+   
+    let match = null;
+    let auf = 0;
+    let currentMask = userMask;
+    for (let r = 0; r < 4; r++) {
+        for (let c of ollCases) {
+            if (c.uMask.length === 20 && c.uMask === currentMask) { match = c; auf = r; break; }
         }
+        if (match) break;
+        currentMask = rotateMask(currentMask);
+    }
+    if (!match) {
+        currentMask = userMask;
+        for (let r = 0; r < 4; r++) {
+            for (let c of ollCases) {
+                if (c.uMask.length === 8 && c.uMask === currentMask.substring(0, 8)) { match = c; auf = r; break; }
+            }
+            if (match) break;
+            currentMask = rotateMask(currentMask);
+        }
+    }
+    if (!match || match.uMask.length === 8) {
+        let textTitle = match ? "Incomplete Pattern" : "Pattern Not Found";
+        let exactStr = match ? `We found a partial match for <strong>${match.name}</strong>, but need more details. Please fill in the side stickers.` : `We couldn't recognize this pattern. Please double-check your stickers and try again.`;
+       
+        match = {
+            id:"?", name: textTitle, algs:[], isHelper: true,
+            helperText: `
+                <div class="text-sm mt-1 text-zinc-300 mb-4 leading-relaxed">
+                    ${exactStr}
+                </div>
+            `
+        };
+    }
+    currentOllCase = match;
+    if (!match.isHelper && !hasScoredThisMatch) {
+        awardPoint();
+        hasScoredThisMatch = true;
+    }
+    const res = document.getElementById('oll-result');
+    res.classList.remove('hidden');
 
+    let headerHTML = `
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">${match.isHelper ? "" : 'OLL ' + match.id}</div>
+                <h2 class="text-2xl font-bold ${match.isHelper ? 'text-red-400 cursor-pointer' : 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500'}"
+                    ${match.isHelper ? `onclick="navigator.clipboard.writeText('${userMask}'); alert('Copied developer mask!');"` : ''}>
+                    ${match.isHelper ? '<i class="fa-solid fa-triangle-exclamation mr-2"></i>' : ''}${match.name}
+                </h2>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="oll-fav-btn" onclick="toggleFavorite('oll')" class="text-xl transition-colors outline-none" style="display: ${match.isHelper ? 'none' : 'block'}"></button>
+                ${auf > 0 ? `<div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700 hidden sm:block"><i class="fa-solid fa-rotate-right mr-1"></i> Rotate ${["", "90° CW", "180°", "90° CCW"][auf]}</div>` : ''}
+            </div>
+        </div>
+    `;
+    if (match.isHelper) {
+        document.getElementById('oll-desc').innerHTML = headerHTML + match.helperText;
+    } else {
+        let holdStr = match.hold || "Match the pattern to the correct angle shown below.";
+        document.getElementById('oll-desc').innerHTML = headerHTML + `
+            <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
+                <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
+                <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
+            </div>
+        `;
+    }
+    const container = document.getElementById('oll-algs-container');
+    container.innerHTML = '';
+    if (!match.isHelper) {
+        container.innerHTML = `<div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>`;
+    }
+    match.algs.forEach(alg => container.appendChild(buildAlgBlock(alg)));
+    renderPreview(true, 'oll-preview');
+   
+    document.getElementById('oll-secret-copy').onclick = () => {
+        navigator.clipboard.writeText(userMask);
+        alert('Copied developer 20-bit mask!');
+    };
+    if (!match.isHelper) {
+        renderPreview(true, 'oll-correct-preview', match.uMask);
+        document.getElementById('oll-correct-container').style.display = 'flex';
+        if (auf > 0) {
+            document.getElementById('oll-rotation-warning').classList.remove('hidden');
+            document.getElementById('oll-rotation-warning').innerHTML = `<i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle`;
+        } else {
+            document.getElementById('oll-rotation-warning').classList.add('hidden');
+        }
+    } else {
+        document.getElementById('oll-correct-container').style.display = 'none';
+        document.getElementById('oll-rotation-warning').classList.add('hidden');
+    }
+    updateFavoriteButton('oll', match);
+    addToHistory('oll', match);
+    setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+}
         function submitPLL() {
             const resContainer = document.getElementById('pll-result');
             resContainer.classList.remove('hidden');
@@ -1247,42 +1234,26 @@
         }
 
         function generateFullMini(uMask) {
-            const pos = [0,1,2,3,5,6,7,8];
-            let uHTML = '';
-            for (let i = 0; i < 9; i++) {
-                if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}; border-color:#52525b"></div>`;
-                else {
-                    const idx = pos.indexOf(i);
-                    const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : 'transparent';
-                    uHTML += `<div class="mini-square" style="background:${val}; border-color:#52525b"></div>`;
-                }
-            }
-            
-            const getStripHTML = (startIdx) => {
-                let html = '';
-                for(let i=0; i<3; i++) {
-                    const isActive = uMask.length === 20 && uMask[startIdx + i] === '1';
-                    const bg = isActive ? GRADIENT_BG : 'transparent';
-                    html += `<div class="mini-square" style="background:${bg}; border-color:#52525b"></div>`;
-                }
-                return html;
-            };
-
-            const backHTML = getStripHTML(8);
-            const rightHTML = getStripHTML(11);
-            const frontHTML = getStripHTML(14);
-            const leftHTML = getStripHTML(17);
-
-            return `
-                <div class="mini-cross-container transform scale-75 origin-left mt-3">
-                    <div class="side-strip" style="grid-area: top;">${backHTML}</div>
-                    <div class="vertical-strip" style="grid-area: left;">${leftHTML}</div>
-                    <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
-                    <div class="vertical-strip" style="grid-area: right;">${rightHTML}</div>
-                    <div class="side-strip" style="grid-area: bottom;">${frontHTML}</div>
-                </div>
-            `;
+    const pos = [0,1,2,3,5,6,7,8];
+    let uHTML = '';
+    for (let i = 0; i < 9; i++) {
+        if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
+        else {
+            const idx = pos.indexOf(i);
+            const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : '#3f3f46';
+            uHTML += `<div class="mini-square" style="background:${val}"></div>`;
         }
+    }
+    return `
+        <div class="mini-cross-container transform scale-75 origin-left">
+            <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
+            <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+        </div>
+    `;
+}
 
         function generateListHtml(cases, isOLL, emptyMessage = "Nothing to show.") {
             if (!cases || cases.length === 0) return `<div class="text-zinc-500 text-sm text-center py-4 italic">${emptyMessage}</div>`;
