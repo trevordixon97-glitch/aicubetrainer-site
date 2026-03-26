@@ -116,22 +116,102 @@
         </div>
 
         <!-- F2L Content -->
-        <div id="content-f2l" class="tab-content hidden px-6 max-w-xl mx-auto">
-            <div class="mt-2 text-center">
-                <h2 class="text-2xl font-bold tracking-tight text-white">First Two Layers (F2L)</h2>
-                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
-                    Insert your corner and edge pairs intuitively or learn advanced algorithms. <strong>F2L module in development!</strong>
-                </p>
+        <!-- F2L Content -->
+<div id="content-f2l" class="tab-content hidden px-4 sm:px-6 max-w-2xl mx-auto">
+    <!-- F2L Sub-Navigation -->
+    <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 bg-zinc-900 p-2 rounded-2xl border border-zinc-800 snap-x">
+        <button onclick="switchF2LMode(0)" id="f2l-nav-0" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap"><i class="fa-solid fa-stopwatch mr-2 text-orange-400"></i>Random Drill</button>
+        <button onclick="switchF2LMode(1)" id="f2l-nav-1" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-brain mr-2 text-blue-400"></i>Recognition</button>
+        <button onclick="switchF2LMode(2)" id="f2l-nav-2" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-book-open mr-2 text-emerald-400"></i>Practice</button>
+        <button onclick="switchF2LMode(3)" id="f2l-nav-3" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-fire-flame-curved mr-2 text-red-500"></i>60s Rush</button>
+    </div>
+
+    <!-- Mode 0: Random Drill -->
+    <div id="f2l-mode-0" class="f2l-view block">
+        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
+            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-1">Speed Drill</h2>
+            <p class="text-zinc-400 text-xs mb-8 text-center">React fast! Spin a pair, start the timer, and execute on your cube.</p>
+            <div id="f2l-drill-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center transition-transform duration-75">
+                <div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>
             </div>
-            
-            <div class="mt-12 bg-zinc-900/50 border border-zinc-800/50 p-10 rounded-3xl text-center flex flex-col items-center">
-                <div class="w-20 h-20 bg-zinc-800/50 rounded-2xl flex items-center justify-center text-4xl text-zinc-600 mb-6">
-                    <i class="fa-solid fa-layer-group"></i>
+            <div class="text-5xl font-black font-mono text-white mb-8 tracking-tighter" id="f2l-timer">0.00s</div>
+            <div class="w-full space-y-3">
+                <button id="f2l-btn-spin" onclick="spinF2LPair()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-all text-lg shadow-lg border border-zinc-700">SPIN RANDOM PAIR</button>
+                <button id="f2l-btn-start" onclick="startF2LTimer()" class="hidden w-full py-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)]">START TIMER</button>
+                <button id="f2l-btn-stop" onclick="stopF2LTimer()" class="hidden w-full py-6 bg-gradient-to-r from-emerald-400 to-green-600 text-white rounded-2xl font-black text-2xl active:scale-95 transition-all shadow-[0_0_30px_rgba(16,185,129,0.5)] border border-green-400/50">I SOLVED IT!</button>
+            </div>
+            <div id="f2l-drill-result" class="w-full mt-6 hidden opacity-0 transition-opacity duration-500">
+                <div class="bg-black/40 border border-zinc-800 p-5 rounded-2xl text-left w-full">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold text-orange-400 uppercase tracking-widest" id="f2l-drill-name">Basic Insert</span>
+                        <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md font-bold" id="f2l-drill-score">+10 PTS</span>
+                    </div>
+                    <div class="font-mono text-zinc-100 font-bold text-lg mb-2" id="f2l-drill-alg">U (R U' R')</div>
+                    <div class="text-xs text-zinc-400"><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><span id="f2l-drill-tip">Pair is ready.</span></div>
                 </div>
-                <h3 class="text-xl font-bold text-zinc-300">F2L Trainer Coming Soon</h3>
-                <p class="text-sm text-zinc-500 mt-3 max-w-sm">We are building an interactive 3D layout to help you master your First Two Layers pairs instantly.</p>
             </div>
         </div>
+    </div>
+
+    <!-- Mode 1: Recognition Quiz -->
+    <div id="f2l-mode-1" class="f2l-view hidden">
+        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
+            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-1">Recognition Quiz</h2>
+            <p class="text-zinc-400 text-xs mb-8 text-center">Identify the case type instantly. Build your look-ahead speed.</p>
+            <div id="f2l-quiz-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center"></div>
+            <h3 class="text-lg font-bold text-white mb-4">What type of pair is this?</h3>
+            <div class="grid grid-cols-1 gap-3 w-full" id="f2l-quiz-options"></div>
+        </div>
+    </div>
+
+    <!-- Mode 2: Practice Mode -->
+    <div id="f2l-mode-2" class="f2l-view hidden">
+        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
+            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-1">Flashcard Practice</h2>
+            <p class="text-zinc-400 text-xs mb-8 text-center">Study the optimal algorithms one by one at your own pace.</p>
+            <div class="w-full flex justify-between text-xs font-bold text-zinc-500 mb-4 px-2 tracking-widest uppercase">
+                <span id="f2l-prac-counter">Case 1/6</span>
+                <span id="f2l-prac-group" class="text-emerald-400">Basic</span>
+            </div>
+            <div id="f2l-prac-visual" class="transform scale-125 mb-10 min-h-[160px] flex items-center justify-center"></div>
+            <div id="f2l-prac-reveal" class="w-full hidden text-left bg-black/40 border border-zinc-800 p-5 rounded-2xl mb-6">
+                <div class="text-lg font-bold text-white mb-2" id="f2l-prac-name">Name</div>
+                <div class="text-sm text-zinc-400 mb-4 pb-4 border-b border-zinc-800" id="f2l-prac-tip">Tip</div>
+                <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 font-bold">Optimal Alg</div>
+                <div class="font-mono text-orange-400 font-bold text-lg" id="f2l-prac-alg">Alg</div>
+            </div>
+            <div class="w-full flex gap-3">
+                <button id="f2l-btn-reveal" onclick="revealF2LPractice()" class="flex-1 py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold transition-all shadow-lg border border-zinc-700"><i class="fa-regular fa-eye mr-2"></i>REVEAL</button>
+                <button onclick="nextF2LPractice()" class="flex-1 py-4 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-zinc-950 rounded-2xl font-bold transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-300/50">NEXT PAIR <i class="fa-solid fa-arrow-right ml-1"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mode 3: 60s Rush -->
+    <div id="f2l-mode-3" class="f2l-view hidden">
+        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center relative overflow-hidden">
+            <div id="f2l-rush-bg" class="absolute inset-0 bg-red-500/0 transition-colors duration-300 pointer-events-none"></div>
+            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-1 z-10">60s Survival Rush</h2>
+            <p class="text-zinc-400 text-xs mb-6 text-center z-10">Solve as many cases mentally as you can before time runs out!</p>
+            <div class="flex justify-between items-end w-full px-4 mb-4 z-10">
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Score</span>
+                    <span class="text-3xl font-black text-white" id="f2l-rush-score">0</span>
+                </div>
+                <div class="flex flex-col items-end">
+                    <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Time Left</span>
+                    <span class="text-4xl font-black text-red-500 font-mono" id="f2l-rush-time">60</span>
+                </div>
+            </div>
+            <div id="f2l-rush-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center z-10"></div>
+            <button id="f2l-btn-rush-start" onclick="startF2LRush()" class="w-full py-5 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] z-10">START RUSH</button>
+            <div id="f2l-rush-controls" class="w-full hidden z-10 grid grid-cols-2 gap-3">
+                <button onclick="nextRush(true)" class="py-5 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-check mr-2"></i>KNOW IT</button>
+                <button onclick="nextRush(false)" class="py-5 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-xmark mr-2"></i>SKIP (-2s)</button>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Leaderboard / Rank Content -->
         <div id="content-rank" class="tab-content hidden px-6 max-w-xl mx-auto">
