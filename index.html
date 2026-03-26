@@ -89,130 +89,130 @@
 <body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 relative">
     
     <!-- Floating Score Badge -->
-    <div class="absolute top-4 right-4 sm:top-8 sm:right-8 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex flex-col items-center shadow-lg cursor-pointer hover:border-yellow-500/50 transition-all z-50 hover:scale-105 active:scale-95" onclick="switchTab(3)">
-        <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Your Score</span>
-        <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 leading-none" id="header-score">0</span>
-    </div>
+    
 
     <div class="max-w-2xl mx-auto w-full pt-8 sm:pt-12">
         
         <!-- Desktop-friendly centered header -->
-        <div class="px-6 pb-8 flex flex-col items-center text-center gap-4 relative">
-            <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-3xl font-black shrink-0">
-                <i class="fa-solid fa-cube"></i>
-            </div>
-            <div>
-                <h1 class="text-3xl sm:text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 leading-tight pr-16 sm:pr-0">AI Speed Cube Trainer</h1>
-                <p class="text-[10px] sm:text-xs text-orange-400/80 mt-1 uppercase tracking-widest font-semibold pr-16 sm:pr-0">Accurate last layer pattern detection & AI Coach</p>
-            </div>
-        </div>
-
-        <!-- Clean layout for 4 tabs -->
-        <div class="px-4 sm:px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-3xl mx-auto">
-            <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers <br class="sm:hidden">(F2L)</button>
-            <button onclick="switchTab(1)" id="tab-oll" class="flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
-            <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
-            <button onclick="switchTab(3)" id="tab-rank" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition"><i class="fa-solid fa-trophy text-yellow-500 mb-1 sm:mb-0 sm:mr-1 block sm:inline"></i>Leaderboard</button>
-        </div>
-
-        <!-- F2L Content -->
-        <!-- F2L Content -->
-<div id="content-f2l" class="tab-content hidden px-4 sm:px-6 max-w-2xl mx-auto">
-    <!-- F2L Sub-Navigation -->
-    <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 bg-zinc-900 p-2 rounded-2xl border border-zinc-800 snap-x">
-        <button onclick="switchF2LMode(0)" id="f2l-nav-0" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap"><i class="fa-solid fa-stopwatch mr-2 text-orange-400"></i>Random Drill</button>
-        <button onclick="switchF2LMode(1)" id="f2l-nav-1" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-brain mr-2 text-blue-400"></i>Recognition</button>
-        <button onclick="switchF2LMode(2)" id="f2l-nav-2" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-book-open mr-2 text-emerald-400"></i>Practice</button>
-        <button onclick="switchF2LMode(3)" id="f2l-nav-3" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-fire-flame-curved mr-2 text-red-500"></i>60s Rush</button>
+        <div class="px-6 pb-8 flex flex-col items-center text-center gap-4">
+    <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-3xl font-black shrink-0">
+        <i class="fa-solid fa-cube"></i>
     </div>
-
-    <!-- Mode 0: Random Drill -->
-    <div id="f2l-mode-0" class="f2l-view block">
-        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
-            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-1">Speed Drill</h2>
-            <p class="text-zinc-400 text-xs mb-8 text-center">React fast! Spin a pair, start the timer, and execute on your cube.</p>
-            <div id="f2l-drill-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center transition-transform duration-75">
-                <div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>
-            </div>
-            <div class="text-5xl font-black font-mono text-white mb-8 tracking-tighter" id="f2l-timer">0.00s</div>
-            <div class="w-full space-y-3">
-                <button id="f2l-btn-spin" onclick="spinF2LPair()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-all text-lg shadow-lg border border-zinc-700">SPIN RANDOM PAIR</button>
-                <button id="f2l-btn-start" onclick="startF2LTimer()" class="hidden w-full py-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)]">START TIMER</button>
-                <button id="f2l-btn-stop" onclick="stopF2LTimer()" class="hidden w-full py-6 bg-gradient-to-r from-emerald-400 to-green-600 text-white rounded-2xl font-black text-2xl active:scale-95 transition-all shadow-[0_0_30px_rgba(16,185,129,0.5)] border border-green-400/50">I SOLVED IT!</button>
-            </div>
-            <div id="f2l-drill-result" class="w-full mt-6 hidden opacity-0 transition-opacity duration-500">
-                <div class="bg-black/40 border border-zinc-800 p-5 rounded-2xl text-left w-full">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold text-orange-400 uppercase tracking-widest" id="f2l-drill-name">Basic Insert</span>
-                        <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md font-bold" id="f2l-drill-score">+10 PTS</span>
-                    </div>
-                    <div class="font-mono text-zinc-100 font-bold text-lg mb-2" id="f2l-drill-alg">U (R U' R')</div>
-                    <div class="text-xs text-zinc-400"><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><span id="f2l-drill-tip">Pair is ready.</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mode 1: Recognition Quiz -->
-    <div id="f2l-mode-1" class="f2l-view hidden">
-        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
-            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-1">Recognition Quiz</h2>
-            <p class="text-zinc-400 text-xs mb-8 text-center">Identify the case type instantly. Build your look-ahead speed.</p>
-            <div id="f2l-quiz-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center"></div>
-            <h3 class="text-lg font-bold text-white mb-4">What type of pair is this?</h3>
-            <div class="grid grid-cols-1 gap-3 w-full" id="f2l-quiz-options"></div>
-        </div>
-    </div>
-
-    <!-- Mode 2: Practice Mode -->
-    <div id="f2l-mode-2" class="f2l-view hidden">
-        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
-            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-1">Flashcard Practice</h2>
-            <p class="text-zinc-400 text-xs mb-8 text-center">Study the optimal algorithms one by one at your own pace.</p>
-            <div class="w-full flex justify-between text-xs font-bold text-zinc-500 mb-4 px-2 tracking-widest uppercase">
-                <span id="f2l-prac-counter">Case 1/6</span>
-                <span id="f2l-prac-group" class="text-emerald-400">Basic</span>
-            </div>
-            <div id="f2l-prac-visual" class="transform scale-125 mb-10 min-h-[160px] flex items-center justify-center"></div>
-            <div id="f2l-prac-reveal" class="w-full hidden text-left bg-black/40 border border-zinc-800 p-5 rounded-2xl mb-6">
-                <div class="text-lg font-bold text-white mb-2" id="f2l-prac-name">Name</div>
-                <div class="text-sm text-zinc-400 mb-4 pb-4 border-b border-zinc-800" id="f2l-prac-tip">Tip</div>
-                <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 font-bold">Optimal Alg</div>
-                <div class="font-mono text-orange-400 font-bold text-lg" id="f2l-prac-alg">Alg</div>
-            </div>
-            <div class="w-full flex gap-3">
-                <button id="f2l-btn-reveal" onclick="revealF2LPractice()" class="flex-1 py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold transition-all shadow-lg border border-zinc-700"><i class="fa-regular fa-eye mr-2"></i>REVEAL</button>
-                <button onclick="nextF2LPractice()" class="flex-1 py-4 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-zinc-950 rounded-2xl font-bold transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-300/50">NEXT PAIR <i class="fa-solid fa-arrow-right ml-1"></i></button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mode 3: 60s Rush -->
-    <div id="f2l-mode-3" class="f2l-view hidden">
-        <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center relative overflow-hidden">
-            <div id="f2l-rush-bg" class="absolute inset-0 bg-red-500/0 transition-colors duration-300 pointer-events-none"></div>
-            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-1 z-10">60s Survival Rush</h2>
-            <p class="text-zinc-400 text-xs mb-6 text-center z-10">Solve as many cases mentally as you can before time runs out!</p>
-            <div class="flex justify-between items-end w-full px-4 mb-4 z-10">
-                <div class="flex flex-col">
-                    <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Score</span>
-                    <span class="text-3xl font-black text-white" id="f2l-rush-score">0</span>
-                </div>
-                <div class="flex flex-col items-end">
-                    <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Time Left</span>
-                    <span class="text-4xl font-black text-red-500 font-mono" id="f2l-rush-time">60</span>
-                </div>
-            </div>
-            <div id="f2l-rush-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center z-10"></div>
-            <button id="f2l-btn-rush-start" onclick="startF2LRush()" class="w-full py-5 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] z-10">START RUSH</button>
-            <div id="f2l-rush-controls" class="w-full hidden z-10 grid grid-cols-2 gap-3">
-                <button onclick="nextRush(true)" class="py-5 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-check mr-2"></i>KNOW IT</button>
-                <button onclick="nextRush(false)" class="py-5 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-xmark mr-2"></i>SKIP (-2s)</button>
-            </div>
-        </div>
+    <div class="w-full">
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 leading-tight">AI Speed Cube Trainer</h1>
+        <p class="text-[10px] sm:text-xs text-orange-400/80 mt-1 uppercase tracking-widest font-semibold">ACCURATE LAST LAYER PATTERN DETECTION & AI COACH</p>
     </div>
 </div>
 
+        <!-- Clean layout for 4 tabs -->
+        <div class="px-4 sm:px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-3xl mx-auto">
+    <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers</button>
+    <button onclick="switchTab(1)" id="tab-oll" class="flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL</button>
+    <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL</button>
+    <button onclick="switchTab(3)" id="tab-rank" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition"><i class="fa-solid fa-trophy text-yellow-500 mb-1 sm:mb-0 sm:mr-1 block sm:inline"></i>Leaderboard</button>
+</div>
+
+        
+        <!-- F2L Content -->
+        <div id="content-f2l" class="tab-content hidden px-4 sm:px-6 max-w-2xl mx-auto">
+            <!-- F2L Sub-Navigation -->
+            <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 bg-zinc-900 p-2 rounded-2xl border border-zinc-800 snap-x">
+                <button onclick="switchF2LMode(0)" id="f2l-nav-0" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap"><i class="fa-solid fa-stopwatch mr-2 text-orange-400"></i>Random Drill</button>
+                <button onclick="switchF2LMode(1)" id="f2l-nav-1" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-brain mr-2 text-blue-400"></i>Recognition</button>
+                <button onclick="switchF2LMode(2)" id="f2l-nav-2" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-book-open mr-2 text-emerald-400"></i>Practice</button>
+                <button onclick="switchF2LMode(3)" id="f2l-nav-3" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-fire-flame-curved mr-2 text-red-500"></i>60s Rush</button>
+            </div>
+
+            <!-- Mode 0: Random Drill -->
+            <div id="f2l-mode-0" class="f2l-view block">
+                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
+                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-1">Speed Drill</h2>
+                    <p class="text-zinc-400 text-xs mb-4 text-center">React fast! Spin a random F2L pair on screen, start the timer on your real cube, and solve it as quick as possible.</p>
+                    <p class="text-emerald-400 text-[10px] uppercase tracking-widest mb-8">Tip: Great for building muscle memory under pressure.</p>
+                    <div id="f2l-drill-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center transition-transform duration-75">
+                        <div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>
+                    </div>
+                    <div class="text-5xl font-black font-mono text-white mb-8 tracking-tighter" id="f2l-timer">0.00s</div>
+                    <div class="w-full space-y-3">
+                        <button id="f2l-btn-spin" onclick="spinF2LPair()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-all text-lg shadow-lg border border-zinc-700">SPIN RANDOM PAIR</button>
+                        <button id="f2l-btn-start" onclick="startF2LTimer()" class="hidden w-full py-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)]">START TIMER</button>
+                        <button id="f2l-btn-stop" onclick="stopF2LTimer()" class="hidden w-full py-6 bg-gradient-to-r from-emerald-400 to-green-600 text-white rounded-2xl font-black text-2xl active:scale-95 transition-all shadow-[0_0_30px_rgba(16,185,129,0.5)] border border-green-400/50">I SOLVED IT!</button>
+                    </div>
+                    <div id="f2l-drill-result" class="w-full mt-6 hidden opacity-0 transition-opacity duration-500">
+                        <div class="bg-black/40 border border-zinc-800 p-5 rounded-2xl text-left w-full">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-xs font-bold text-orange-400 uppercase tracking-widest" id="f2l-drill-name">Basic Insert</span>
+                                <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md font-bold" id="f2l-drill-score">+10 PTS</span>
+                            </div>
+                            <div class="font-mono text-zinc-100 font-bold text-lg mb-2" id="f2l-drill-alg">U (R U' R')</div>
+                            <div class="text-xs text-zinc-400"><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><span id="f2l-drill-tip">Pair is ready.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 1: Recognition Quiz -->
+            <div id="f2l-mode-1" class="f2l-view hidden">
+                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
+                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-1">Recognition Quiz</h2>
+                    <p class="text-zinc-400 text-xs mb-4 text-center">Train your brain to instantly recognize F2L pair types. This is the key to look-ahead and sub-10 times.</p>
+                    <p class="text-blue-400 text-[10px] uppercase tracking-widest mb-8">Goal: Answer correctly in under 2 seconds every time.</p>
+                    <div id="f2l-quiz-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center"></div>
+                    <h3 class="text-lg font-bold text-white mb-4">What type of pair is this?</h3>
+                    <div class="grid grid-cols-1 gap-3 w-full" id="f2l-quiz-options"></div>
+                </div>
+            </div>
+
+            <!-- Mode 2: Practice Mode -->
+            <div id="f2l-mode-2" class="f2l-view hidden">
+                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
+                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-1">Flashcard Practice</h2>
+                    <p class="text-zinc-400 text-xs mb-4 text-center">Study every F2L case one by one. Tap REVEAL to see the optimal algorithm and recognition tip, then move to the next.</p>
+                    <p class="text-emerald-400 text-[10px] uppercase tracking-widest mb-8">Perfect for learning new cases or refreshing old ones.</p>
+                    <div class="w-full flex justify-between text-xs font-bold text-zinc-500 mb-4 px-2 tracking-widest uppercase">
+                        <span id="f2l-prac-counter">Case 1/6</span>
+                        <span id="f2l-prac-group" class="text-emerald-400">Basic</span>
+                    </div>
+                    <div id="f2l-prac-visual" class="transform scale-125 mb-10 min-h-[160px] flex items-center justify-center"></div>
+                    <div id="f2l-prac-reveal" class="w-full hidden text-left bg-black/40 border border-zinc-800 p-5 rounded-2xl mb-6">
+                        <div class="text-lg font-bold text-white mb-2" id="f2l-prac-name">Name</div>
+                        <div class="text-sm text-zinc-400 mb-4 pb-4 border-b border-zinc-800" id="f2l-prac-tip">Tip</div>
+                        <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 font-bold">Optimal Alg</div>
+                        <div class="font-mono text-orange-400 font-bold text-lg" id="f2l-prac-alg">Alg</div>
+                    </div>
+                    <div class="w-full flex gap-3">
+                        <button id="f2l-btn-reveal" onclick="revealF2LPractice()" class="flex-1 py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold transition-all shadow-lg border border-zinc-700"><i class="fa-regular fa-eye mr-2"></i>REVEAL</button>
+                        <button onclick="nextF2LPractice()" class="flex-1 py-4 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-zinc-950 rounded-2xl font-bold transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-300/50">NEXT PAIR <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode 3: 60s Rush -->
+            <div id="f2l-mode-3" class="f2l-view hidden">
+                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center relative overflow-hidden">
+                    <div id="f2l-rush-bg" class="absolute inset-0 bg-red-500/0 transition-colors duration-300 pointer-events-none"></div>
+                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-1 z-10">60s Survival Rush</h2>
+                    <p class="text-zinc-400 text-xs mb-4 text-center z-10">How many pairs can you recognize in 60 seconds? Tap KNOW IT when you see the case, or SKIP if you don’t.</p>
+                    <p class="text-red-400 text-[10px] uppercase tracking-widest mb-6 z-10">Penalty: -2 seconds for skipping. Beat your personal best!</p>
+                    <div class="flex justify-between items-end w-full px-4 mb-4 z-10">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Score</span>
+                            <span class="text-3xl font-black text-white" id="f2l-rush-score">0</span>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Time Left</span>
+                            <span class="text-4xl font-black text-red-500 font-mono" id="f2l-rush-time">60</span>
+                        </div>
+                    </div>
+                    <div id="f2l-rush-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center z-10"></div>
+                    <button id="f2l-btn-rush-start" onclick="startF2LRush()" class="w-full py-5 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] z-10">START RUSH</button>
+                    <div id="f2l-rush-controls" class="w-full hidden z-10 grid grid-cols-2 gap-3">
+                        <button onclick="nextRush(true)" class="py-5 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-check mr-2"></i>KNOW IT</button>
+                        <button onclick="nextRush(false)" class="py-5 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-xmark mr-2"></i>SKIP (-2s)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Leaderboard / Rank Content -->
         <div id="content-rank" class="tab-content hidden px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
@@ -251,186 +251,205 @@
         </div>
 
         <!-- OLL Content -->
-        <div id="content-oll" class="tab-content hidden px-6 max-w-xl mx-auto">
-            <div class="mt-2 text-center">
-                <h2 class="text-2xl font-bold tracking-tight text-white">OLL Pattern Recognition</h2>
-                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
-                    After completing the first two layers, hold your cube with the last layer you need to solve on top. Tap the squares below to match your top layer's pattern, then press <strong>DETECT MATCH</strong> to find the exact algorithm!
-                    <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
-                </p>
+<div id="content-oll" class="tab-content hidden px-6 max-w-xl mx-auto">
+    <div class="mt-2 text-center">
+        <h2 class="text-2xl font-bold tracking-tight text-white">OLL Pattern Recognition</h2>
+        <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+            After completing the first two layers, hold your cube with the last layer you need to solve on top. Tap the squares below to match your top layer's pattern, then press <strong>DETECT MATCH</strong> to find the exact algorithm!
+            <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
+        </p>
+    </div>
+
+    <!-- Smaller, vertically centered Your Score box -->
+    <div class="mt-6 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex items-center justify-between max-w-[240px] mx-auto">
+        <div class="flex flex-col">
+            <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest">Your Score</span>
+            <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="score-oll">0</span>
+        </div>
+        <i class="fa-solid fa-trophy text-yellow-400 text-2xl"></i>
+    </div>
+
+    <!-- Main 3x3 tappable grid -->
+    <div class="cross-container mt-10">
+        <div class="back-strip side-strip" id="oll-back"></div>
+        <div class="left-strip vertical-strip" id="oll-left"></div>
+        <div class="u-face" id="oll-u"></div>
+        <div class="right-strip vertical-strip" id="oll-right"></div>
+        <div class="front-strip side-strip" id="oll-front"></div>
+    </div>
+
+    <!-- Quick Reset & Submit -->
+    <div class="flex flex-col items-center mt-10">
+        <button onclick="submitOLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
+            <i class="fa-solid fa-magic"></i>
+            DETECT MATCH
+        </button>
+        <button onclick="resetOLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
+            <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
+        </button>
+    </div>
+
+    <!-- Result area -->
+    <div id="oll-result" class="hidden mt-10 bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
+        <div id="oll-desc" class="text-zinc-400 text-sm leading-tight"></div>
+        <div id="oll-algs-container" class="mt-6 space-y-4"></div>
+        <div class="mt-8 border-t border-zinc-800 pt-6">
+            <div class="flex justify-between items-start w-full">
+                <div class="flex flex-col items-center flex-1">
+                    <div id="oll-secret-copy" class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy">Your Pattern</div>
+                    <div id="oll-preview" class="origin-top relative" style="height: 120px;"></div>
+                </div>
+                <div id="oll-correct-container" class="flex flex-col items-center flex-1">
+                    <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
+                    <div id="oll-correct-preview" class="origin-top relative" style="height: 120px;"></div>
+                </div>
             </div>
-
-            <div class="cross-container mt-10">
-                <div class="back-strip side-strip" id="oll-back"></div>
-                <div class="left-strip vertical-strip" id="oll-left"></div>
-                <div class="u-face" id="oll-u"></div>
-                <div class="right-strip vertical-strip" id="oll-right"></div>
-                <div class="front-strip side-strip" id="oll-front"></div>
-            </div>
-
-            <!-- Quick Reset & Submit -->
-            <div class="flex flex-col items-center mt-10">
-                <button onclick="submitOLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-magic"></i>
-                    DETECT MATCH
-                </button>
-                <button onclick="resetOLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
-                    <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
-                </button>
-            </div>
-
-            <div id="oll-result" class="hidden mt-10 bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
-                <div id="oll-desc" class="text-zinc-400 text-sm leading-tight"></div>
-                <div id="oll-algs-container" class="mt-6 space-y-4"></div>
-
-                <div class="mt-8 border-t border-zinc-800 pt-6">
-                    <div class="flex justify-between items-start w-full">
-                        <div class="flex flex-col items-center flex-1">
-                            <div id="oll-secret-copy" class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy">Your Pattern</div>
-                            <div id="oll-preview" class="origin-top relative" style="height: 120px;"></div>
-                        </div>
-                        <div id="oll-correct-container" class="flex flex-col items-center flex-1">
-                            <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
-                            <div id="oll-correct-preview" class="origin-top relative" style="height: 120px;"></div>
-                        </div>
-                    </div>
-                    <div id="oll-rotation-warning" class="text-center text-xs text-orange-400 mt-2 hidden bg-orange-500/10 py-2 rounded-xl border border-orange-500/20">
-                        <i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mt-10">
-                    <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET</button>
-                    <button onclick="switchTab(2)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO PLL</button>
-                </div>
-            </div>
-
-            <!-- OLL Tab Lists -->
-            <div class="mt-12 space-y-4">
-                <!-- Favorites List -->
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('oll-tab-fav-list', 'oll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite OLLs</div>
-                        <i id="oll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="oll-tab-fav-list" class="hidden px-6 pb-6">
-                        <div id="oll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
-                    </div>
-                </div>
-
-                <!-- History List -->
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('oll-tab-hist-list', 'oll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> OLL History</div>
-                        <i id="oll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="oll-tab-hist-list" class="hidden px-6 pb-6">
-                        <div id="oll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
-                    </div>
-                </div>
-
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('oll-tab-oll-list', 'oll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
-                        <i id="oll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="oll-tab-oll-list" class="hidden px-6 pb-6">
-                        <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
-                        <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
-                    </div>
-                </div>
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('oll-tab-pll-list', 'oll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
-                        <i id="oll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="oll-tab-pll-list" class="hidden px-6 pb-6">
-                        <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
-                        <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
-                    </div>
-                </div>
+            <div id="oll-rotation-warning" class="text-center text-xs text-orange-400 mt-2 hidden bg-orange-500/10 py-2 rounded-xl border border-orange-500/20">
+                <i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle
             </div>
         </div>
+        <div class="grid grid-cols-2 gap-4 mt-10">
+            <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET</button>
+            <button onclick="switchTab(2)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO PLL</button>
+        </div>
+    </div>
 
-        <!-- PLL Content -->
-        <div id="content-pll" class="tab-content hidden px-6 max-w-xl mx-auto">
-            <div class="mt-2 text-center">
-                <h2 class="text-2xl font-bold tracking-tight text-white">PLL Pattern Recognition</h2>
-                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
-                    Permutation of the Last Layer (PLL) is the final step. The entire top face is now orange, but the pieces need to swap places. Tap the two squares on the center grid to indicate which pieces need to swap, then press <strong>DETECT MATCH</strong>!
-                    <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
-                </p>
-            </div>
-
-            <div class="cross-container mt-10">
-                <div class="back-strip side-strip" id="pll-back"></div>
-                <div class="left-strip vertical-strip" id="pll-left"></div>
-                <div class="u-face" id="pll-u"></div>
-                <div class="right-strip vertical-strip" id="pll-right"></div>
-                <div class="front-strip side-strip" id="pll-front"></div>
-            </div>
-
-            <!-- Quick Reset & Submit -->
-            <div class="flex flex-col items-center mt-10">
-                <button onclick="submitPLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-magic"></i>
-                    DETECT MATCH
-                </button>
-                <button onclick="resetPLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
-                    <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
-                </button>
-            </div>
-
-            <div id="pll-result" class="hidden mt-10">
-                <!-- Dynamically populated -->
-            </div>
-
-            <!-- PLL Tab Lists -->
-            <div class="mt-12 space-y-4">
-                <!-- Favorites List -->
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('pll-tab-fav-list', 'pll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite PLLs</div>
-                        <i id="pll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="pll-tab-fav-list" class="hidden px-6 pb-6">
-                        <div id="pll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
-                    </div>
-                </div>
-
-                <!-- History List -->
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('pll-tab-hist-list', 'pll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> PLL History</div>
-                        <i id="pll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="pll-tab-hist-list" class="hidden px-6 pb-6">
-                        <div id="pll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
-                    </div>
-                </div>
-
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('pll-tab-pll-list', 'pll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
-                        <i id="pll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="pll-tab-pll-list" class="hidden px-6 pb-6">
-                        <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
-                        <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
-                    </div>
-                </div>
-                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                    <button onclick="toggleList('pll-tab-oll-list', 'pll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
-                        <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
-                        <i id="pll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
-                    </button>
-                    <div id="pll-tab-oll-list" class="hidden px-6 pb-6">
-                        <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
-                        <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
-                    </div>
-                </div>
+    <!-- OLL Tab Lists (Favorites, History, Full OLL, Full PLL) -->
+    <div class="mt-12 space-y-4">
+        <!-- Favorites -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('oll-tab-fav-list', 'oll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite OLLs</div>
+                <i id="oll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="oll-tab-fav-list" class="hidden px-6 pb-6">
+                <div id="oll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
             </div>
         </div>
+        <!-- History -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('oll-tab-hist-list', 'oll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> OLL History</div>
+                <i id="oll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="oll-tab-hist-list" class="hidden px-6 pb-6">
+                <div id="oll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+            </div>
+        </div>
+        <!-- Full OLL List -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('oll-tab-oll-list', 'oll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                <i id="oll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="oll-tab-oll-list" class="hidden px-6 pb-6">
+                <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
+                <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+            </div>
+        </div>
+        <!-- Full PLL List -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('oll-tab-pll-list', 'oll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
+                <i id="oll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="oll-tab-pll-list" class="hidden px-6 pb-6">
+                <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
+                <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+       <!-- PLL Content -->
+<div id="content-pll" class="tab-content hidden px-6 max-w-xl mx-auto">
+    <div class="mt-2 text-center">
+        <h2 class="text-2xl font-bold tracking-tight text-white">PLL Pattern Recognition</h2>
+        <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+            Permutation of the Last Layer (PLL) is the final step. The entire top face is now orange, but the pieces need to swap places. Tap the two squares on the center grid to indicate which pieces need to swap, then press <strong>DETECT MATCH</strong>!
+            <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
+        </p>
+    </div>
+
+    <!-- Smaller, vertically centered Your Score box -->
+    <div class="mt-6 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex items-center justify-between max-w-[240px] mx-auto">
+        <div class="flex flex-col">
+            <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest">Your Score</span>
+            <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="score-pll">0</span>
+        </div>
+        <i class="fa-solid fa-trophy text-yellow-400 text-2xl"></i>
+    </div>
+
+    <!-- Main 3x3 tappable grid -->
+    <div class="cross-container mt-10">
+        <div class="back-strip side-strip" id="pll-back"></div>
+        <div class="left-strip vertical-strip" id="pll-left"></div>
+        <div class="u-face" id="pll-u"></div>
+        <div class="right-strip vertical-strip" id="pll-right"></div>
+        <div class="front-strip side-strip" id="pll-front"></div>
+    </div>
+
+    <!-- Quick Reset & Submit -->
+    <div class="flex flex-col items-center mt-10">
+        <button onclick="submitPLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
+            <i class="fa-solid fa-magic"></i>
+            DETECT MATCH
+        </button>
+        <button onclick="resetPLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
+            <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
+        </button>
+    </div>
+
+    <div id="pll-result" class="hidden mt-10">
+        <!-- Dynamically populated -->
+    </div>
+
+    <!-- PLL Tab Lists -->
+    <div class="mt-12 space-y-4">
+        <!-- Favorites -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('pll-tab-fav-list', 'pll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite PLLs</div>
+                <i id="pll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="pll-tab-fav-list" class="hidden px-6 pb-6">
+                <div id="pll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+            </div>
+        </div>
+        <!-- History -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('pll-tab-hist-list', 'pll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> PLL History</div>
+                <i id="pll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="pll-tab-hist-list" class="hidden px-6 pb-6">
+                <div id="pll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+            </div>
+        </div>
+        <!-- Full PLL List -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('pll-tab-pll-list', 'pll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
+                <i id="pll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="pll-tab-pll-list" class="hidden px-6 pb-6">
+                <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
+                <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+            </div>
+        </div>
+        <!-- Full OLL List -->
+        <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+            <button onclick="toggleList('pll-tab-oll-list', 'pll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                <i id="pll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+            </button>
+            <div id="pll-tab-oll-list" class="hidden px-6 pb-6">
+                <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
+                <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Footer / Legal Navigation -->
         <div class="mt-16 text-center w-full pb-8 border-t border-zinc-900 pt-8">
@@ -892,23 +911,30 @@ function endRush() {
             updateCloudScore();
         }
 
-        function awardPoint() {
-            userScore++;
-            localStorage.setItem('cubeTrainerScore', userScore);
-            
-            document.getElementById('header-score').innerText = userScore;
-            document.getElementById('profile-score').innerText = userScore;
-            
-            // Pop animation on the header badge
-            const headerBadge = document.getElementById('header-score').parentElement;
-            headerBadge.classList.add('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
-            setTimeout(() => {
-                headerBadge.classList.remove('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
-            }, 300);
-
-            renderLeaderboard();
-            updateCloudScore();
-        }
+       function awardPoint() {
+    userScore++;
+    localStorage.setItem('cubeTrainerScore', userScore);
+    
+    // This line updates ALL score badges (header, OLL, PLL, and profile)
+    updateScoreDisplays();
+    
+    // Pop animation on the header badge
+    const headerBadge = document.getElementById('header-score').parentElement;
+    headerBadge.classList.add('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
+    setTimeout(() => {
+        headerBadge.classList.remove('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
+    }, 300);
+    
+    renderLeaderboard();
+    updateCloudScore();
+}
+        function updateScoreDisplays() {
+    const score = userScore;
+    document.getElementById('header-score').innerText = score;
+    if (document.getElementById('score-oll')) document.getElementById('score-oll').innerText = score;
+    if (document.getElementById('score-pll')) document.getElementById('score-pll').innerText = score;
+    document.getElementById('profile-score').innerText = score;
+}
 
         function renderLeaderboard() {
             let allPlayers = [...globalLeaderboard];
@@ -1357,6 +1383,7 @@ function endRush() {
     currentOllCase = match;
     if (!match.isHelper && !hasScoredThisMatch) {
         awardPoint();
+        if (!match.isHelper) fireConfetti(true);  // BIG congrats confetti on successful detection
         hasScoredThisMatch = true;
     }
     const res = document.getElementById('oll-result');
@@ -1462,6 +1489,7 @@ function endRush() {
             currentPllCase = match;
             if (!hasScoredThisMatch) {
                 awardPoint();
+                if (!match.isHelper) fireConfetti(true);  // BIG congrats confetti on successful detection
                 hasScoredThisMatch = true;
             }
 
