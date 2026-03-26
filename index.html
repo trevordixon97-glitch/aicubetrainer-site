@@ -88,10 +88,13 @@
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 relative">
     
-    <!-- Floating Score Badge -->
-    <div class="absolute top-4 right-4 sm:top-8 sm:right-8 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex flex-col items-center shadow-lg cursor-pointer hover:border-yellow-500/50 transition-all z-50 hover:scale-105 active:scale-95" onclick="switchTab(3)">
-        <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Your Score</span>
-        <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 leading-none" id="header-score">0</span>
+    <!-- Floating Score Badge - Higher, smaller square, "Current Score" -->
+    <div class="absolute top-3 right-3 sm:top-5 sm:right-5 bg-zinc-900 border border-zinc-700 px-4 py-3 rounded-3xl flex items-center gap-3 shadow-2xl z-50 cursor-pointer hover:border-yellow-400 transition-all hover:scale-105 active:scale-95" onclick="switchTab(3)">
+        <i class="fa-solid fa-trophy text-yellow-400 text-2xl"></i>
+        <div class="text-center">
+            <span class="block text-[9px] font-bold uppercase tracking-widest text-zinc-400">CURRENT SCORE</span>
+            <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 leading-none" id="header-score">0</span>
+        </div>
     </div>
 
     <div class="max-w-2xl mx-auto w-full pt-8 sm:pt-12">
@@ -263,14 +266,7 @@
         </p>
     </div>
 
-                <!-- Smaller + perfectly vertically centered Your Score box -->
-            <div class="mt-6 mx-auto bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-2xl flex items-center gap-4 w-fit shadow-inner">
-                <div class="text-center">
-                    <span class="block text-[9px] font-bold uppercase tracking-widest text-zinc-400">YOUR SCORE</span>
-                    <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="score-oll">0</span>
-                </div>
-                <i class="fa-solid fa-trophy text-yellow-400 text-2xl"></i>
-            </div>
+               
 
     <!-- Main 3x3 tappable grid -->
     <div class="cross-container mt-10">
@@ -374,14 +370,7 @@
         </p>
     </div>
 
-                <!-- Smaller + perfectly vertically centered Your Score box -->
-            <div class="mt-6 mx-auto bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-2xl flex items-center gap-4 w-fit shadow-inner">
-                <div class="text-center">
-                    <span class="block text-[9px] font-bold uppercase tracking-widest text-zinc-400">YOUR SCORE</span>
-                    <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="score-pll">0</span>
-                </div>
-                <i class="fa-solid fa-trophy text-yellow-400 text-2xl"></i>
-            </div>
+                
 
     <!-- Main 3x3 tappable grid -->
     <div class="cross-container mt-10">
@@ -932,12 +921,10 @@ function endRush() {
     updateCloudScore();
 }
                 function updateScoreDisplays() {
-            const score = userScore;
-            if (document.getElementById('header-score')) document.getElementById('header-score').innerText = score;
-            if (document.getElementById('score-oll')) document.getElementById('score-oll').innerText = score;
-            if (document.getElementById('score-pll')) document.getElementById('score-pll').innerText = score;
-            document.getElementById('profile-score').innerText = score;
-        }
+    const score = userScore;
+    document.getElementById('header-score').innerText = score;
+    document.getElementById('profile-score').innerText = score;
+}
 
         function renderLeaderboard() {
             let allPlayers = [...globalLeaderboard];
@@ -1584,24 +1571,43 @@ function endRush() {
             document.getElementById('pll-result').classList.add('hidden');
         }
 
-        function generateFullMini(uMask) {
+        function generateFullMini(mask) {
+    if (!mask || mask.length < 8) return '';
     const pos = [0,1,2,3,5,6,7,8];
     let uHTML = '';
     for (let i = 0; i < 9; i++) {
-        if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
-        else {
+        if (i === 4) {
+            uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
+        } else {
             const idx = pos.indexOf(i);
-            const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : '#3f3f46';
+            const val = idx >= 0 && mask[idx] === '1' ? GRADIENT_BG : '#3f3f46';
             uHTML += `<div class="mini-square" style="background:${val}"></div>`;
         }
     }
+    // Side colors from full 20-char mask
+    let backHTML = '', leftHTML = '', rightHTML = '', frontHTML = '';
+    if (mask.length === 20) {
+        for(let i=0; i<3; i++) {
+            const b = mask[8+i]==='1' ? GRADIENT_BG : '#3f3f46';
+            const r = mask[11+i]==='1' ? GRADIENT_BG : '#3f3f46';
+            const f = mask[14+i]==='1' ? GRADIENT_BG : '#3f3f46';
+            const l = mask[17+i]==='1' ? GRADIENT_BG : '#3f3f46';
+            backHTML += `<div class="mini-square" style="background:${b}"></div>`;
+            rightHTML += `<div class="mini-square" style="background:${r}"></div>`;
+            frontHTML += `<div class="mini-square" style="background:${f}"></div>`;
+            leftHTML += `<div class="mini-square" style="background:${l}"></div>`;
+        }
+    } else {
+        const gray = `<div class="mini-square" style="background:#3f3f46"></div>`;
+        backHTML = leftHTML = rightHTML = frontHTML = gray + gray + gray;
+    }
     return `
         <div class="mini-cross-container transform scale-75 origin-left">
-            <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-            <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="side-strip" style="grid-area: top;">${backHTML}</div>
+            <div class="vertical-strip" style="grid-area: left;">${leftHTML}</div>
             <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
-            <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
-            <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="vertical-strip" style="grid-area: right;">${rightHTML}</div>
+            <div class="side-strip" style="grid-area: bottom;">${frontHTML}</div>
         </div>
     `;
 }
