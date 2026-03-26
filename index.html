@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI Speed Cube Trainer • Accurate OLL Detection & AI Coach</title>
-   
+    
     <!-- FAVICON - exact same SVG as your header icon -->
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="32x32">
     <link rel="apple-touch-icon" href="favicon.svg" sizes="180x180">
+
     <!-- Force browser to refresh the favicon cache -->
     <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
-   
-    <!-- ADD CANVAS CONFETTI FOR GAMIFICATION -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <!-- GOOGLE ADSENSE START -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673" crossorigin="anonymous"></script>
     <!-- GOOGLE ADSENSE END -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -36,64 +36,66 @@
         }
         .side-strip { display: flex; gap: 8px; justify-content: center; }
         .vertical-strip { display: flex; flex-direction: column; gap: 8px; justify-content: center; }
-       
+        
         .cross-container, .list-preview {
             display: grid;
             grid-template-areas:
                 ". top ."
                 "left center right"
                 ". bottom .";
-            gap: 12px;
+            gap: 12px; 
             justify-content: center;
             align-items: center;
-            width: fit-content;
+            width: fit-content; 
             margin: 0 auto;
         }
-       
+        
         .mini-cross-container {
             display: grid;
             grid-template-areas:
                 ". top ."
                 "left center right"
                 ". bottom .";
-            gap: 6px;
+            gap: 6px; 
             justify-content: center;
             align-items: center;
-            width: fit-content;
+            width: fit-content; 
             margin: 0 auto;
         }
-        .back-strip { grid-area: top; }
-        .left-strip { grid-area: left; }
+
+        .back-strip  { grid-area: top; }
+        .left-strip  { grid-area: left; }
         .right-strip { grid-area: right; }
         .front-strip { grid-area: bottom; }
-       
-        .u-face {
-            grid-area: center;
-            background: #27272a;
-            padding: 10px;
-            border-radius: 16px;
+        
+        .u-face { 
+            grid-area: center; 
+            background: #27272a; 
+            padding: 10px; 
+            border-radius: 16px; 
             box-sizing: border-box;
-            position: relative;
+            position: relative; 
         }
         .mini-u-face {
-            grid-area: center;
-            background: #27272a;
-            padding: 6px;
-            border-radius: 12px;
+            grid-area: center; 
+            background: #27272a; 
+            padding: 6px; 
+            border-radius: 12px; 
             box-sizing: border-box;
-            position: relative;
+            position: relative; 
         }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 relative">
-   
+    
     <!-- Floating Score Badge -->
     <div class="absolute top-4 right-4 sm:top-8 sm:right-8 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-2xl flex flex-col items-center shadow-lg cursor-pointer hover:border-yellow-500/50 transition-all z-50 hover:scale-105 active:scale-95" onclick="switchTab(3)">
         <span class="text-[9px] text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Your Score</span>
         <span class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 leading-none" id="header-score">0</span>
     </div>
+
     <div class="max-w-2xl mx-auto w-full pt-8 sm:pt-12">
-       
+        
         <!-- Desktop-friendly centered header -->
         <div class="px-6 pb-8 flex flex-col items-center text-center gap-4 relative">
             <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-3xl font-black shrink-0">
@@ -104,6 +106,7 @@
                 <p class="text-[10px] sm:text-xs text-orange-400/80 mt-1 uppercase tracking-widest font-semibold pr-16 sm:pr-0">Accurate last layer pattern detection & AI Coach</p>
             </div>
         </div>
+
         <!-- Clean layout for 4 tabs -->
         <div class="px-4 sm:px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-3xl mx-auto">
             <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers <br class="sm:hidden">(F2L)</button>
@@ -111,113 +114,25 @@
             <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
             <button onclick="switchTab(3)" id="tab-rank" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition"><i class="fa-solid fa-trophy text-yellow-500 mb-1 sm:mb-0 sm:mr-1 block sm:inline"></i>Leaderboard</button>
         </div>
+
         <!-- F2L Content -->
-        <div id="content-f2l" class="tab-content hidden px-4 sm:px-6 max-w-2xl mx-auto">
-           
-            <!-- F2L Sub-Navigation -->
-            <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 bg-zinc-900 p-2 rounded-2xl border border-zinc-800 snap-x">
-                <button onclick="switchF2LMode(0)" id="f2l-nav-0" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap"><i class="fa-solid fa-stopwatch mr-2 text-orange-400"></i>Random Drill</button>
-                <button onclick="switchF2LMode(1)" id="f2l-nav-1" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-brain mr-2 text-blue-400"></i>Recognition</button>
-                <button onclick="switchF2LMode(2)" id="f2l-nav-2" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-book-open mr-2 text-emerald-400"></i>Practice</button>
-                <button onclick="switchF2LMode(3)" id="f2l-nav-3" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-fire-flame-curved mr-2 text-red-500"></i>60s Rush</button>
+        <div id="content-f2l" class="tab-content hidden px-6 max-w-xl mx-auto">
+            <div class="mt-2 text-center">
+                <h2 class="text-2xl font-bold tracking-tight text-white">First Two Layers (F2L)</h2>
+                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                    Insert your corner and edge pairs intuitively or learn advanced algorithms. <strong>F2L module in development!</strong>
+                </p>
             </div>
-            <!-- Mode 1: Random F2L Drill -->
-            <div id="f2l-mode-0" class="f2l-view block">
-                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
-                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-1">Speed Drill</h2>
-                    <p class="text-zinc-400 text-xs mb-8 text-center">React fast! Spin a pair, start the timer, and execute on your cube.</p>
-                   
-                    <div id="f2l-drill-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center transition-transform duration-75">
-                        <!-- Rendered visual goes here -->
-                        <div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>
-                    </div>
-                   
-                    <div class="text-5xl font-black font-mono text-white mb-8 tracking-tighter" id="f2l-timer">0.00s</div>
-                   
-                    <div class="w-full space-y-3">
-                        <button id="f2l-btn-spin" onclick="spinF2LPair()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-all text-lg shadow-lg border border-zinc-700">SPIN RANDOM PAIR</button>
-                        <button id="f2l-btn-start" onclick="startF2LTimer()" class="hidden w-full py-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(59,130,246,0.4)]">START TIMER</button>
-                        <button id="f2l-btn-stop" onclick="stopF2LTimer()" class="hidden w-full py-6 bg-gradient-to-r from-emerald-400 to-green-600 text-white rounded-2xl font-black text-2xl active:scale-95 transition-all shadow-[0_0_30px_rgba(16,185,129,0.5)] border border-green-400/50">I SOLVED IT!</button>
-                    </div>
-                    <div id="f2l-drill-result" class="w-full mt-6 hidden opacity-0 transition-opacity duration-500">
-                        <div class="bg-black/40 border border-zinc-800 p-5 rounded-2xl text-left w-full">
-                            <div class="flex justify-between items-center mb-3">
-                                <span class="text-xs font-bold text-orange-400 uppercase tracking-widest" id="f2l-drill-name">Basic Insert</span>
-                                <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-md font-bold" id="f2l-drill-score">+10 PTS</span>
-                            </div>
-                            <div class="font-mono text-zinc-100 font-bold text-lg mb-2" id="f2l-drill-alg">U (R U' R')</div>
-                            <div class="text-xs text-zinc-400"><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><span id="f2l-drill-tip">Pair is ready.</span></div>
-                        </div>
-                    </div>
+            
+            <div class="mt-12 bg-zinc-900/50 border border-zinc-800/50 p-10 rounded-3xl text-center flex flex-col items-center">
+                <div class="w-20 h-20 bg-zinc-800/50 rounded-2xl flex items-center justify-center text-4xl text-zinc-600 mb-6">
+                    <i class="fa-solid fa-layer-group"></i>
                 </div>
-            </div>
-            <!-- Mode 2: Pair Recognition -->
-            <div id="f2l-mode-1" class="f2l-view hidden">
-                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
-                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-1">Recognition Quiz</h2>
-                    <p class="text-zinc-400 text-xs mb-8 text-center">Identify the case type instantly. Build your look-ahead speed.</p>
-                   
-                    <div id="f2l-quiz-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center"></div>
-                   
-                    <h3 class="text-lg font-bold text-white mb-4">What type of pair is this?</h3>
-                    <div class="grid grid-cols-1 gap-3 w-full" id="f2l-quiz-options">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-            </div>
-            <!-- Mode 3: Practice Mode -->
-            <div id="f2l-mode-2" class="f2l-view hidden">
-                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
-                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-1">Flashcard Practice</h2>
-                    <p class="text-zinc-400 text-xs mb-8 text-center">Study the optimal algorithms one by one at your own pace.</p>
-                   
-                    <div class="w-full flex justify-between text-xs font-bold text-zinc-500 mb-4 px-2 tracking-widest uppercase">
-                        <span id="f2l-prac-counter">Case 1/6</span>
-                        <span id="f2l-prac-group" class="text-emerald-400">Basic</span>
-                    </div>
-                    <div id="f2l-prac-visual" class="transform scale-125 mb-10 min-h-[160px] flex items-center justify-center"></div>
-                   
-                    <div id="f2l-prac-reveal" class="w-full hidden text-left bg-black/40 border border-zinc-800 p-5 rounded-2xl mb-6">
-                        <div class="text-lg font-bold text-white mb-2" id="f2l-prac-name">Name</div>
-                        <div class="text-sm text-zinc-400 mb-4 pb-4 border-b border-zinc-800" id="f2l-prac-tip">Tip</div>
-                        <div class="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 font-bold">Optimal Alg</div>
-                        <div class="font-mono text-orange-400 font-bold text-lg" id="f2l-prac-alg">Alg</div>
-                    </div>
-                    <div class="w-full flex gap-3">
-                        <button id="f2l-btn-reveal" onclick="revealF2LPractice()" class="flex-1 py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold transition-all shadow-lg border border-zinc-700"><i class="fa-regular fa-eye mr-2"></i>REVEAL</button>
-                        <button onclick="nextF2LPractice()" class="flex-1 py-4 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-300 hover:to-teal-400 text-zinc-950 rounded-2xl font-bold transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] border border-emerald-300/50">NEXT PAIR <i class="fa-solid fa-arrow-right ml-1"></i></button>
-                    </div>
-                </div>
-            </div>
-            <!-- Mode 4: 60s Rush -->
-            <div id="f2l-mode-3" class="f2l-view hidden">
-                <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center relative overflow-hidden">
-                    <!-- Warning Pulse Background -->
-                    <div id="f2l-rush-bg" class="absolute inset-0 bg-red-500/0 transition-colors duration-300 pointer-events-none"></div>
-                    <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-1 z-10">60s Survival Rush</h2>
-                    <p class="text-zinc-400 text-xs mb-6 text-center z-10">Solve as many cases mentally as you can before time runs out!</p>
-                   
-                    <div class="flex justify-between items-end w-full px-4 mb-4 z-10">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Score</span>
-                            <span class="text-3xl font-black text-white" id="f2l-rush-score">0</span>
-                        </div>
-                        <div class="flex flex-col items-end">
-                            <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Time Left</span>
-                            <span class="text-4xl font-black text-red-500 font-mono" id="f2l-rush-time">60</span>
-                        </div>
-                    </div>
-                    <div id="f2l-rush-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center z-10"></div>
-                   
-                    <button id="f2l-btn-rush-start" onclick="startF2LRush()" class="w-full py-5 bg-gradient-to-r from-red-500 to-orange-600 text-white rounded-2xl font-black text-xl active:scale-95 transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] z-10">START RUSH</button>
-                   
-                    <div id="f2l-rush-controls" class="w-full hidden z-10 grid grid-cols-2 gap-3">
-                        <button onclick="nextRush(true)" class="py-5 bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 border border-emerald-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-check mr-2"></i>KNOW IT</button>
-                        <button onclick="nextRush(false)" class="py-5 bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/50 rounded-2xl font-black text-lg transition-all active:scale-95"><i class="fa-solid fa-xmark mr-2"></i>SKIP (-2s)</button>
-                    </div>
-                </div>
+                <h3 class="text-xl font-bold text-zinc-300">F2L Trainer Coming Soon</h3>
+                <p class="text-sm text-zinc-500 mt-3 max-w-sm">We are building an interactive 3D layout to help you master your First Two Layers pairs instantly.</p>
             </div>
         </div>
+
         <!-- Leaderboard / Rank Content -->
         <div id="content-rank" class="tab-content hidden px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
@@ -226,7 +141,7 @@
                     Compete against speedcubers worldwide! Detect OLL and PLL patterns to increase your score and climb the ranks.
                 </p>
             </div>
-           
+            
             <!-- User Profile Setup -->
             <div class="mt-8 bg-zinc-900 border border-zinc-800 p-6 rounded-3xl flex flex-col sm:flex-row gap-4 items-center shadow-xl">
                 <div class="flex-1 w-full">
@@ -238,6 +153,7 @@
                     <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="profile-score">0</div>
                 </div>
             </div>
+
             <!-- Leaderboard List -->
             <div class="mt-8 bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-xl">
                 <div class="bg-zinc-950/50 border-b border-zinc-800 px-6 py-4 flex text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
@@ -253,6 +169,7 @@
                 </div>
             </div>
         </div>
+
         <!-- OLL Content -->
         <div id="content-oll" class="tab-content hidden px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
@@ -262,6 +179,7 @@
                     <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
                 </p>
             </div>
+
             <div class="cross-container mt-10">
                 <div class="back-strip side-strip" id="oll-back"></div>
                 <div class="left-strip vertical-strip" id="oll-left"></div>
@@ -269,6 +187,7 @@
                 <div class="right-strip vertical-strip" id="oll-right"></div>
                 <div class="front-strip side-strip" id="oll-front"></div>
             </div>
+
             <!-- Quick Reset & Submit -->
             <div class="flex flex-col items-center mt-10">
                 <button onclick="submitOLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
@@ -279,9 +198,11 @@
                     <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
                 </button>
             </div>
+
             <div id="oll-result" class="hidden mt-10 bg-zinc-900 rounded-3xl p-6 border border-zinc-800">
                 <div id="oll-desc" class="text-zinc-400 text-sm leading-tight"></div>
                 <div id="oll-algs-container" class="mt-6 space-y-4"></div>
+
                 <div class="mt-8 border-t border-zinc-800 pt-6">
                     <div class="flex justify-between items-start w-full">
                         <div class="flex flex-col items-center flex-1">
@@ -297,11 +218,13 @@
                         <i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle
                     </div>
                 </div>
+
                 <div class="grid grid-cols-2 gap-4 mt-10">
                     <button onclick="resetOLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET</button>
                     <button onclick="switchTab(2)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO PLL</button>
                 </div>
             </div>
+
             <!-- OLL Tab Lists -->
             <div class="mt-12 space-y-4">
                 <!-- Favorites List -->
@@ -314,6 +237,7 @@
                         <div id="oll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
                     </div>
                 </div>
+
                 <!-- History List -->
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('oll-tab-hist-list', 'oll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
@@ -324,6 +248,7 @@
                         <div id="oll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
                     </div>
                 </div>
+
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('oll-tab-oll-list', 'oll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
                         <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
@@ -346,6 +271,7 @@
                 </div>
             </div>
         </div>
+
         <!-- PLL Content -->
         <div id="content-pll" class="tab-content hidden px-6 max-w-xl mx-auto">
             <div class="mt-2 text-center">
@@ -355,6 +281,7 @@
                     <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
                 </p>
             </div>
+
             <div class="cross-container mt-10">
                 <div class="back-strip side-strip" id="pll-back"></div>
                 <div class="left-strip vertical-strip" id="pll-left"></div>
@@ -362,6 +289,7 @@
                 <div class="right-strip vertical-strip" id="pll-right"></div>
                 <div class="front-strip side-strip" id="pll-front"></div>
             </div>
+
             <!-- Quick Reset & Submit -->
             <div class="flex flex-col items-center mt-10">
                 <button onclick="submitPLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
@@ -372,9 +300,11 @@
                     <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
                 </button>
             </div>
+
             <div id="pll-result" class="hidden mt-10">
                 <!-- Dynamically populated -->
             </div>
+
             <!-- PLL Tab Lists -->
             <div class="mt-12 space-y-4">
                 <!-- Favorites List -->
@@ -387,6 +317,7 @@
                         <div id="pll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
                     </div>
                 </div>
+
                 <!-- History List -->
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('pll-tab-hist-list', 'pll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
@@ -397,6 +328,7 @@
                         <div id="pll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
                     </div>
                 </div>
+
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('pll-tab-pll-list', 'pll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
                         <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
@@ -419,6 +351,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Footer / Legal Navigation -->
         <div class="mt-16 text-center w-full pb-8 border-t border-zinc-900 pt-8">
             <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-zinc-500 font-medium">
@@ -428,421 +361,36 @@
             </div>
         </div>
     </div>
+
     <script>
         const GRADIENT_BG = 'linear-gradient(135deg, #facc15 0%, #f97316 100%)';
         const SIDE_COLORS = ['#3b82f6', '#f1f5f9', '#22c55e', GRADIENT_BG];
-        // --- Core Colors for F2L ---
-        const C_W = '#f8fafc'; // White
-        const C_R = '#ef4444'; // Red (Front)
-        const C_B = '#3b82f6'; // Blue (Right)
-        const C_Y = '#facc15'; // Yellow
-        const C_X = '#3f3f46'; // Empty/Gray
+
         // Core State
         let ollUState = Array(9).fill(0); ollUState[4] = 1;
         let ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
-       
+        
         let pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
         let pllArrows = [];
         let pllTapStartIdx = null;
         let pllDragStartIdx = null;
+
         // Session & Local Storage State
         let ollHistory = [];
         let pllHistory = [];
         let favorites = JSON.parse(localStorage.getItem('cubeTrainerFavs')) || { oll: [], pll: [] };
-       
+        
         // Gamification Leaderboard State
         let userScore = parseInt(localStorage.getItem('cubeTrainerScore') || "0");
         let userName = localStorage.getItem('cubeTrainerName') || "SpeedCuber";
-        let hasScoredThisMatch = false;
-       
+        let hasScoredThisMatch = false; 
+        
         let globalLeaderboard = [];
-       
+        
         // Track currently viewed matches
         let currentOllCase = null;
         let currentPllCase = null;
-        // F2L Database
-        const f2lCases = [
-            { id: 1, type: "insert", group: "Basic Insert", name: "Right Setup Insert", recog: "White faces Right, Edge matches Front.", tip: "Pair is perfectly set up. Insert it directly.", algs: ["U (R U' R')"],
-              top: {8: C_W, 5: C_B}, front: {2: C_R}, right: {1: C_R, 2: C_B} },
-           
-            { id: 2, type: "insert", group: "Basic Insert", name: "Front Setup Insert", recog: "White faces Front, Edge matches Right.", tip: "Pair is perfectly set up. Insert from front.", algs: ["y' U' (R' U R)"],
-              top: {8: C_W, 7: C_R}, front: {1: C_B, 2: C_R}, right: {2: C_B} },
-           
-            { id: 3, type: "split", group: "Split Pair", name: "Different Top Colors", recog: "White on Right, Top colors mismatch.", tip: "Hide the corner in the back, slide the edge over, unhide.", algs: ["U' (R U R') U (R U' R')"],
-              top: {8: C_R, 3: C_B}, front: {2: C_W}, right: {2: C_B}, left: {1: C_R} },
-           
-            { id: 4, type: "split", group: "Split Pair", name: "Same Top Colors", recog: "Top colors are the same. White on side.", tip: "Hide the corner, push the edge far away (U2), unhide.", algs: ["(R U2 R') U' (R U R')"],
-              top: {8: C_B, 1: C_B}, front: {2: C_W}, right: {2: C_R}, back: {1: C_R} },
-           
-            { id: 5, type: "top", group: "White on Top", name: "White Top, Edge Right", recog: "White points to sky. Edge is matched to center.", tip: "Move edge to match center, hide it away, place corner on top, bring back.", algs: ["U (R U' R') U' (F' U F)"],
-              top: {8: C_W, 5: C_R}, front: {2: C_B}, right: {1: C_B, 2: C_R} },
-           
-            { id: 6, type: "stuck", group: "Stuck in Slot", name: "Flipped in Slot", recog: "Both pieces in slot, but reversed/flipped.", tip: "Take them out using an empty slot technique, split, then insert.", algs: ["(R U R') d (R' U' R) U' (R' U' R)"],
-              top: {}, front: {2: C_B}, right: {2: C_R} /* Simplified mask for slot-stuck */ }
-        ];
-        // --- F2L Game State ---
-        let currentF2LCase = null;
-        let f2lTimerInterval = null;
-        let f2lStartTime = 0;
-        let f2lPracticeIdx = 0;
-       
-        let rushTimerInterval = null;
-        let rushTimeLeft = 60;
-        let rushScore = 0;
-        // F2L Helper to Render the Isometric Map
-        function getF2LSvg(caseObj) {
-            // Unpack mapping
-            let t = Object.assign({0:C_Y, 1:C_Y, 2:C_Y, 3:C_Y, 4:C_Y, 5:C_Y, 6:C_Y, 7:C_Y, 8:C_Y}, caseObj.top || {});
-            let f = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.front || {});
-            let r = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.right || {});
-            let l = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.left || {});
-            let b = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.back || {});
-            let uHTML = '';
-            for(let i=0; i<9; i++) uHTML += `<div class="mini-square" style="background:${t[i]}; border-color:#52525b"></div>`;
-            let stripHTML = (stripArr) => `<div class="mini-square" style="background:${stripArr[0]}; border-color:#52525b"></div><div class="mini-square" style="background:${stripArr[1]}; border-color:#52525b"></div><div class="mini-square" style="background:${stripArr[2]}; border-color:#52525b"></div>`;
-            return `
-                <div class="mini-cross-container transform scale-[0.8] origin-center">
-                    <div class="side-strip" style="grid-area: top;">${stripHTML(b)}</div>
-                    <div class="vertical-strip" style="grid-area: left;">${stripHTML(l)}</div>
-                    <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
-                    <div class="vertical-strip" style="grid-area: right;">${stripHTML(r)}</div>
-                    <div class="side-strip" style="grid-area: bottom;">${stripHTML(f)}</div>
-                </div>
-            `;
-        }
-        // F2L Tab Switching
-        function switchF2LMode(n) {
-            document.querySelectorAll('.f2l-view').forEach(v => v.classList.add('hidden'));
-            document.getElementById(`f2l-mode-${n}`).classList.remove('hidden');
-           
-            // Reset active states
-            for(let i=0; i<4; i++) {
-                let btn = document.getElementById(`f2l-nav-${i}`);
-                if(i===n) {
-                    btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap border border-zinc-700";
-                } else {
-                    btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap";
-                }
-            }
-            // Init specific modes
-            if (n === 1) nextF2LQuiz();
-            if (n === 2) { f2lPracticeIdx = 0; renderF2LPractice(); }
-           
-            // Clean up ongoing timers
-            clearInterval(f2lTimerInterval);
-            clearInterval(rushTimerInterval);
-            document.getElementById('f2l-btn-spin').classList.remove('hidden');
-            document.getElementById('f2l-btn-start').classList.add('hidden');
-            document.getElementById('f2l-btn-stop').classList.add('hidden');
-            document.getElementById('f2l-drill-result').classList.add('hidden');
-            document.getElementById('f2l-drill-result').classList.replace('opacity-100', 'opacity-0');
-            document.getElementById('f2l-timer').innerText = "0.00s";
-            document.getElementById('f2l-rush-controls').classList.add('hidden');
-            document.getElementById('f2l-btn-rush-start').classList.remove('hidden');
-            document.getElementById('f2l-rush-time').innerText = "60";
-            document.getElementById('f2l-rush-score').innerText = "0";
-            document.getElementById('f2l-rush-visual').innerHTML = "";
-            document.getElementById('f2l-drill-visual').innerHTML = `<div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>`;
-        }
-        // Gamification: Confetti Helper
-        function fireConfetti(isMega = false) {
-            if (typeof confetti === 'undefined') return;
-            const duration = isMega ? 3000 : 1000;
-            const end = Date.now() + duration;
-            (function frame() {
-                confetti({
-                    particleCount: isMega ? 5 : 3,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0, y: 0.8 },
-                    colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']
-                });
-                confetti({
-                    particleCount: isMega ? 5 : 3,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1, y: 0.8 },
-                    colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']
-                });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-        }
-        // --- F2L Mode 1: Random Drill ---
-        function spinF2LPair() {
-            const visual = document.getElementById('f2l-drill-visual');
-            const btnSpin = document.getElementById('f2l-btn-spin');
-            const btnStart = document.getElementById('f2l-btn-start');
-           
-            btnSpin.classList.add('hidden');
-            document.getElementById('f2l-drill-result').classList.add('hidden');
-            document.getElementById('f2l-drill-result').classList.replace('opacity-100', 'opacity-0');
-            document.getElementById('f2l-timer').innerText = "0.00s";
-            document.getElementById('f2l-timer').classList.replace('text-emerald-400', 'text-white');
-            // Shuffling animation
-            let shuffles = 0;
-            let shuffleInterval = setInterval(() => {
-                let randomCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
-                visual.innerHTML = getF2LSvg(randomCase);
-                shuffles++;
-                if (shuffles > 15) {
-                    clearInterval(shuffleInterval);
-                    currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
-                    visual.innerHTML = getF2LSvg(currentF2LCase);
-                    visual.classList.add('scale-125');
-                    setTimeout(() => visual.classList.remove('scale-125'), 200);
-                    btnStart.classList.remove('hidden');
-                }
-            }, 50);
-        }
-        function startF2LTimer() {
-            document.getElementById('f2l-btn-start').classList.add('hidden');
-            document.getElementById('f2l-btn-stop').classList.remove('hidden');
-           
-            f2lStartTime = Date.now();
-            const timerEl = document.getElementById('f2l-timer');
-           
-            f2lTimerInterval = setInterval(() => {
-                let diff = (Date.now() - f2lStartTime) / 1000;
-                timerEl.innerText = diff.toFixed(2) + "s";
-            }, 10);
-        }
-        function stopF2LTimer() {
-            clearInterval(f2lTimerInterval);
-            document.getElementById('f2l-btn-stop').classList.add('hidden');
-           
-            let timeTaken = (Date.now() - f2lStartTime) / 1000;
-            const timerEl = document.getElementById('f2l-timer');
-            timerEl.classList.replace('text-white', 'text-emerald-400');
-           
-            let points = 5;
-            let isMega = false;
-            if (timeTaken < 3) { points = 50; isMega = true; }
-            else if (timeTaken < 5) points = 25;
-            else if (timeTaken < 8) points = 10;
-            for(let i=0; i<Math.ceil(points/5); i++) awardPoint();
-            if (isMega) fireConfetti(true); else fireConfetti(false);
-            // Show Results
-            const res = document.getElementById('f2l-drill-result');
-            res.classList.remove('hidden');
-            setTimeout(() => res.classList.replace('opacity-0', 'opacity-100'), 10);
-           
-            document.getElementById('f2l-drill-name').innerText = currentF2LCase.name;
-            document.getElementById('f2l-drill-score').innerText = `+${points} PTS!`;
-            document.getElementById('f2l-drill-alg').innerText = currentF2LCase.algs[0];
-            document.getElementById('f2l-drill-tip').innerText = currentF2LCase.tip;
-            document.getElementById('f2l-btn-spin').innerText = "NEXT PAIR";
-            document.getElementById('f2l-btn-spin').classList.remove('hidden');
-        }
-        // --- F2L Mode 2: Quiz ---
-        function nextF2LQuiz() {
-            const visual = document.getElementById('f2l-quiz-visual');
-            const optionsBox = document.getElementById('f2l-quiz-options');
-           
-            currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
-            visual.innerHTML = getF2LSvg(currentF2LCase);
-           
-            // Build options
-            const types = ["insert", "split", "top", "stuck"];
-            const labels = {
-                "insert": "Basic Insert (Ready)",
-                "split": "Split Pair (Colors mismatch)",
-                "top": "White facing up",
-                "stuck": "Stuck in a slot"
-            };
-            let html = '';
-            types.forEach(t => {
-                html += `<button onclick="answerF2LQuiz('${t}', this)" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white rounded-2xl font-bold transition-all">${labels[t]}</button>`;
-            });
-            optionsBox.innerHTML = html;
-        }
-        function answerF2LQuiz(guessType, btnEl) {
-            const isCorrect = guessType === currentF2LCase.type;
-            const options = document.getElementById('f2l-quiz-options').children;
-           
-            // Disable all buttons
-            for (let btn of options) btn.disabled = true;
-            if (isCorrect) {
-                btnEl.classList.replace('bg-zinc-800', 'bg-emerald-600');
-                btnEl.classList.replace('border-zinc-700', 'border-emerald-400');
-                fireConfetti(false);
-                awardPoint(); awardPoint();
-                setTimeout(nextF2LQuiz, 1000);
-            } else {
-                btnEl.classList.replace('bg-zinc-800', 'bg-red-600');
-                btnEl.classList.replace('border-zinc-700', 'border-red-400');
-                // Find correct one
-                for (let btn of options) {
-                    if (btn.innerText.includes(currentF2LCase.type === 'insert' ? 'Basic' : currentF2LCase.type === 'top' ? 'up' : currentF2LCase.type === 'split' ? 'Split' : 'Stuck')) {
-                        btn.classList.replace('bg-zinc-800', 'bg-emerald-600');
-                    }
-                }
-                setTimeout(nextF2LQuiz, 1500);
-            }
-        }
-        // --- F2L Mode 3: Practice ---
-        function renderF2LPractice() {
-            const c = f2lCases[f2lPracticeIdx];
-            document.getElementById('f2l-prac-counter').innerText = `Case ${f2lPracticeIdx + 1}/${f2lCases.length}`;
-            document.getElementById('f2l-prac-group').innerText = c.group;
-            document.getElementById('f2l-prac-visual').innerHTML = getF2LSvg(c);
-           
-            document.getElementById('f2l-prac-reveal').classList.add('hidden');
-            document.getElementById('f2l-btn-reveal').classList.remove('hidden');
-        }
-        function revealF2LPractice() {
-            const c = f2lCases[f2lPracticeIdx];
-            document.getElementById('f2l-prac-reveal').classList.remove('hidden');
-            document.getElementById('f2l-btn-reveal').classList.add('hidden');
-           
-            document.getElementById('f2l-prac-name').innerText = c.name;
-            document.getElementById('f2l-prac-tip').innerHTML = `<i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i> ${c.recog}<br><br><i class="fa-solid fa-hand text-blue-400 mr-2"></i> ${c.tip}`;
-            document.getElementById('f2l-prac-alg').innerText = c.algs[0];
-        }
-        function nextF2LPractice() {
-            f2lPracticeIdx = (f2lPracticeIdx + 1) % f2lCases.length;
-            renderF2LPractice();
-        }
-        // --- F2L Mode 4: 60s Rush ---
-        function startF2LRush() {
-            document.getElementById('f2l-btn-rush-start').classList.add('hidden');
-            document.getElementById('f2l-rush-controls').classList.remove('hidden');
-           
-            rushScore = 0;
-            rushTimeLeft = 60;
-            document.getElementById('f2l-rush-score').innerText = "0";
-            document.getElementById('f2l-rush-time').innerText = "60";
-            document.getElementById('f2l-rush-time').classList.replace('text-red-500', 'text-white');
-           
-            nextRushCase();
-            rushTimerInterval = setInterval(() => {
-                rushTimeLeft--;
-                document.getElementById('f2l-rush-time').innerText = rushTimeLeft;
-               
-                if (rushTimeLeft <= 10) {
-                    document.getElementById('f2l-rush-time').classList.replace('text-white', 'text-red-500');
-                    const bg = document.getElementById('f2l-rush-bg');
-                    bg.classList.add('bg-red-500/20');
-                    setTimeout(() => bg.classList.remove('bg-red-500/20'), 200);
-                }
-                if (rushTimeLeft <= 0) {
-                    clearInterval(rushTimerInterval);
-                    endRush();
-                }
-            }, 1000);
-        }
-        function nextRushCase() {
-            currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
-            document.getElementById('f2l-rush-visual').innerHTML = getF2LSvg(currentF2LCase);
-        }
-        function nextRush(success) {
-            if (rushTimeLeft <= 0) return;
-           
-            if (success) {
-                rushScore++;
-                document.getElementById('f2l-rush-score').innerText = rushScore;
-                awardPoint(); // Global points
-                nextRushCase();
-            } else {
-                // Penalty
-                rushTimeLeft -= 2;
-                const bg = document.getElementById('f2l-rush-bg');
-                bg.classList.add('bg-red-500/40');
-                setTimeout(() => bg.classList.remove('bg-red-500/40'), 300);
-                nextRushCase();
-            }
-        }
-        function endRush() {
-            document.getElementById('f2l-rush-controls').classList.add('hidden');
-            document.getElementById('f2l-btn-rush-start').classList.remove('hidden');
-            document.getElementById('f2l-btn-rush-start').innerText = "TRY AGAIN";
-           
-            document.getElementById('f2l-rush-visual').innerHTML = `
-                <div class="text-center">
-                    <div class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 mb-2">${rushScore}</div>
-                    <div class="text-sm font-bold text-zinc-500 uppercase tracking-widest">Pairs Recognized</div>
-                </div>
-            `;
-            if (rushScore > 10) fireConfetti(true);
-        }
-        // --- Firebase Global Integration ---
-        let db, auth, currentUser, appId, firestoreAPI;
-       
-        async function initCloud() {
-            try {
-                const fbApp = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js');
-                const fbAuth = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js');
-                firestoreAPI = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
-               
-                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-                if (!firebaseConfig) {
-                    console.log("No Firebase config found. Running locally.");
-                    renderLeaderboard(); // render local only
-                    return;
-                }
-                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-                const app = fbApp.initializeApp(firebaseConfig);
-                auth = fbAuth.getAuth(app);
-                db = firestoreAPI.getFirestore(app);
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await fbAuth.signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await fbAuth.signInAnonymously(auth);
-                }
-                fbAuth.onAuthStateChanged(auth, (user) => {
-                    currentUser = user;
-                    if (user) {
-                        listenToLeaderboard();
-                    }
-                });
-            } catch (e) {
-                console.error("Cloud storage failed to initialize", e);
-                renderLeaderboard(); // fallback
-            }
-        }
-        function listenToLeaderboard() {
-            if (!currentUser || !db) return;
-            const lbRef = firestoreAPI.collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
-           
-            firestoreAPI.onSnapshot(lbRef, (snapshot) => {
-                globalLeaderboard = [];
-                let myDocFound = false;
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    globalLeaderboard.push(data);
-                    if (data.uid === currentUser.uid) {
-                        myDocFound = true;
-                        // Keep highest score
-                        if (data.score > userScore) {
-                            userScore = data.score;
-                            userName = data.name || "SpeedCuber";
-                            localStorage.setItem('cubeTrainerScore', userScore);
-                            localStorage.setItem('cubeTrainerName', userName);
-                           
-                            document.getElementById('username-input').value = userName;
-                            document.getElementById('header-score').innerText = userScore;
-                            document.getElementById('profile-score').innerText = userScore;
-                        }
-                    }
-                });
-                // If my doc isn't in the DB yet but I have a score locally, push it up
-                if (!myDocFound && userScore > 0) {
-                    updateCloudScore();
-                }
-                renderLeaderboard();
-            }, (error) => {
-                console.error("Error listening to leaderboard: ", error);
-            });
-        }
-        function updateCloudScore() {
-            if (!currentUser || !db) return;
-            const docRef = firestoreAPI.doc(db, 'artifacts', appId, 'public', 'data', 'leaderboard', currentUser.uid);
-            firestoreAPI.setDoc(docRef, {
-                uid: currentUser.uid,
-                name: userName,
-                score: userScore,
-                updatedAt: Date.now()
-            }, { merge: true }).catch(e => console.error("Error updating score: ", e));
-        }
+
         const ollCases = [
             {id:1, name:"Dot 1", recog:"Pure dot (no edges oriented)", algs:["R U2 [R2' F R F'] U2' [R' F R F']"], uMask:"00000000010111010111"},
             {id:2, name:"OLL 2", recog:"Pure dot (no edges oriented)", algs:["[F R U R' U' F'] [f R U R' U' f']"], uMask:"00000000011010011111"},
@@ -902,6 +450,7 @@
             {id:56, name:"Mummy 2", recog:"Corners oriented (M-slice)", algs:["[F R U R' U' R] F' [r U R' U'] r'", "(y) [f R U R' U' f'] [F (R U R' U') (R U R' U') F']"], uMask:"00011000010101010101"},
             {id:57, name:"Mummy", recog:"Corners oriented", algs:["[R U R' U'] M' [U R U' r']"], uMask:"10111101010000010000"}
         ];
+
         // 21 PLL Cases with intelligent signatures
         const pllCases = [
             {id: "H", name: "H Perm", recog: "Opposite edges swapped", hold: "Any orientation", algs: ["M2 U M2 U2 M2 U M2"], arrows: "1-7,3-5"},
@@ -926,6 +475,922 @@
             {id: "Gc", name: "Gc Perm", recog: "Headlights left, block front-left", hold: "Headlights left", algs: ["[R2 u'] R U' R U R' u R2 y [R U' R']"], arrows: "0->6,3->5,5->7,6->8,7->3,8->0"},
             {id: "Gd", name: "Gd Perm", recog: "Headlights left, block back-left", hold: "Headlights left", algs: ["[R U R'] y' R2 u' R U' R' U R' u R2"], arrows: "0->2,1->3,2->6,3->7,6->0,7->1"}
         ];
+
+        // --- Firebase Global Integration ---
+        let db, auth, currentUser, appId, firestoreAPI;
+        
+        async function initCloud() {
+            try {
+                const fbApp = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js');
+                const fbAuth = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js');
+                firestoreAPI = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
+                
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+                if (!firebaseConfig) {
+                    console.log("No Firebase config found. Running locally.");
+                    renderLeaderboard(); // render local only
+                    return;
+                }
+
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const app = fbApp.initializeApp(firebaseConfig);
+                auth = fbAuth.getAuth(app);
+                db = firestoreAPI.getFirestore(app);
+
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await fbAuth.signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await fbAuth.signInAnonymously(auth);
+                }
+
+                fbAuth.onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (user) {
+                        listenToLeaderboard();
+                    }
+                });
+            } catch (e) {
+                console.error("Cloud storage failed to initialize", e);
+                renderLeaderboard(); // fallback
+            }
+        }
+
+        function listenToLeaderboard() {
+            if (!currentUser || !db) return;
+            const lbRef = firestoreAPI.collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
+            
+            firestoreAPI.onSnapshot(lbRef, (snapshot) => {
+                globalLeaderboard = [];
+                let myDocFound = false;
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    globalLeaderboard.push(data);
+                    if (data.uid === currentUser.uid) {
+                        myDocFound = true;
+                        // Keep highest score
+                        if (data.score > userScore) {
+                            userScore = data.score;
+                            userName = data.name || "SpeedCuber";
+                            localStorage.setItem('cubeTrainerScore', userScore);
+                            localStorage.setItem('cubeTrainerName', userName);
+                            
+                            document.getElementById('username-input').value = userName;
+                            document.getElementById('header-score').innerText = userScore;
+                            document.getElementById('profile-score').innerText = userScore;
+                        }
+                    }
+                });
+
+                // If my doc isn't in the DB yet but I have a score locally, push it up
+                if (!myDocFound && userScore > 0) {
+                    updateCloudScore();
+                }
+
+                renderLeaderboard();
+            }, (error) => {
+                console.error("Error listening to leaderboard: ", error);
+            });
+        }
+
+        function updateCloudScore() {
+            if (!currentUser || !db) return;
+            const docRef = firestoreAPI.doc(db, 'artifacts', appId, 'public', 'data', 'leaderboard', currentUser.uid);
+            firestoreAPI.setDoc(docRef, {
+                uid: currentUser.uid,
+                name: userName,
+                score: userScore,
+                updatedAt: Date.now()
+            }, { merge: true }).catch(e => console.error("Error updating score: ", e));
+        }
+
+        // Gamification Functions
+        function updateUsername(newName) {
+            userName = newName.trim() || "SpeedCuber";
+            localStorage.setItem('cubeTrainerName', userName);
+            renderLeaderboard();
+            updateCloudScore();
+        }
+
+        function awardPoint() {
+            userScore++;
+            localStorage.setItem('cubeTrainerScore', userScore);
+            
+            document.getElementById('header-score').innerText = userScore;
+            document.getElementById('profile-score').innerText = userScore;
+            
+            // Pop animation on the header badge
+            const headerBadge = document.getElementById('header-score').parentElement;
+            headerBadge.classList.add('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
+            setTimeout(() => {
+                headerBadge.classList.remove('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
+            }, 300);
+
+            renderLeaderboard();
+            updateCloudScore();
+        }
+
+        function renderLeaderboard() {
+            let allPlayers = [...globalLeaderboard];
+            
+            // Ensure local user is always represented even if offline
+            if (!allPlayers.find(p => p.uid === (currentUser ? currentUser.uid : 'local'))) {
+                allPlayers.push({ name: userName, score: userScore, uid: currentUser ? currentUser.uid : 'local' });
+            }
+
+            // Flag the user for highlighting
+            allPlayers = allPlayers.map(p => ({
+                ...p,
+                isUser: p.uid === (currentUser ? currentUser.uid : 'local')
+            }));
+
+            // Sort by score
+            allPlayers.sort((a, b) => b.score - a.score);
+
+            const listContainer = document.getElementById('leaderboard-list');
+            listContainer.innerHTML = '';
+
+            allPlayers.slice(0, 20).forEach((player, index) => {
+                const rank = index + 1;
+                let rankColor = "text-zinc-500";
+                let rankIcon = rank;
+                
+                if (rank === 1) { rankColor = "text-yellow-400"; rankIcon = '<i class="fa-solid fa-crown"></i>'; }
+                else if (rank === 2) { rankColor = "text-zinc-300"; rankIcon = '<i class="fa-solid fa-medal"></i>'; }
+                else if (rank === 3) { rankColor = "text-amber-600"; rankIcon = '<i class="fa-solid fa-medal"></i>'; }
+
+                const isMe = player.isUser;
+                const bgClass = isMe ? "bg-orange-500/10 border-l-4 border-orange-500" : "hover:bg-zinc-800/30";
+                const nameColor = isMe ? "text-orange-400 font-bold" : "text-zinc-200";
+
+                const html = `
+                    <div class="flex items-center px-6 py-4 transition-colors ${bgClass}">
+                        <div class="w-12 text-center text-lg font-black ${rankColor}">${rankIcon}</div>
+                        <div class="flex-1 pl-4 text-base ${nameColor}">${player.name} ${isMe ? '<span class="ml-2 text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-md uppercase tracking-wider">You</span>' : ''}</div>
+                        <div class="w-20 text-right font-mono font-bold text-zinc-300">${player.score}</div>
+                    </div>
+                `;
+                listContainer.innerHTML += html;
+            });
+        }
+
+        // Core Utilities
+        function rotateMask(mask) {
+            if (mask.length === 8) return mask[5] + mask[3] + mask[0] + mask[6] + mask[1] + mask[7] + mask[4] + mask[2];
+            const u = [mask[5], mask[3], mask[0], mask[6], mask[1], mask[7], mask[4], mask[2]].join('');
+            const b = [mask[19], mask[18], mask[17]].join(''); 
+            const r = [mask[8], mask[9], mask[10]].join('');   
+            const f = [mask[13], mask[12], mask[11]].join(''); 
+            const l = [mask[14], mask[15], mask[16]].join(''); 
+            return u + b + r + f + l;
+        }
+
+        function getPllSignature(arrows) {
+            let degree = {};
+            arrows.forEach(a => {
+                degree[a.from] = (degree[a.from] || 0) + 1;
+                degree[a.to] = (degree[a.to] || 0) + 1;
+            });
+            
+            return arrows.map(a => {
+                if (degree[a.from] === 1 && degree[a.to] === 1) return Math.min(a.from, a.to) + '-' + Math.max(a.from, a.to);
+                return a.from + '->' + a.to;
+            }).sort().join(',');
+        }
+
+        // Favorites and History Logic
+        function saveFavorites() {
+            localStorage.setItem('cubeTrainerFavs', JSON.stringify(favorites));
+        }
+
+        function toggleFavorite(type) {
+            const currentCase = type === 'oll' ? currentOllCase : currentPllCase;
+            if (!currentCase || currentCase.isHelper) return;
+
+            const favArr = favorites[type];
+            const idx = favArr.indexOf(currentCase.id);
+            
+            if (idx > -1) favArr.splice(idx, 1);
+            else favArr.push(currentCase.id);
+            
+            saveFavorites();
+            renderFavorites(type);
+            updateFavoriteButton(type, currentCase);
+        }
+
+        function updateFavoriteButton(type, match) {
+            const btn = document.getElementById(`${type}-fav-btn`);
+            if (!btn) return;
+            
+            if (match && !match.isHelper) {
+                btn.style.display = 'block';
+                const isFav = favorites[type].includes(match.id);
+                btn.innerHTML = isFav ? '<i class="fa-solid fa-star text-yellow-400"></i>' : '<i class="fa-regular fa-star text-zinc-400 hover:text-yellow-400"></i>';
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+
+        function addToHistory(type, match) {
+            if (!match || match.isHelper) return;
+            const histArr = type === 'oll' ? ollHistory : pllHistory;
+            
+            if (histArr[0] !== match.id) {
+                histArr.unshift(match.id);
+                if (histArr.length > 10) histArr.pop();
+                renderHistory(type);
+            }
+        }
+
+        // GUI and Grid Logic
+        function getArrowsSvgString(arrowsToDraw, isMini) {
+            let degree = {};
+            arrowsToDraw.forEach(a => {
+                degree[a.from] = (degree[a.from] || 0) + 1;
+                degree[a.to] = (degree[a.to] || 0) + 1;
+            });
+
+            let uid = Math.random().toString(36).substr(2, 9);
+            let mWidth = isMini ? 3 : 5;
+            let mHeight = isMini ? 3 : 5;
+            let rX = isMini ? 1.5 : 1.5;
+            let rY = isMini ? 1.5 : 2.5;
+            let pts = isMini ? "0 0, 3 1.5, 0 3" : "0 0, 5 2.5, 0 5";
+            let sw = isMini ? 0.4 : 0.3;
+
+            let html = `
+                <defs>
+                    <marker id="start-${uid}" markerWidth="${mWidth}" markerHeight="${mHeight}" refX="${rX}" refY="${rY}" orient="auto-start-reverse" overflow="visible">
+                        <polygon points="${pts}" fill="#ffffff" stroke="#000000" stroke-width="${sw}" stroke-linejoin="round"/>
+                    </marker>
+                    <marker id="end-${uid}" markerWidth="${mWidth}" markerHeight="${mHeight}" refX="${rX+1}" refY="${rY}" orient="auto" overflow="visible">
+                        <polygon points="${pts}" fill="#ffffff" stroke="#000000" stroke-width="${sw}" stroke-linejoin="round"/>
+                    </marker>
+                </defs>
+            `;
+            
+            let paths = '';
+            arrowsToDraw.forEach(arr => {
+                let isSwap = (degree[arr.from] === 1 && degree[arr.to] === 1);
+                let size = isMini ? 29 : 60;
+                let offset = isMini ? 19 : 36;
+                
+                let x1 = offset + (arr.from % 3) * size; let y1 = offset + Math.floor(arr.from / 3) * size;
+                let x2 = offset + (arr.to % 3) * size;   let y2 = offset + Math.floor(arr.to / 3) * size;
+                let dx = x2 - x1; let dy = y2 - y1;
+                let len = Math.sqrt(dx*dx + dy*dy);
+                
+                if (len > 0) {
+                    let rs = isSwap ? (isMini ? 6 : 20) / len : (isMini ? 3 : 10) / len;
+                    let re = (isMini ? 6 : 20) / len;
+                    
+                    let sx = x1 + dx * rs; let sy = y1 + dy * rs;
+                    let ex = x2 - dx * re; let ey = y2 - dy * re;
+                    
+                    let markers = `marker-end="url(#end-${uid})"`;
+                    if (isSwap) markers = `marker-start="url(#start-${uid})" marker-end="url(#end-${uid})"`;
+
+                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#000000" stroke-width="${isMini ? 3.5 : 8}" stroke-linecap="round" />`;
+                    paths += `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-width="${isMini ? 2 : 5}" stroke-linecap="round" ${markers} />`;
+                }
+            });
+            return html + paths;
+        }
+
+        function createNet(isOLL) {
+            const prefix = isOLL ? 'oll' : 'pll';
+            const uCont = document.getElementById(prefix + '-u');
+            uCont.innerHTML = '';
+            
+            const uGrid = document.createElement('div');
+            uGrid.style.display = 'grid'; uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)'; uGrid.style.gap = '8px';
+            
+            for (let i = 0; i < 9; i++) {
+                const sq = document.createElement('div');
+                sq.className = isOLL ? 'cube-square' : 'cube-square pll-u-square';
+                if (!isOLL) sq.dataset.index = i;
+
+                if (isOLL) {
+                    sq.style.background = (i === 4 || ollUState[i]) ? GRADIENT_BG : 'transparent';
+                    sq.onclick = () => { 
+                        hasScoredThisMatch = false;
+                        if (i !== 4) { ollUState[i] = 1 - ollUState[i]; sq.style.background = ollUState[i] ? GRADIENT_BG : 'transparent'; } 
+                    };
+                } else {
+                    sq.style.background = GRADIENT_BG; 
+                }
+                uGrid.appendChild(sq);
+            }
+            uCont.appendChild(uGrid);
+
+            if (!isOLL) {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("id", "pll-svg");
+                svg.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none");
+                svg.style.zIndex = "10";
+                uCont.appendChild(svg);
+                svg.innerHTML = getArrowsSvgString(pllArrows, false);
+                renderPllGrid();
+            }
+
+            const sideState = isOLL ? ollSideState : pllSides;
+            ['back','left','right','front'].forEach(side => {
+                const cont = document.getElementById(prefix + '-' + side);
+                cont.innerHTML = '';
+                const wrapper = document.createElement('div');
+                wrapper.className = (side==='left' || side==='right') ? 'vertical-strip' : 'side-strip';
+                for (let i = 0; i < 3; i++) {
+                    const sq = document.createElement('div');
+                    sq.className = 'cube-square';
+                    if (isOLL) {
+                        sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
+                        sq.onclick = () => {
+                            hasScoredThisMatch = false;
+                            sideState[side][i] = sideState[side][i] ? 0 : 1;
+                            sq.style.background = sideState[side][i] ? GRADIENT_BG : 'transparent';
+                        };
+                    } else {
+                        sq.style.background = 'transparent';
+                        sq.style.borderColor = '#3f3f46';
+                        sq.style.cursor = 'default';
+                    }
+                    wrapper.appendChild(sq);
+                }
+                cont.appendChild(wrapper);
+            });
+        }
+
+        function initPllInteractions() {
+            const uFace = document.getElementById('pll-u');
+            
+            uFace.addEventListener('pointerdown', (e) => {
+                hasScoredThisMatch = false;
+                let sq = e.target.closest('.pll-u-square');
+                if (sq) {
+                    pllDragStartIdx = parseInt(sq.dataset.index);
+                    e.target.setPointerCapture(e.pointerId);
+                }
+            });
+
+            document.addEventListener('pointerup', (e) => {
+                if (pllDragStartIdx !== null) {
+                    let el = document.elementFromPoint(e.clientX, e.clientY);
+                    let dropSq = el ? el.closest('.pll-u-square') : null;
+                    
+                    if (dropSq) {
+                        let dropIdx = parseInt(dropSq.dataset.index);
+                        if (dropIdx === pllDragStartIdx) {
+                            if (pllTapStartIdx === null) {
+                                pllTapStartIdx = dropIdx; 
+                            } else {
+                                if (pllTapStartIdx !== dropIdx) togglePllArrow(pllTapStartIdx, dropIdx); 
+                                pllTapStartIdx = null;
+                            }
+                        } else {
+                            togglePllArrow(pllDragStartIdx, dropIdx);
+                            pllTapStartIdx = null; 
+                        }
+                    } else {
+                        pllTapStartIdx = null; 
+                    }
+                    pllDragStartIdx = null;
+                    renderPllGrid();
+                    document.getElementById('pll-svg').innerHTML = getArrowsSvgString(pllArrows, false);
+                }
+            });
+
+            uFace.addEventListener('touchmove', (e) => {
+                if (pllDragStartIdx !== null) e.preventDefault();
+            }, { passive: false });
+        }
+
+        function togglePllArrow(from, to) {
+            if (from === to) return;
+            let idx = pllArrows.findIndex(arr => (arr.from === from && arr.to === to) || (arr.from === to && arr.to === from));
+            if (idx >= 0) pllArrows.splice(idx, 1);
+            else pllArrows.push({from, to});
+        }
+
+        function renderPllGrid() {
+            let activeIndices = new Set();
+            if (pllTapStartIdx !== null) activeIndices.add(pllTapStartIdx);
+            pllArrows.forEach(arr => { activeIndices.add(arr.from); activeIndices.add(arr.to); });
+
+            document.querySelectorAll('.pll-u-square').forEach((sq) => {
+                let idx = parseInt(sq.dataset.index);
+                if (activeIndices.has(idx)) {
+                    sq.style.boxShadow = '0 0 12px 2px rgba(255,255,255,0.4), inset 0 0 0 1px rgba(255,255,255,0.8)'; 
+                    sq.style.borderColor = 'rgba(255,255,255,0.9)';
+                } else {
+                    sq.style.boxShadow = 'none';
+                    sq.style.borderColor = '#52525b';
+                }
+            });
+        }
+
+        function renderPreview(isOLL, containerId, maskString = null, arrowArray = null) {
+            const cont = document.getElementById(containerId);
+            cont.innerHTML = '';
+            
+            const grid = document.createElement('div');
+            grid.className = "mini-cross-container transform scale-[0.65] sm:scale-75 origin-top";
+
+            let localUState = isOLL ? [...ollUState] : null;
+            let localSides = isOLL ? ollSideState : pllSides;
+
+            if (isOLL && maskString) {
+                localUState = Array(9).fill(0); localUState[4] = 1;
+                const pos = [0,1,2,3,5,6,7,8];
+                for (let i = 0; i < 8; i++) localUState[pos[i]] = parseInt(maskString[i] || '0');
+
+                localSides = { back: [0,0,0], right: [0,0,0], front: [0,0,0], left: [0,0,0] };
+                if (maskString.length === 20) {
+                    for(let i=0; i<3; i++) {
+                        localSides.back[i] = parseInt(maskString[8+i]);
+                        localSides.right[i] = parseInt(maskString[11+i]);
+                        localSides.front[i] = parseInt(maskString[14+i]);
+                        localSides.left[i] = parseInt(maskString[17+i]);
+                    }
+                }
+            }
+
+            const createStrip = (areaName, stateKey, isVertical) => {
+                const strip = document.createElement('div');
+                strip.style.gridArea = areaName;
+                strip.className = isVertical ? 'vertical-strip' : 'side-strip';
+                for (let i = 0; i < 3; i++) {
+                    const s = document.createElement('div'); s.className = 'mini-square';
+                    if (isOLL) {
+                        const st = localSides[stateKey][i];
+                        s.style.background = st ? GRADIENT_BG : 'transparent';
+                        s.style.borderColor = '#52525b';
+                    } else {
+                        s.style.background = 'transparent';
+                        s.style.borderColor = '#3f3f46';
+                    }
+                    strip.appendChild(s);
+                }
+                grid.appendChild(strip);
+            };
+
+            createStrip('top', 'back', false);
+            createStrip('left', 'left', true);
+            createStrip('right', 'right', true);
+            createStrip('bottom', 'front', false);
+
+            const uWrap = document.createElement('div');
+            uWrap.className = 'mini-u-face';
+
+            const uGrid = document.createElement('div');
+            uGrid.style.display = 'grid'; uGrid.style.gridTemplateColumns = 'repeat(3, 1fr)'; uGrid.style.gap = '3px';
+            for (let i = 0; i < 9; i++) {
+                const s = document.createElement('div'); s.className = 'mini-square';
+                s.style.background = isOLL ? ((i===4 || localUState[i]) ? GRADIENT_BG : 'transparent') : GRADIENT_BG;
+                uGrid.appendChild(s);
+            }
+            uWrap.appendChild(uGrid);
+
+            if (!isOLL) {
+                let arrowsToDraw = arrowArray || pllArrows;
+                if (arrowsToDraw.length > 0) {
+                    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    svg.setAttribute("class", "absolute inset-0 w-full h-full pointer-events-none");
+                    svg.style.zIndex = "10";
+                    svg.innerHTML = getArrowsSvgString(arrowsToDraw, true);
+                    uWrap.appendChild(svg);
+                }
+            }
+
+            grid.appendChild(uWrap);
+            cont.appendChild(grid);
+        }
+
+        function buildAlgBlock(alg) {
+            const div = document.createElement('div');
+            div.className = 'bg-black/60 border border-zinc-800 p-4 rounded-2xl';
+            div.innerHTML = `
+                <div class="font-mono text-orange-300 text-sm font-semibold tracking-wide">${alg}</div>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="copyAlg(this)" class="w-full text-[11px] font-bold tracking-wider bg-zinc-800 hover:bg-zinc-700 text-zinc-300 py-2.5 rounded-xl transition">
+                        <i class="fa-solid fa-copy mr-1"></i> COPY
+                    </button>
+                </div>
+            `;
+            return div;
+        }
+
+        function buildAlgBlockString(alg) {
+            return `
+                <div class="bg-black/60 border border-zinc-800 p-4 rounded-2xl">
+                    <div class="font-mono text-orange-300 text-sm font-semibold tracking-wide">${alg}</div>
+                    <div class="flex gap-2 mt-4">
+                        <button onclick="copyAlg(this)" class="w-full text-[11px] font-bold tracking-wider bg-zinc-800 hover:bg-zinc-700 text-zinc-300 py-2.5 rounded-xl transition">
+                            <i class="fa-solid fa-copy mr-1"></i> COPY
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function submitOLL() {
+    let uVals = [0,1,2,3,5,6,7,8].map(i => ollUState[i] ? '1' : '0');
+    let bVals = ollSideState.back.map(v => v ? '1' : '0');
+    let rVals = ollSideState.right.map(v => v ? '1' : '0');
+    let fVals = ollSideState.front.map(v => v ? '1' : '0');
+    let lVals = ollSideState.left.map(v => v ? '1' : '0');
+   
+    let userMask = [...uVals, ...bVals, ...rVals, ...fVals, ...lVals].join('');
+   
+    let match = null;
+    let auf = 0;
+    let currentMask = userMask;
+    for (let r = 0; r < 4; r++) {
+        for (let c of ollCases) {
+            if (c.uMask.length === 20 && c.uMask === currentMask) { match = c; auf = r; break; }
+        }
+        if (match) break;
+        currentMask = rotateMask(currentMask);
+    }
+    if (!match) {
+        currentMask = userMask;
+        for (let r = 0; r < 4; r++) {
+            for (let c of ollCases) {
+                if (c.uMask.length === 8 && c.uMask === currentMask.substring(0, 8)) { match = c; auf = r; break; }
+            }
+            if (match) break;
+            currentMask = rotateMask(currentMask);
+        }
+    }
+    if (!match || match.uMask.length === 8) {
+        let textTitle = match ? "Incomplete Pattern" : "Pattern Not Found";
+        let exactStr = match ? `We found a partial match for <strong>${match.name}</strong>, but need more details. Please fill in the side stickers.` : `We couldn't recognize this pattern. Please double-check your stickers and try again.`;
+       
+        match = {
+            id:"?", name: textTitle, algs:[], isHelper: true,
+            helperText: `
+                <div class="text-sm mt-1 text-zinc-300 mb-4 leading-relaxed">
+                    ${exactStr}
+                </div>
+            `
+        };
+    }
+    currentOllCase = match;
+    if (!match.isHelper && !hasScoredThisMatch) {
+        awardPoint();
+        hasScoredThisMatch = true;
+    }
+    const res = document.getElementById('oll-result');
+    res.classList.remove('hidden');
+
+    let headerHTML = `
+        <div class="flex justify-between items-start mb-4">
+            <div>
+                <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">${match.isHelper ? "" : 'OLL ' + match.id}</div>
+                <h2 class="text-2xl font-bold ${match.isHelper ? 'text-red-400 cursor-pointer' : 'text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500'}"
+                    ${match.isHelper ? `onclick="navigator.clipboard.writeText('${userMask}'); alert('Copied developer mask!');"` : ''}>
+                    ${match.isHelper ? '<i class="fa-solid fa-triangle-exclamation mr-2"></i>' : ''}${match.name}
+                </h2>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="oll-fav-btn" onclick="toggleFavorite('oll')" class="text-xl transition-colors outline-none" style="display: ${match.isHelper ? 'none' : 'block'}"></button>
+                ${auf > 0 ? `<div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700 hidden sm:block"><i class="fa-solid fa-rotate-right mr-1"></i> Rotate ${["", "90° CW", "180°", "90° CCW"][auf]}</div>` : ''}
+            </div>
+        </div>
+    `;
+    if (match.isHelper) {
+        document.getElementById('oll-desc').innerHTML = headerHTML + match.helperText;
+    } else {
+        let holdStr = match.hold || "Match the pattern to the correct angle shown below.";
+        document.getElementById('oll-desc').innerHTML = headerHTML + `
+            <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
+                <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
+                <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${holdStr}</div>
+            </div>
+        `;
+    }
+    const container = document.getElementById('oll-algs-container');
+    container.innerHTML = '';
+    if (!match.isHelper) {
+        container.innerHTML = `<div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>`;
+    }
+    match.algs.forEach(alg => container.appendChild(buildAlgBlock(alg)));
+    renderPreview(true, 'oll-preview');
+   
+    document.getElementById('oll-secret-copy').onclick = () => {
+        navigator.clipboard.writeText(userMask);
+        alert('Copied developer 20-bit mask!');
+    };
+    if (!match.isHelper) {
+        renderPreview(true, 'oll-correct-preview', match.uMask);
+        document.getElementById('oll-correct-container').style.display = 'flex';
+        if (auf > 0) {
+            document.getElementById('oll-rotation-warning').classList.remove('hidden');
+            document.getElementById('oll-rotation-warning').innerHTML = `<i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle`;
+        } else {
+            document.getElementById('oll-rotation-warning').classList.add('hidden');
+        }
+    } else {
+        document.getElementById('oll-correct-container').style.display = 'none';
+        document.getElementById('oll-rotation-warning').classList.add('hidden');
+    }
+    updateFavoriteButton('oll', match);
+    addToHistory('oll', match);
+    setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+}
+        function submitPLL() {
+            const resContainer = document.getElementById('pll-result');
+            resContainer.classList.remove('hidden');
+
+            if (pllArrows.length === 0) {
+                resContainer.innerHTML = `<div class="text-zinc-500 text-center italic mt-4 py-6">Draw an arrow pattern to begin</div>`;
+                return;
+            }
+
+            let match = null;
+            let auf = 0;
+            let currentArrows = JSON.parse(JSON.stringify(pllArrows));
+
+            for (let r = 0; r < 4; r++) {
+                let sig = getPllSignature(currentArrows);
+                match = pllCases.find(c => c.arrows && c.arrows === sig);
+                if (match) { auf = r; break; }
+
+                const rotMap = [2, 5, 8, 1, 4, 7, 0, 3, 6];
+                currentArrows = currentArrows.map(a => {
+                    return {from: rotMap[a.from], to: rotMap[a.to]};
+                });
+            }
+
+            if (!match) {
+                let baseSig = getPllSignature(pllArrows);
+                resContainer.innerHTML = `
+                    <div class="bg-red-950/40 border border-red-900/50 p-6 rounded-3xl shadow-xl">
+                        <div class="text-red-400 font-bold mb-1 text-lg cursor-pointer inline-block" onclick="navigator.clipboard.writeText('${baseSig}'); alert('Copied developer PLL signature!');"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Pattern Not Found</div>
+                        <div class="text-sm mt-2 text-zinc-300 mb-6 leading-relaxed">
+                            We couldn't recognize this arrow pattern. Please double-check your swaps and try again.
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mt-6">
+                            <button onclick="resetPLL()" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
+                            <button onclick="switchTab(1)" class="w-full py-4 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
+                        </div>
+                    </div>
+                `;
+                setTimeout(() => resContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                return;
+            }
+
+            currentPllCase = match;
+            if (!hasScoredThisMatch) {
+                awardPoint();
+                hasScoredThisMatch = true;
+            }
+
+            let rotationText = ["Correct Angle", "Rotate 90° CW", "Rotate 180°", "Rotate 90° CCW"][auf];
+            let algsHTML = match.algs.map(a => buildAlgBlockString(a)).join('');
+
+            resContainer.innerHTML = `
+                <div class="bg-zinc-900 rounded-3xl p-6 border border-zinc-800 shadow-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-xs font-bold tracking-wider text-orange-400 mb-1">PLL ${match.id}</div>
+                            <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">${match.name}</h2>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button id="pll-fav-btn" onclick="toggleFavorite('pll')" class="text-xl transition-colors outline-none" title="Save to Favorites"></button>
+                            ${auf > 0 ? `<div class="bg-zinc-800 text-zinc-300 text-[10px] px-3 py-1.5 rounded-lg border border-zinc-700 hidden sm:block"><i class="fa-solid fa-rotate-right mr-1"></i> ${rotationText}</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="text-zinc-400 text-sm mb-5 leading-relaxed bg-black/20 p-4 rounded-xl space-y-3 border border-zinc-800/50">
+                        <div><i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${match.recog}</div>
+                        <div><i class="fa-solid fa-hand text-emerald-400 mr-2"></i><strong class="text-zinc-200">Hold:</strong> ${match.hold}</div>
+                    </div>
+                    <div class="mb-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">Algorithms</div>
+                    <div class="space-y-4">${algsHTML}</div>
+                    
+                    <div class="mt-8 border-t border-zinc-800 pt-6">
+                        <div class="flex justify-between items-start w-full">
+                            <div class="flex flex-col items-center flex-1">
+                                <div id="pll-user-mask" class="text-[10px] text-zinc-500 mb-3 font-bold uppercase tracking-widest text-center h-8 cursor-pointer select-none" title="Developer Copy">Your Pattern</div>
+                                <div id="pll-preview" class="origin-top relative" style="height: 120px;"></div>
+                            </div>
+                            <div class="flex flex-col items-center flex-1">
+                                <div class="text-[10px] text-emerald-400 mb-3 font-bold uppercase tracking-widest text-center h-8">Correct Angle<br><span class="text-emerald-500/70 text-[8px] tracking-normal">(Start algo here)</span></div>
+                                <div id="pll-correct-preview" class="origin-top relative" style="height: 120px;"></div>
+                            </div>
+                        </div>
+                        ${auf > 0 ? `<div class="text-center text-xs text-orange-400 mt-2 bg-orange-500/10 py-2 rounded-xl border border-orange-500/20"><i class="fa-solid fa-rotate mr-1"></i> Rotate your cube to match the correct angle</div>` : ''}
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mt-10">
+                        <button onclick="resetPLL()" class="py-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-2xl font-bold active:scale-95 transition-colors">RESET PATTERN</button>
+                        <button onclick="switchTab(1)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO OLL</button>
+                    </div>
+                </div>
+            `;
+
+            renderPreview(false, 'pll-preview', null, pllArrows);
+            
+            let correctArrows = match.arrows ? match.arrows.split(',').filter(x=>x).map(s => {
+                if (s.includes('->')) {
+                    let parts = s.split('->'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                } else {
+                    let parts = s.split('-'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                }
+            }) : [];
+            renderPreview(false, 'pll-correct-preview', null, correctArrows);
+
+            document.getElementById('pll-user-mask').onclick = () => {
+                navigator.clipboard.writeText(getPllSignature(pllArrows));
+                alert('Copied developer PLL signature!');
+            };
+
+            updateFavoriteButton('pll', match);
+            addToHistory('pll', match);
+            setTimeout(() => resContainer.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+        }
+
+        function copyAlg(btn) {
+            const algText = btn.parentElement.parentElement.querySelector('.font-mono').textContent;
+            navigator.clipboard.writeText(algText);
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> <span class="text-emerald-400">COPIED</span>`;
+            setTimeout(() => btn.innerHTML = originalHTML, 1500);
+        }
+
+        function resetOLL() {
+            hasScoredThisMatch = false;
+            ollUState = Array(9).fill(0); ollUState[4] = 1;
+            ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+            createNet(true);
+            document.getElementById('oll-result').classList.add('hidden');
+        }
+
+        function resetPLL() {
+            hasScoredThisMatch = false;
+            pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+            pllArrows = []; pllTapStartIdx = null; pllDragStartIdx = null;
+            createNet(false);
+            document.getElementById('pll-result').classList.add('hidden');
+        }
+
+        function generateFullMini(uMask) {
+    const pos = [0,1,2,3,5,6,7,8];
+    let uHTML = '';
+    for (let i = 0; i < 9; i++) {
+        if (i === 4) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
+        else {
+            const idx = pos.indexOf(i);
+            const val = idx >= 0 && uMask[idx] === '1' ? GRADIENT_BG : '#3f3f46';
+            uHTML += `<div class="mini-square" style="background:${val}"></div>`;
+        }
+    }
+    return `
+        <div class="mini-cross-container transform scale-75 origin-left">
+            <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
+            <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+            <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div><div class="mini-square" style="background:#3f3f46"></div></div>
+        </div>
+    `;
+}
+
+        function generateListHtml(cases, isOLL, emptyMessage = "Nothing to show.") {
+            if (!cases || cases.length === 0) return `<div class="text-zinc-500 text-sm text-center py-4 italic">${emptyMessage}</div>`;
+            return cases.map(c => {
+                let algHTML = c.algs.map(a => `
+                    <div class="bg-black/40 border border-zinc-800 rounded-2xl p-3 mt-3">
+                        <div class="font-mono text-orange-300 text-xs tracking-wide">${a}</div>
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="copyAlg(this);event.stopImmediatePropagation()" class="w-full text-[10px] font-bold tracking-wider text-zinc-400 hover:text-white bg-zinc-800 py-1.5 rounded-lg transition">COPY</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                let visualHTML = '';
+                if (isOLL) {
+                    visualHTML = generateFullMini(c.uMask);
+                } else {
+                    let uHTML = '';
+                    for (let i = 0; i < 9; i++) uHTML += `<div class="mini-square" style="background:${GRADIENT_BG}"></div>`;
+                    
+                    let arrowArray = [];
+                    if (c.arrows) {
+                        arrowArray = c.arrows.split(',').filter(x=>x).map(s => {
+                            if (s.includes('->')) {
+                                let parts = s.split('->'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                            } else {
+                                let parts = s.split('-'); return {from: parseInt(parts[0]), to: parseInt(parts[1])};
+                            }
+                        });
+                    }
+                    
+                    let svgHTML = '';
+                    if (arrowArray.length > 0) {
+                        svgHTML = `<svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10;">${getArrowsSvgString(arrowArray, true)}</svg>`;
+                    }
+
+                    visualHTML = `
+                    <div class="mini-cross-container transform scale-75 origin-left mt-3">
+                        <div class="side-strip" style="grid-area: top;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                        <div class="vertical-strip" style="grid-area: left;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                        <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div>${svgHTML}</div>
+                        <div class="vertical-strip" style="grid-area: right;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                        <div class="side-strip" style="grid-area: bottom;"><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div><div class="mini-square" style="border-color:#3f3f46"></div></div>
+                    </div>`;
+                }
+
+                const typePrefix = isOLL ? (typeof c.id === 'number' ? `OLL ${c.id}` : `OLL • ${c.id}`) : `PLL ${c.id}`;
+
+                return `
+                    <div class="list-item-wrapper bg-zinc-900 border border-zinc-800 rounded-3xl p-5 hover:border-orange-500/30 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="font-mono text-[10px] font-bold tracking-widest text-zinc-900 bg-gradient-to-r from-yellow-400 to-orange-500 px-2 py-1 rounded-md mb-1 inline-block">${typePrefix}</span>
+                                <div class="font-bold text-lg mt-1 text-zinc-100">${c.name}</div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-zinc-400 mt-2 mb-2 leading-relaxed">
+                            <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i><strong class="text-zinc-200">Recognition:</strong> ${c.recog}<br>
+                            <i class="fa-solid fa-hand text-emerald-400 mr-2 mt-2"></i><strong class="text-zinc-200">Hold:</strong> ${c.hold || "Match the pattern to the correct angle shown below."}
+                        </div>
+                        ${visualHTML}
+                        ${algHTML}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderHistory(type) {
+            const db = type === 'oll' ? ollCases : pllCases;
+            const histArr = type === 'oll' ? ollHistory : pllHistory;
+            const casesToRender = histArr.map(id => db.find(c => c.id === id)).filter(c => c);
+            document.getElementById(`${type}-hist-container`).innerHTML = generateListHtml(casesToRender, type === 'oll', "No history for this session yet.");
+        }
+
+        function renderFavorites(type) {
+            const db = type === 'oll' ? ollCases : pllCases;
+            const favArr = favorites[type];
+            const casesToRender = favArr.map(id => db.find(c => c.id === id)).filter(c => c);
+            document.getElementById(`${type}-fav-container`).innerHTML = generateListHtml(casesToRender, type === 'oll', "No favorites saved yet.");
+        }
+
+        function populateLists() {
+            document.querySelectorAll('.oll-list-container').forEach(el => el.innerHTML = generateListHtml(ollCases, true));
+            document.querySelectorAll('.pll-list-container').forEach(el => el.innerHTML = generateListHtml(pllCases, false));
+            
+            renderHistory('oll'); renderHistory('pll');
+            renderFavorites('oll'); renderFavorites('pll');
+            renderLeaderboard();
+        }
+
+        function filterList(inputEl, listSelector, syncClass) {
+            const term = inputEl.value.toLowerCase();
+            document.querySelectorAll(listSelector).forEach(container => {
+                container.querySelectorAll('.list-item-wrapper').forEach(item => {
+                    item.style.display = item.textContent.toLowerCase().includes(term) ? 'block' : 'none';
+                });
+            });
+            document.querySelectorAll(syncClass).forEach(syncEl => {
+                if (syncEl !== inputEl) syncEl.value = inputEl.value;
+            });
+        }
+
+        function toggleList(contentId, chevronId) {
+            const content = document.getElementById(contentId);
+            const chevron = document.getElementById(chevronId);
+            content.classList.toggle('hidden');
+            chevron.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        function switchTab(n) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            
+            const contents = ['content-f2l', 'content-oll', 'content-pll', 'content-rank'];
+            document.getElementById(contents[n]).classList.remove('hidden');
+            
+            const activeClass = "flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm leading-tight bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50";
+            const inactiveClass = "flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
+            
+            document.getElementById('tab-f2l').className = n === 0 ? activeClass : inactiveClass;
+            document.getElementById('tab-oll').className = n === 1 ? activeClass : inactiveClass;
+            document.getElementById('tab-pll').className = n === 2 ? activeClass : inactiveClass;
+            document.getElementById('tab-rank').className = n === 3 ? activeClass : inactiveClass;
+        }
+
+        window.onload = () => {
+            document.getElementById('header-score').innerText = userScore;
+            document.getElementById('profile-score').innerText = userScore;
+            document.getElementById('username-input').value = userName;
+            
+            pllSides.back = [0,0,0]; pllSides.right = [1,1,1]; pllSides.front = [2,2,2]; pllSides.left = [3,3,3];
+            createNet(true); createNet(false);
+            initPllInteractions(); populateLists(); 
+            switchTab(1); // Default to OLL
+            
+            // Connect to Global Database
+            initCloud();
+        };
     </script>
 </body>
 </html>
