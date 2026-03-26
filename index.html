@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AI Speed Cube Trainer • Accurate OLL Detection & AI Coach</title>
    
-    <!-- FAVICON -->
+    <!-- FAVICON - exact same SVG as your header icon -->
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="32x32">
     <link rel="apple-touch-icon" href="favicon.svg" sizes="180x180">
+    <!-- Force browser to refresh the favicon cache -->
     <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
    
-    <!-- CANVAS CONFETTI FOR GAMIFICATION -->
+    <!-- ADD CANVAS CONFETTI FOR GAMIFICATION -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-   
-    <!-- GOOGLE ADSENSE -->
+    <!-- GOOGLE ADSENSE START -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3450574279480673" crossorigin="anonymous"></script>
-   
+    <!-- GOOGLE ADSENSE END -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -94,7 +94,7 @@
     </div>
     <div class="max-w-2xl mx-auto w-full pt-8 sm:pt-12">
        
-        <!-- Header -->
+        <!-- Desktop-friendly centered header -->
         <div class="px-6 pb-8 flex flex-col items-center text-center gap-4 relative">
             <div class="w-14 h-14 bg-gradient-to-br from-yellow-400 to-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] text-zinc-950 rounded-3xl flex items-center justify-center text-3xl font-black shrink-0">
                 <i class="fa-solid fa-cube"></i>
@@ -104,16 +104,16 @@
                 <p class="text-[10px] sm:text-xs text-orange-400/80 mt-1 uppercase tracking-widest font-semibold pr-16 sm:pr-0">Accurate last layer pattern detection & AI Coach</p>
             </div>
         </div>
-        <!-- Tabs -->
+        <!-- Clean layout for 4 tabs -->
         <div class="px-4 sm:px-6 pb-6 flex justify-center gap-2 sm:gap-4 max-w-3xl mx-auto">
             <button onclick="switchTab(0)" id="tab-f2l" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">First Two Layers <br class="sm:hidden">(F2L)</button>
             <button onclick="switchTab(1)" id="tab-oll" class="flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50">OLL (57)</button>
             <button onclick="switchTab(2)" id="tab-pll" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition">PLL (21)</button>
             <button onclick="switchTab(3)" id="tab-rank" class="flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition"><i class="fa-solid fa-trophy text-yellow-500 mb-1 sm:mb-0 sm:mr-1 block sm:inline"></i>Leaderboard</button>
         </div>
-
-        <!-- ==================== F2L CONTENT (FULL RICH TRAINER) ==================== -->
+        <!-- F2L Content -->
         <div id="content-f2l" class="tab-content hidden px-4 sm:px-6 max-w-2xl mx-auto">
+           
             <!-- F2L Sub-Navigation -->
             <div class="flex overflow-x-auto no-scrollbar gap-2 mb-6 bg-zinc-900 p-2 rounded-2xl border border-zinc-800 snap-x">
                 <button onclick="switchF2LMode(0)" id="f2l-nav-0" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap"><i class="fa-solid fa-stopwatch mr-2 text-orange-400"></i>Random Drill</button>
@@ -121,14 +121,14 @@
                 <button onclick="switchF2LMode(2)" id="f2l-nav-2" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-book-open mr-2 text-emerald-400"></i>Practice</button>
                 <button onclick="switchF2LMode(3)" id="f2l-nav-3" class="flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap"><i class="fa-solid fa-fire-flame-curved mr-2 text-red-500"></i>60s Rush</button>
             </div>
-            
-            <!-- Mode 0: Random Drill -->
+            <!-- Mode 1: Random F2L Drill -->
             <div id="f2l-mode-0" class="f2l-view block">
                 <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
                     <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-1">Speed Drill</h2>
                     <p class="text-zinc-400 text-xs mb-8 text-center">React fast! Spin a pair, start the timer, and execute on your cube.</p>
                    
                     <div id="f2l-drill-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center transition-transform duration-75">
+                        <!-- Rendered visual goes here -->
                         <div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>
                     </div>
                    
@@ -151,8 +151,7 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Mode 1: Recognition Quiz -->
+            <!-- Mode 2: Pair Recognition -->
             <div id="f2l-mode-1" class="f2l-view hidden">
                 <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
                     <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-1">Recognition Quiz</h2>
@@ -161,11 +160,12 @@
                     <div id="f2l-quiz-visual" class="transform scale-110 mb-8 min-h-[160px] flex items-center justify-center"></div>
                    
                     <h3 class="text-lg font-bold text-white mb-4">What type of pair is this?</h3>
-                    <div class="grid grid-cols-1 gap-3 w-full" id="f2l-quiz-options"></div>
+                    <div class="grid grid-cols-1 gap-3 w-full" id="f2l-quiz-options">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
             </div>
-            
-            <!-- Mode 2: Practice -->
+            <!-- Mode 3: Practice Mode -->
             <div id="f2l-mode-2" class="f2l-view hidden">
                 <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center">
                     <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 mb-1">Flashcard Practice</h2>
@@ -189,10 +189,10 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Mode 3: 60s Rush -->
+            <!-- Mode 4: 60s Rush -->
             <div id="f2l-mode-3" class="f2l-view hidden">
                 <div class="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col items-center relative overflow-hidden">
+                    <!-- Warning Pulse Background -->
                     <div id="f2l-rush-bg" class="absolute inset-0 bg-red-500/0 transition-colors duration-300 pointer-events-none"></div>
                     <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-1 z-10">60s Survival Rush</h2>
                     <p class="text-zinc-400 text-xs mb-6 text-center z-10">Solve as many cases mentally as you can before time runs out!</p>
@@ -218,10 +218,8 @@
                 </div>
             </div>
         </div>
-
-        <!-- Leaderboard Content -->
+        <!-- Leaderboard / Rank Content -->
         <div id="content-rank" class="tab-content hidden px-6 max-w-xl mx-auto">
-            <!-- (unchanged from last working version) -->
             <div class="mt-2 text-center">
                 <h2 class="text-2xl font-bold tracking-tight text-white">Global Leaderboard</h2>
                 <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
@@ -229,6 +227,7 @@
                 </p>
             </div>
            
+            <!-- User Profile Setup -->
             <div class="mt-8 bg-zinc-900 border border-zinc-800 p-6 rounded-3xl flex flex-col sm:flex-row gap-4 items-center shadow-xl">
                 <div class="flex-1 w-full">
                     <label class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2 block">Your Competitor Name</label>
@@ -239,6 +238,7 @@
                     <div class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500" id="profile-score">0</div>
                 </div>
             </div>
+            <!-- Leaderboard List -->
             <div class="mt-8 bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-xl">
                 <div class="bg-zinc-950/50 border-b border-zinc-800 px-6 py-4 flex text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                     <div class="w-12 text-center">Rank</div>
@@ -246,16 +246,15 @@
                     <div class="w-20 text-right">Detected</div>
                 </div>
                 <div id="leaderboard-list" class="divide-y divide-zinc-800/50 relative">
+                    <!-- Populated by JS -->
                     <div class="text-zinc-500 text-sm text-center py-8 italic" id="leaderboard-loading">
                         <i class="fa-solid fa-spinner fa-spin mr-2"></i> Connecting to Global Database...
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- OLL Content (unchanged) -->
+        <!-- OLL Content -->
         <div id="content-oll" class="tab-content hidden px-6 max-w-xl mx-auto">
-            <!-- (full OLL section from last working version - identical) -->
             <div class="mt-2 text-center">
                 <h2 class="text-2xl font-bold tracking-tight text-white">OLL Pattern Recognition</h2>
                 <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
@@ -270,6 +269,7 @@
                 <div class="right-strip vertical-strip" id="oll-right"></div>
                 <div class="front-strip side-strip" id="oll-front"></div>
             </div>
+            <!-- Quick Reset & Submit -->
             <div class="flex flex-col items-center mt-10">
                 <button onclick="submitOLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
                     <i class="fa-solid fa-magic"></i>
@@ -302,9 +302,9 @@
                     <button onclick="switchTab(2)" class="py-5 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 text-zinc-950 rounded-2xl font-bold active:scale-95 transition-colors">GO TO PLL</button>
                 </div>
             </div>
-            <!-- OLL Tab Lists (identical) -->
+            <!-- OLL Tab Lists -->
             <div class="mt-12 space-y-4">
-                <!-- Favorites, History, Full OLL, Full PLL lists - unchanged -->
+                <!-- Favorites List -->
                 <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
                     <button onclick="toggleList('oll-tab-fav-list', 'oll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
                         <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite OLLs</div>
@@ -314,18 +314,112 @@
                         <div id="oll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
                     </div>
                 </div>
-                <!-- (History, Full List OLL, Full List PLL - identical to working version) -->
-                <!-- ... (omitted for brevity in this comment but fully present in the code below) ... -->
+                <!-- History List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-hist-list', 'oll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> OLL History</div>
+                        <i id="oll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-hist-list" class="hidden px-6 pb-6">
+                        <div id="oll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-oll-list', 'oll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                        <i id="oll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-oll-list" class="hidden px-6 pb-6">
+                        <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
+                        <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('oll-tab-pll-list', 'oll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
+                        <i id="oll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="oll-tab-pll-list" class="hidden px-6 pb-6">
+                        <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
+                        <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- PLL Content (identical to last working) -->
+        <!-- PLL Content -->
         <div id="content-pll" class="tab-content hidden px-6 max-w-xl mx-auto">
-            <!-- (full PLL HTML + lists - identical) -->
-            <!-- ... (same structure) ... -->
+            <div class="mt-2 text-center">
+                <h2 class="text-2xl font-bold tracking-tight text-white">PLL Pattern Recognition</h2>
+                <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                    Permutation of the Last Layer (PLL) is the final step. The entire top face is now orange, but the pieces need to swap places. Tap the two squares on the center grid to indicate which pieces need to swap, then press <strong>DETECT MATCH</strong>!
+                    <br><a href="howto.html" class="inline-block mt-1 text-orange-400 hover:text-orange-300 transition-colors underline underline-offset-4">Need more help? Read this detailed guide.</a>
+                </p>
+            </div>
+            <div class="cross-container mt-10">
+                <div class="back-strip side-strip" id="pll-back"></div>
+                <div class="left-strip vertical-strip" id="pll-left"></div>
+                <div class="u-face" id="pll-u"></div>
+                <div class="right-strip vertical-strip" id="pll-right"></div>
+                <div class="front-strip side-strip" id="pll-front"></div>
+            </div>
+            <!-- Quick Reset & Submit -->
+            <div class="flex flex-col items-center mt-10">
+                <button onclick="submitPLL()" class="w-full max-w-xs bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-300 hover:to-orange-400 transition-colors text-zinc-950 font-bold text-xl py-6 rounded-3xl shadow-[0_0_20px_rgba(249,115,22,0.4)] border border-orange-400/50 active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-magic"></i>
+                    DETECT MATCH
+                </button>
+                <button onclick="resetPLL()" class="mt-5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors uppercase tracking-widest font-bold">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Reset Grid
+                </button>
+            </div>
+            <div id="pll-result" class="hidden mt-10">
+                <!-- Dynamically populated -->
+            </div>
+            <!-- PLL Tab Lists -->
+            <div class="mt-12 space-y-4">
+                <!-- Favorites List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-fav-list', 'pll-tab-fav-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-star text-yellow-500 mr-2"></i> Favorite PLLs</div>
+                        <i id="pll-tab-fav-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-fav-list" class="hidden px-6 pb-6">
+                        <div id="pll-fav-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+                <!-- History List -->
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-hist-list', 'pll-tab-hist-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100"><i class="fa-solid fa-clock-rotate-left text-blue-400 mr-2"></i> PLL History</div>
+                        <i id="pll-tab-hist-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-hist-list" class="hidden px-6 pb-6">
+                        <div id="pll-hist-container" class="space-y-4 max-h-[380px] overflow-auto pr-2 pb-2 mt-4"></div>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-pll-list', 'pll-tab-pll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of PLL Algorithms</div>
+                        <i id="pll-tab-pll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-pll-list" class="hidden px-6 pb-6">
+                        <input class="sync-pll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.pll-list-container', '.sync-pll-search')" placeholder="Search PLL shape...">
+                        <div class="pll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+                    <button onclick="toggleList('pll-tab-oll-list', 'pll-tab-oll-chevron')" class="w-full px-6 py-4 flex items-center justify-between hover:bg-zinc-800/80 transition-colors">
+                        <div class="text-lg font-semibold text-zinc-100">Full List of OLL Algorithms</div>
+                        <i id="pll-tab-oll-chevron" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                    </button>
+                    <div id="pll-tab-oll-list" class="hidden px-6 pb-6">
+                        <input class="sync-oll-search bg-zinc-950 border border-zinc-700 rounded-xl px-4 py-2 text-sm w-full focus:outline-none focus:border-orange-500 transition-colors text-zinc-200 mt-4 mb-4" onkeyup="filterList(this, '.oll-list-container', '.sync-oll-search')" placeholder="Search OLL shape...">
+                        <div class="oll-list-container space-y-4 max-h-[380px] overflow-auto pr-2 pb-2"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Footer -->
+        <!-- Footer / Legal Navigation -->
         <div class="mt-16 text-center w-full pb-8 border-t border-zinc-900 pt-8">
             <div class="flex flex-wrap gap-x-6 gap-y-2 justify-center text-sm text-zinc-500 font-medium">
                 <a href="howto.html" class="hover:text-zinc-300 transition-colors hover:underline underline-offset-4">How to Use the Trainer</a>
@@ -334,49 +428,75 @@
             </div>
         </div>
     </div>
-
     <script>
-        // ==================== F2L CORE (NEW RICH TRAINER) ====================
         const GRADIENT_BG = 'linear-gradient(135deg, #facc15 0%, #f97316 100%)';
         const SIDE_COLORS = ['#3b82f6', '#f1f5f9', '#22c55e', GRADIENT_BG];
-        
-        // F2L Colors
-        const C_W = '#f8fafc';
-        const C_R = '#ef4444';
-        const C_B = '#3b82f6';
-        const C_Y = '#facc15';
-        const C_X = '#3f3f46';
-
-        // F2L Cases
+        // --- Core Colors for F2L ---
+        const C_W = '#f8fafc'; // White
+        const C_R = '#ef4444'; // Red (Front)
+        const C_B = '#3b82f6'; // Blue (Right)
+        const C_Y = '#facc15'; // Yellow
+        const C_X = '#3f3f46'; // Empty/Gray
+        // Core State
+        let ollUState = Array(9).fill(0); ollUState[4] = 1;
+        let ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+       
+        let pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
+        let pllArrows = [];
+        let pllTapStartIdx = null;
+        let pllDragStartIdx = null;
+        // Session & Local Storage State
+        let ollHistory = [];
+        let pllHistory = [];
+        let favorites = JSON.parse(localStorage.getItem('cubeTrainerFavs')) || { oll: [], pll: [] };
+       
+        // Gamification Leaderboard State
+        let userScore = parseInt(localStorage.getItem('cubeTrainerScore') || "0");
+        let userName = localStorage.getItem('cubeTrainerName') || "SpeedCuber";
+        let hasScoredThisMatch = false;
+       
+        let globalLeaderboard = [];
+       
+        // Track currently viewed matches
+        let currentOllCase = null;
+        let currentPllCase = null;
+        // F2L Database
         const f2lCases = [
             { id: 1, type: "insert", group: "Basic Insert", name: "Right Setup Insert", recog: "White faces Right, Edge matches Front.", tip: "Pair is perfectly set up. Insert it directly.", algs: ["U (R U' R')"],
               top: {8: C_W, 5: C_B}, front: {2: C_R}, right: {1: C_R, 2: C_B} },
+           
             { id: 2, type: "insert", group: "Basic Insert", name: "Front Setup Insert", recog: "White faces Front, Edge matches Right.", tip: "Pair is perfectly set up. Insert from front.", algs: ["y' U' (R' U R)"],
               top: {8: C_W, 7: C_R}, front: {1: C_B, 2: C_R}, right: {2: C_B} },
+           
             { id: 3, type: "split", group: "Split Pair", name: "Different Top Colors", recog: "White on Right, Top colors mismatch.", tip: "Hide the corner in the back, slide the edge over, unhide.", algs: ["U' (R U R') U (R U' R')"],
               top: {8: C_R, 3: C_B}, front: {2: C_W}, right: {2: C_B}, left: {1: C_R} },
+           
             { id: 4, type: "split", group: "Split Pair", name: "Same Top Colors", recog: "Top colors are the same. White on side.", tip: "Hide the corner, push the edge far away (U2), unhide.", algs: ["(R U2 R') U' (R U R')"],
               top: {8: C_B, 1: C_B}, front: {2: C_W}, right: {2: C_R}, back: {1: C_R} },
+           
             { id: 5, type: "top", group: "White on Top", name: "White Top, Edge Right", recog: "White points to sky. Edge is matched to center.", tip: "Move edge to match center, hide it away, place corner on top, bring back.", algs: ["U (R U' R') U' (F' U F)"],
               top: {8: C_W, 5: C_R}, front: {2: C_B}, right: {1: C_B, 2: C_R} },
+           
             { id: 6, type: "stuck", group: "Stuck in Slot", name: "Flipped in Slot", recog: "Both pieces in slot, but reversed/flipped.", tip: "Take them out using an empty slot technique, split, then insert.", algs: ["(R U R') d (R' U' R) U' (R' U' R)"],
-              top: {}, front: {2: C_B}, right: {2: C_R} }
+              top: {}, front: {2: C_B}, right: {2: C_R} /* Simplified mask for slot-stuck */ }
         ];
-
+        // --- F2L Game State ---
         let currentF2LCase = null;
         let f2lTimerInterval = null;
         let f2lStartTime = 0;
         let f2lPracticeIdx = 0;
+       
         let rushTimerInterval = null;
         let rushTimeLeft = 60;
         let rushScore = 0;
-
+        // F2L Helper to Render the Isometric Map
         function getF2LSvg(caseObj) {
-            let t = Object.assign({0:C_Y,1:C_Y,2:C_Y,3:C_Y,4:C_Y,5:C_Y,6:C_Y,7:C_Y,8:C_Y}, caseObj.top || {});
-            let f = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.front || {});
-            let r = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.right || {});
-            let l = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.left || {});
-            let b = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.back || {});
+            // Unpack mapping
+            let t = Object.assign({0:C_Y, 1:C_Y, 2:C_Y, 3:C_Y, 4:C_Y, 5:C_Y, 6:C_Y, 7:C_Y, 8:C_Y}, caseObj.top || {});
+            let f = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.front || {});
+            let r = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.right || {});
+            let l = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.left || {});
+            let b = Object.assign({0:C_X, 1:C_X, 2:C_X}, caseObj.back || {});
             let uHTML = '';
             for(let i=0; i<9; i++) uHTML += `<div class="mini-square" style="background:${t[i]}; border-color:#52525b"></div>`;
             let stripHTML = (stripArr) => `<div class="mini-square" style="background:${stripArr[0]}; border-color:#52525b"></div><div class="mini-square" style="background:${stripArr[1]}; border-color:#52525b"></div><div class="mini-square" style="background:${stripArr[2]}; border-color:#52525b"></div>`;
@@ -390,48 +510,75 @@
                 </div>
             `;
         }
-
+        // F2L Tab Switching
         function switchF2LMode(n) {
             document.querySelectorAll('.f2l-view').forEach(v => v.classList.add('hidden'));
             document.getElementById(`f2l-mode-${n}`).classList.remove('hidden');
+           
+            // Reset active states
             for(let i=0; i<4; i++) {
                 let btn = document.getElementById(`f2l-nav-${i}`);
-                if(i===n) btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap border border-zinc-700";
-                else btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap";
+                if(i===n) {
+                    btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap border border-zinc-700";
+                } else {
+                    btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap";
+                }
             }
+            // Init specific modes
             if (n === 1) nextF2LQuiz();
             if (n === 2) { f2lPracticeIdx = 0; renderF2LPractice(); }
-            clearInterval(f2lTimerInterval); clearInterval(rushTimerInterval);
+           
+            // Clean up ongoing timers
+            clearInterval(f2lTimerInterval);
+            clearInterval(rushTimerInterval);
             document.getElementById('f2l-btn-spin').classList.remove('hidden');
             document.getElementById('f2l-btn-start').classList.add('hidden');
             document.getElementById('f2l-btn-stop').classList.add('hidden');
             document.getElementById('f2l-drill-result').classList.add('hidden');
+            document.getElementById('f2l-drill-result').classList.replace('opacity-100', 'opacity-0');
             document.getElementById('f2l-timer').innerText = "0.00s";
             document.getElementById('f2l-rush-controls').classList.add('hidden');
             document.getElementById('f2l-btn-rush-start').classList.remove('hidden');
             document.getElementById('f2l-rush-time').innerText = "60";
             document.getElementById('f2l-rush-score').innerText = "0";
             document.getElementById('f2l-rush-visual').innerHTML = "";
+            document.getElementById('f2l-drill-visual').innerHTML = `<div class="text-zinc-600 text-4xl animate-pulse"><i class="fa-solid fa-dice"></i></div>`;
         }
-
+        // Gamification: Confetti Helper
         function fireConfetti(isMega = false) {
             if (typeof confetti === 'undefined') return;
             const duration = isMega ? 3000 : 1000;
             const end = Date.now() + duration;
             (function frame() {
-                confetti({particleCount: isMega ? 5 : 3, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']});
-                confetti({particleCount: isMega ? 5 : 3, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']});
+                confetti({
+                    particleCount: isMega ? 5 : 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.8 },
+                    colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']
+                });
+                confetti({
+                    particleCount: isMega ? 5 : 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.8 },
+                    colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']
+                });
                 if (Date.now() < end) requestAnimationFrame(frame);
-            })();
+            }());
         }
-
+        // --- F2L Mode 1: Random Drill ---
         function spinF2LPair() {
             const visual = document.getElementById('f2l-drill-visual');
             const btnSpin = document.getElementById('f2l-btn-spin');
             const btnStart = document.getElementById('f2l-btn-start');
+           
             btnSpin.classList.add('hidden');
             document.getElementById('f2l-drill-result').classList.add('hidden');
+            document.getElementById('f2l-drill-result').classList.replace('opacity-100', 'opacity-0');
             document.getElementById('f2l-timer').innerText = "0.00s";
+            document.getElementById('f2l-timer').classList.replace('text-emerald-400', 'text-white');
+            // Shuffling animation
             let shuffles = 0;
             let shuffleInterval = setInterval(() => {
                 let randomCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
@@ -441,28 +588,32 @@
                     clearInterval(shuffleInterval);
                     currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
                     visual.innerHTML = getF2LSvg(currentF2LCase);
+                    visual.classList.add('scale-125');
+                    setTimeout(() => visual.classList.remove('scale-125'), 200);
                     btnStart.classList.remove('hidden');
                 }
             }, 50);
         }
-
         function startF2LTimer() {
             document.getElementById('f2l-btn-start').classList.add('hidden');
             document.getElementById('f2l-btn-stop').classList.remove('hidden');
+           
             f2lStartTime = Date.now();
             const timerEl = document.getElementById('f2l-timer');
+           
             f2lTimerInterval = setInterval(() => {
                 let diff = (Date.now() - f2lStartTime) / 1000;
                 timerEl.innerText = diff.toFixed(2) + "s";
             }, 10);
         }
-
         function stopF2LTimer() {
             clearInterval(f2lTimerInterval);
             document.getElementById('f2l-btn-stop').classList.add('hidden');
+           
             let timeTaken = (Date.now() - f2lStartTime) / 1000;
             const timerEl = document.getElementById('f2l-timer');
             timerEl.classList.replace('text-white', 'text-emerald-400');
+           
             let points = 5;
             let isMega = false;
             if (timeTaken < 3) { points = 50; isMega = true; }
@@ -470,9 +621,11 @@
             else if (timeTaken < 8) points = 10;
             for(let i=0; i<Math.ceil(points/5); i++) awardPoint();
             if (isMega) fireConfetti(true); else fireConfetti(false);
+            // Show Results
             const res = document.getElementById('f2l-drill-result');
             res.classList.remove('hidden');
             setTimeout(() => res.classList.replace('opacity-0', 'opacity-100'), 10);
+           
             document.getElementById('f2l-drill-name').innerText = currentF2LCase.name;
             document.getElementById('f2l-drill-score').innerText = `+${points} PTS!`;
             document.getElementById('f2l-drill-alg').innerText = currentF2LCase.algs[0];
@@ -480,24 +633,33 @@
             document.getElementById('f2l-btn-spin').innerText = "NEXT PAIR";
             document.getElementById('f2l-btn-spin').classList.remove('hidden');
         }
-
+        // --- F2L Mode 2: Quiz ---
         function nextF2LQuiz() {
             const visual = document.getElementById('f2l-quiz-visual');
             const optionsBox = document.getElementById('f2l-quiz-options');
+           
             currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
             visual.innerHTML = getF2LSvg(currentF2LCase);
+           
+            // Build options
             const types = ["insert", "split", "top", "stuck"];
-            const labels = {"insert": "Basic Insert (Ready)", "split": "Split Pair (Colors mismatch)", "top": "White facing up", "stuck": "Stuck in a slot"};
+            const labels = {
+                "insert": "Basic Insert (Ready)",
+                "split": "Split Pair (Colors mismatch)",
+                "top": "White facing up",
+                "stuck": "Stuck in a slot"
+            };
             let html = '';
             types.forEach(t => {
                 html += `<button onclick="answerF2LQuiz('${t}', this)" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white rounded-2xl font-bold transition-all">${labels[t]}</button>`;
             });
             optionsBox.innerHTML = html;
         }
-
         function answerF2LQuiz(guessType, btnEl) {
             const isCorrect = guessType === currentF2LCase.type;
             const options = document.getElementById('f2l-quiz-options').children;
+           
+            // Disable all buttons
             for (let btn of options) btn.disabled = true;
             if (isCorrect) {
                 btnEl.classList.replace('bg-zinc-800', 'bg-emerald-600');
@@ -507,6 +669,8 @@
                 setTimeout(nextF2LQuiz, 1000);
             } else {
                 btnEl.classList.replace('bg-zinc-800', 'bg-red-600');
+                btnEl.classList.replace('border-zinc-700', 'border-red-400');
+                // Find correct one
                 for (let btn of options) {
                     if (btn.innerText.includes(currentF2LCase.type === 'insert' ? 'Basic' : currentF2LCase.type === 'top' ? 'up' : currentF2LCase.type === 'split' ? 'Split' : 'Stuck')) {
                         btn.classList.replace('bg-zinc-800', 'bg-emerald-600');
@@ -515,69 +679,83 @@
                 setTimeout(nextF2LQuiz, 1500);
             }
         }
-
+        // --- F2L Mode 3: Practice ---
         function renderF2LPractice() {
             const c = f2lCases[f2lPracticeIdx];
             document.getElementById('f2l-prac-counter').innerText = `Case ${f2lPracticeIdx + 1}/${f2lCases.length}`;
             document.getElementById('f2l-prac-group').innerText = c.group;
             document.getElementById('f2l-prac-visual').innerHTML = getF2LSvg(c);
+           
             document.getElementById('f2l-prac-reveal').classList.add('hidden');
             document.getElementById('f2l-btn-reveal').classList.remove('hidden');
         }
-
         function revealF2LPractice() {
             const c = f2lCases[f2lPracticeIdx];
             document.getElementById('f2l-prac-reveal').classList.remove('hidden');
             document.getElementById('f2l-btn-reveal').classList.add('hidden');
+           
             document.getElementById('f2l-prac-name').innerText = c.name;
             document.getElementById('f2l-prac-tip').innerHTML = `<i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i> ${c.recog}<br><br><i class="fa-solid fa-hand text-blue-400 mr-2"></i> ${c.tip}`;
             document.getElementById('f2l-prac-alg').innerText = c.algs[0];
         }
-
         function nextF2LPractice() {
             f2lPracticeIdx = (f2lPracticeIdx + 1) % f2lCases.length;
             renderF2LPractice();
         }
-
+        // --- F2L Mode 4: 60s Rush ---
         function startF2LRush() {
             document.getElementById('f2l-btn-rush-start').classList.add('hidden');
             document.getElementById('f2l-rush-controls').classList.remove('hidden');
-            rushScore = 0; rushTimeLeft = 60;
+           
+            rushScore = 0;
+            rushTimeLeft = 60;
             document.getElementById('f2l-rush-score').innerText = "0";
             document.getElementById('f2l-rush-time').innerText = "60";
             document.getElementById('f2l-rush-time').classList.replace('text-red-500', 'text-white');
+           
             nextRushCase();
             rushTimerInterval = setInterval(() => {
                 rushTimeLeft--;
                 document.getElementById('f2l-rush-time').innerText = rushTimeLeft;
-                if (rushTimeLeft <= 10) document.getElementById('f2l-rush-time').classList.replace('text-white', 'text-red-500');
-                if (rushTimeLeft <= 0) { clearInterval(rushTimerInterval); endRush(); }
+               
+                if (rushTimeLeft <= 10) {
+                    document.getElementById('f2l-rush-time').classList.replace('text-white', 'text-red-500');
+                    const bg = document.getElementById('f2l-rush-bg');
+                    bg.classList.add('bg-red-500/20');
+                    setTimeout(() => bg.classList.remove('bg-red-500/20'), 200);
+                }
+                if (rushTimeLeft <= 0) {
+                    clearInterval(rushTimerInterval);
+                    endRush();
+                }
             }, 1000);
         }
-
         function nextRushCase() {
             currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
             document.getElementById('f2l-rush-visual').innerHTML = getF2LSvg(currentF2LCase);
         }
-
         function nextRush(success) {
             if (rushTimeLeft <= 0) return;
+           
             if (success) {
-                rushScore++; document.getElementById('f2l-rush-score').innerText = rushScore;
-                awardPoint();
+                rushScore++;
+                document.getElementById('f2l-rush-score').innerText = rushScore;
+                awardPoint(); // Global points
                 nextRushCase();
             } else {
+                // Penalty
                 rushTimeLeft -= 2;
                 const bg = document.getElementById('f2l-rush-bg');
-                bg.classList.add('bg-red-500/40'); setTimeout(() => bg.classList.remove('bg-red-500/40'), 300);
+                bg.classList.add('bg-red-500/40');
+                setTimeout(() => bg.classList.remove('bg-red-500/40'), 300);
                 nextRushCase();
             }
         }
-
         function endRush() {
             document.getElementById('f2l-rush-controls').classList.add('hidden');
             document.getElementById('f2l-btn-rush-start').classList.remove('hidden');
             document.getElementById('f2l-btn-rush-start').innerText = "TRY AGAIN";
+           
             document.getElementById('f2l-rush-visual').innerHTML = `
                 <div class="text-center">
                     <div class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 mb-2">${rushScore}</div>
@@ -586,129 +764,168 @@
             `;
             if (rushScore > 10) fireConfetti(true);
         }
-
-        // ==================== ORIGINAL WORKING CODE (OLL + PLL + LEADERBOARD) ====================
-        // Core State
-        let ollUState = Array(9).fill(0); ollUState[4] = 1;
-        let ollSideState = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
-        let pllSides = { back: [0,0,0], left: [0,0,0], right: [0,0,0], front: [0,0,0] };
-        let pllArrows = [];
-        let pllTapStartIdx = null;
-        let pllDragStartIdx = null;
-
-        // Storage
-        let ollHistory = [];
-        let pllHistory = [];
-        let favorites = JSON.parse(localStorage.getItem('cubeTrainerFavs')) || { oll: [], pll: [] };
-
-        let userScore = parseInt(localStorage.getItem('cubeTrainerScore') || "0");
-        let userName = localStorage.getItem('cubeTrainerName') || "SpeedCuber";
-        let hasScoredThisMatch = false;
-        let globalLeaderboard = [];
-        let currentOllCase = null;
-        let currentPllCase = null;
-
-        // OLL & PLL Cases (unchanged from last working version)
-        const ollCases = [ /* full 57 cases exactly as in last working version */ 
+        // --- Firebase Global Integration ---
+        let db, auth, currentUser, appId, firestoreAPI;
+       
+        async function initCloud() {
+            try {
+                const fbApp = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js');
+                const fbAuth = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js');
+                firestoreAPI = await import('https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js');
+               
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+                if (!firebaseConfig) {
+                    console.log("No Firebase config found. Running locally.");
+                    renderLeaderboard(); // render local only
+                    return;
+                }
+                appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+                const app = fbApp.initializeApp(firebaseConfig);
+                auth = fbAuth.getAuth(app);
+                db = firestoreAPI.getFirestore(app);
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await fbAuth.signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await fbAuth.signInAnonymously(auth);
+                }
+                fbAuth.onAuthStateChanged(auth, (user) => {
+                    currentUser = user;
+                    if (user) {
+                        listenToLeaderboard();
+                    }
+                });
+            } catch (e) {
+                console.error("Cloud storage failed to initialize", e);
+                renderLeaderboard(); // fallback
+            }
+        }
+        function listenToLeaderboard() {
+            if (!currentUser || !db) return;
+            const lbRef = firestoreAPI.collection(db, 'artifacts', appId, 'public', 'data', 'leaderboard');
+           
+            firestoreAPI.onSnapshot(lbRef, (snapshot) => {
+                globalLeaderboard = [];
+                let myDocFound = false;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    globalLeaderboard.push(data);
+                    if (data.uid === currentUser.uid) {
+                        myDocFound = true;
+                        // Keep highest score
+                        if (data.score > userScore) {
+                            userScore = data.score;
+                            userName = data.name || "SpeedCuber";
+                            localStorage.setItem('cubeTrainerScore', userScore);
+                            localStorage.setItem('cubeTrainerName', userName);
+                           
+                            document.getElementById('username-input').value = userName;
+                            document.getElementById('header-score').innerText = userScore;
+                            document.getElementById('profile-score').innerText = userScore;
+                        }
+                    }
+                });
+                // If my doc isn't in the DB yet but I have a score locally, push it up
+                if (!myDocFound && userScore > 0) {
+                    updateCloudScore();
+                }
+                renderLeaderboard();
+            }, (error) => {
+                console.error("Error listening to leaderboard: ", error);
+            });
+        }
+        function updateCloudScore() {
+            if (!currentUser || !db) return;
+            const docRef = firestoreAPI.doc(db, 'artifacts', appId, 'public', 'data', 'leaderboard', currentUser.uid);
+            firestoreAPI.setDoc(docRef, {
+                uid: currentUser.uid,
+                name: userName,
+                score: userScore,
+                updatedAt: Date.now()
+            }, { merge: true }).catch(e => console.error("Error updating score: ", e));
+        }
+        const ollCases = [
             {id:1, name:"Dot 1", recog:"Pure dot (no edges oriented)", algs:["R U2 [R2' F R F'] U2' [R' F R F']"], uMask:"00000000010111010111"},
-            // ... (all 57 OLL cases copied exactly)
+            {id:2, name:"OLL 2", recog:"Pure dot (no edges oriented)", algs:["[F R U R' U' F'] [f R U R' U' f']"], uMask:"00000000011010011111"},
+            {id:3, name:"Dot 3", recog:"Pure dot (no edges oriented)", algs:["(f R U R' U' f') U' (F R U R' U' F')", "r' R2 U R' U r U2 r' U M'"], uMask:"00000001110110010011"},
+            {id:4, name:"Dot 4", recog:"Pure dot (no edges oriented)", algs:["(f R U R' U' f') U (F R U R' U' F')"], uMask:"00100000010011110110"},
+            {id:5, name:"Square 1", recog:"2x2 square top-left", algs:["l' U2 L U L' U l", "(y2) r' U2 R U R' U r"], uMask:"11010000000110011001"},
+            {id:6, name:"Square 2", recog:"2x2 square top-right", algs:["r U2' R' U' R U' r'"], uMask:"01101000000001110110"},
+            {id:7, name:"Lightning 1", recog:"Small lightning (right)", algs:["[r U R' U] [R U2' r']"], uMask:"01010100100110011000"},
+            {id:8, name:"Lightning 2", recog:"Small lightning mirror (left)", algs:["R U2' R' U2 R' F R F'", "l' U' L U' L' U2 l"], uMask:"01001001001000110110"},
+            {id:9, name:"Fish 1", recog:"Fish shape (right)", algs:["[R U R' U' R' F] R2 U R' U' F'", "[R' U' R] y' x' R U' R' F R U R'"], uMask:"01010001001010110100"},
+            {id:10, name:"Fish 2", recog:"Fish mirror (left)", algs:["[R U R' U] [R' F R F'] [R U2 R']", "[R U R'] y R' F R U' R' F' R"], uMask:"00110010110010001001"},
+            {id:11, name:"Lightning 3", recog:"Large lightning (right)", algs:["[F' L' U' L U F] y [F R U R' U' F']", "y [r U R' U] [R' F R F'] [R U2 r']", "(y') r' R2 U R' U [R U2 R' U] M'"], uMask:"10010010010110001001"},
+            {id:12, name:"Lightning 4", recog:"Large lightning mirror (left)", algs:["[F R U R' U' F'] U [F R U R' U' F']", "(y) M U2 [R' U' R U' R' U2 R] U M'"], uMask:"00101010010001100110"},
+            {id:13, name:"Knight 1", recog:"Knight move shape", algs:["r U' r' U' r U r' y' [R' U R]"], uMask:"00011100110100011000"},
+            {id:14, name:"Knight 2", recog:"Knight move mirror", algs:["R' F R U R' F' R y' [R U' R']"], uMask:"00011001011000110100"},
+            {id:15, name:"Knight 3", recog:"Knight move", algs:["[l' U' l] [L' U' L U] [l' U l]"], uMask:"10011000010100011001"},
+            {id:16, name:"Knight 4", recog:"Knight move mirror", algs:["[r U r'] [R U R' U'] [r U' r']"], uMask:"00111000010001110100"},
+            {id:17, name:"Dot 5", recog:"Pure dot (no edges oriented)", algs:["[R U R' U] [R' F R F'] U2 [R' F R F']"], uMask:"10000001011010010011"},
+            {id:18, name:"Dot 6", recog:"Pure dot (no edges oriented)", algs:["[F R U R' U] y' R' U2 [R' F R F']", "y R U2 R2 F R F' U2 M' U R U' r'"], uMask:"00000101111010010010"},
+            {id:19, name:"Dot 7", recog:"Pure dot (no edges oriented)", algs:["[r' R] U [R U R' U'] r [R2' F R F']", "M U [R U R' U'] M' [R' F R F']"], uMask:"10100000010011010011"},
+            {id:20, name:"Dot 8", recog:"Pure dot (no edges oriented)", algs:["M U R U R' U' M2 [U R U' r']", "R U R' U R' F R F' U2 R' F R F' M U R U' r'"], uMask:"10100101010010010010"},
+            {id:21, name:"Cross H", recog:"Full cross H (all edges + corners oriented)", algs:["R U2 R' U' R U R' U' R U' R'", "(y) R U R' U [R U' R' U] [R U2 R']", "F [R U R' U'] [R U R' U'] [R U R' U'] F'"], uMask:"01011010101000101000"},
+            {id:22, name:"Cross Pi", recog:"Full cross Pi", algs:["R U2' [R2 U'] [R2 U'] R2 U2' R", "R U2 R2 U' R2 U' R2 U2 R"], uMask:"01011010001000001101"},
+            {id:23, name:"Superman", recog:"Full cross headlights", algs:["R2 D [R' U2 R] D' [R' U2 R']"], uMask:"11111010000000101000"},
+            {id:24, name:"Cross T", recog:"Full cross T", algs:["l' U' L U R U' [r' F]"], uMask:"11011110001000001000"},
+            {id:25, name:"Cross Bowtie", recog:"Full cross bowtie", algs:["[R' F R B'] [R' F' R B]", "F' r U R' U' r' F R"], uMask:"11011011000100100000"},
+            {id:26, name:"AntiSune", recog:"Mirror of the Sune algorithm. Distinguished from the Sune by the side the non-oriented corners are facing. Easy to recognize after placing the oriented corner at the back.", algs:["R' U' R U' R' U2 R", "(y) R U2 R' U' R U' R'"], uMask:"11011010001001100000"},
+            {id:27, name:"Sune", recog:"The most recognized OLL algorithm.", algs:["L U L' U [L U2 L']", "(y2) R U R' U [R U2' R']"], uMask:"01111010100000001001"},
+            {id:28, name:"Arrow", recog:"All corners oriented, edges flipped", algs:["M' U M U2 M' U M", "r U R' U' M U R U' r'"], uMask:"10101111010000000010"},
+            {id:29, name:"Awkward 1", recog:"Awkward shape", algs:["M U [R U R' U'] [R' F R F'] M'", "(y) [R U R' U'] R U' R' F' U' [F R U R'] L2 U' L B L' U L2 U' [r' U' r]"], uMask:"10110010010011000001"},
+            {id:30, name:"Awkward 2", recog:"Awkward mirror", algs:["R2 U R' B' R U' R2 U R B R'"], uMask:"10101010010001000011"},
+            {id:31, name:"P Shape 1", recog:"P shape", algs:["[R' U'] F [U R U' R'] F' R"], uMask:"01101001100000110010"},
+            {id:32, name:"P Shape 2", recog:"P mirror", algs:["R U B' U' R' U R B R'", "R d L' d' R' U R B R'"], uMask:"00101011110000100010"},
+            {id:33, name:"T", recog:"T shape", algs:["[R U R' U'] [R' F R F']", "R U R' U' R' F R F'"], uMask:"00111001110000110000"},
+            {id:34, name:"C Shape", recog:"C shape", algs:["R U R2 U' R' F R U R U' F'"], uMask:"00011101010100010100"},
+            {id:35, name:"Fish 3", recog:"Fish shape", algs:["R U2' [R2 F R F'] [R U2 R']"], uMask:"10001011100100100100"},
+            {id:36, name:"W Shape", recog:"W shape", algs:["[L' U' L U'] [L' U L U] [L F' L' F]", "R' U' R U' R' U R U l U' R' U x"], uMask:"11001001001000010011"},
+            {id:37, name:"Fish 4", recog:"Fish mirror", algs:["F R U' R' U' R U R' F'", "R U2 R' U' F' R U R' U' R' F R2 U' R' U'"], uMask:"11010001000110110000"},
+            {id:38, name:"Awkward 3", recog:"Awkward shape", algs:["[R U R' U] [R U' R' U'] [R' F R F']", "F R U' R' U' R U R' F' R U R' U' R' F R F'"], uMask:"01110100100011010000"},
+            {id:39, name:"L Shape 1", recog:"L shape", algs:["L F' L' U' L U F U' L'", "R U R' U R U2 R' F R U R' U' F'"], uMask:"00111100110001010000"},
+            {id:40, name:"L Shape 2", recog:"L mirror", algs:["[R' F R U R' U' F'] U R"], uMask:"10011001011000010001"},
+            {id:41, name:"Awkward Fish", recog:"Big lightning / awkward fish", algs:["[R U' R' U2] R U y R U' R' U' F'", "(y2) [R U R' U] [R U2 R'] [F R U R' U' F']"], uMask:"10101010010000101010"},
+            {id:42, name:"Awkward Fish mirror", recog:"Big lightning mirror", algs:["R' U2 [R U R' U] R y [F R U R' U' F']", "(y') [L' U L U2] L' U' y' L' U L U F [R' F R F'] [R' F R F'] [R U R' U'] [R U R']"], uMask:"01110001000010010101"},
+            {id:43, name:"P Shape 3", recog:"P shape", algs:["f ' (L' U' L U) f", "(y2) R' U' F R' F' R U R"], uMask:"10010110010111000000"},
+            {id:44, name:"P Shape 4", recog:"P mirror", algs:["f [R U R' U'] f'"], uMask:"00101011010000000111"},
+            {id:45, name:"T Shape 2", recog:"T shape", algs:["F [R U R' U'] F'"], uMask:"00111001010000010101"},
+            {id:46, name:"C Shape 2", recog:"Recognized by the stickers bar, to be faced to the right.", algs:["R' U' [R' F R F'] U R"], uMask:"11000110000111000010"},
+            {id:47, name:"L Shape 3", recog:"L shape", algs:["R' U' [R' F R F'] [R' F R F'] U R", "[F' L' U' L U] [L' U' L U] F"], uMask:"01001000100101110010"},
+            {id:48, name:"L Shape 4", recog:"L mirror", algs:["F [R U R' U'] [R U R' U'] F'"], uMask:"01010000001010011101"},
+            {id:49, name:"L Shape 5", recog:"Recognized by having bar & a block (also no headlights). Bar is facing to the left.", algs:["[R' F R' F'] R2 U2' y [R' F R F']", "r U' r' U' r U r' y R' U R F U R U' R2 F' R"], uMask:"01001000001000011111"},
+            {id:50, name:"Knight 6", recog:"Knight mirror", algs:["R' F R2 B' R2' F' R2 B R'", "(y2) R B' R B R2' U2 [F R' F' R]"], uMask:"01010000100111110000"},
+            {id:51, name:"I Line", recog:"I line shape", algs:["f [R U R' U'] [R U R' U'] f'"], uMask:"00011000011000011101"},
+            {id:52, name:"I Line 2", recog:"I line mirror", algs:["R U R' U R d' R U' R' F'", "R U R' U R U2 R' U R U2 R'"], uMask:"01000010100111100010"},
+            {id:53, name:"I Line 3", recog:"I line", algs:["[l' U' L U'] [L' U L U'] [L' U2 l]", "(y2) r' U' R U' R' U R U' [R' U2 r]"], uMask:"01010000000111010101"},
+            {id:54, name:"I Line 4", recog:"I line", algs:["[r U R' U] [R U' R' U] [R U2' r']"], uMask:"01001000000101010111"},
+            {id:55, name:"I Long", recog:"Long line", algs:["R U2 R2 U' R U' R' U2 F R F'", "(y) R' F R U R U' R2 F' [R2 U' R' U] R U R'"], uMask:"01000010000111000111"},
+            {id:56, name:"Mummy 2", recog:"Corners oriented (M-slice)", algs:["[F R U R' U' R] F' [r U R' U'] r'", "(y) [f R U R' U' f'] [F (R U R' U') (R U R' U') F']"], uMask:"00011000010101010101"},
             {id:57, name:"Mummy", recog:"Corners oriented", algs:["[R U R' U'] M' [U R U' r']"], uMask:"10111101010000010000"}
         ];
-        const pllCases = [ /* full 21 PLL cases exactly as in last working version */ 
+        // 21 PLL Cases with intelligent signatures
+        const pllCases = [
             {id: "H", name: "H Perm", recog: "Opposite edges swapped", hold: "Any orientation", algs: ["M2 U M2 U2 M2 U M2"], arrows: "1-7,3-5"},
-            // ... (all 21 PLL cases)
+            {id: "Ua", name: "Ua Perm", recog: "3 edges CCW", hold: "Solved bar in back", algs: ["[R U' R] U R U R U' R' U' R2", "(y2) R2 U' R' U' R U R U R U' R"], arrows: "3->7,5->3,7->5"},
+            {id: "Ub", name: "Ub Perm", recog: "3 edges CW", hold: "Solved bar in back", algs: ["R2 U R U R' U' R' U' R' U R'", "(y2) R' U R' U' R' U' R' U R U R2"], arrows: "3->5,5->7,7->3"},
+            {id: "Z", name: "Z Perm", recog: "Adjacent edges swapped", hold: "Swapped edges Front/Right", algs: ["M2 U M2 U M' U2 M2 U2 M' U2", "(y) [U R' U'] R U' R U R U' R' U R U [R2 U' R' U]"], arrows: "1-3,5-7"},
+            {id: "Aa", name: "Aa Perm", recog: "Headlights, 2x2 block", hold: "Headlights in back", algs: ["l' U R' D2 R U' R' D2 R2"], arrows: "0->2,2->8,8->0"},
+            {id: "Ab", name: "Ab Perm", recog: "Headlights, 2x2 block", hold: "Headlights in back", algs: ["l U' R D2 R' U R D2 R2"], arrows: "2->6,6->8,8->2"},
+            {id: "E", name: "E Perm", recog: "No solved bars/headlights", hold: "Align corners", algs: ["x' [R U' R' D] [R U R' D'] [R U R' D] [R U' R' D']", "(y) x' [R U' R' D] [R U R' D'] [R U R' D] [R U' R' D']"], arrows: "0-6,2-8"},
+            {id: "T", name: "T Perm", recog: "Headlights on left, 2x2 block", hold: "Headlights on left", algs: ["[R U R' U'] R' F R2 U' R' U' [R U R' F']"], arrows: "2-8,3-5"},
+            {id: "F", name: "F Perm", recog: "Full block, adjacent corners", hold: "Block on left", algs: ["[R' U R U'] R2 y' [R' U' R U] y x [R U R' U'] [R2 x U']", "R' U2 R' d' R' F' R2 U' R' U R' F R U' F"], arrows: "0-2,3-5"},
+            {id: "Ja", name: "Ja Perm", recog: "Block on left, adjacent corners swap", hold: "Block on left", algs: ["[R' U L'] U2 [R U' R' U2] [L R U']", "(y) L' U' L F L' U' L U L F' L2 U L U"], arrows: "0-2,1-3"},
+            {id: "Jb", name: "Jb Perm", recog: "Block on right, adjacent corners swap", hold: "Block on right", algs: ["[R U R' F'] [R U R' U' R' F] [R2 U' R' U']"], arrows: "2-8,5-7"},
+            {id: "Ra", name: "Ra Perm", recog: "Headlights on back, block front-left", hold: "Headlights in back", algs: ["[L U2' L' U2'] L F' L' U' L U L F L2' U", "(y) [R U R' F'] R U2 R' U2 R' F R U R U2 R' U'"], arrows: "0-2,3-7"},
+            {id: "Rb", name: "Rb Perm", recog: "Headlights on back, block front-right", hold: "Headlights in back", algs: ["[R' U2 R U2] R' F R U R' U' R' F' R2 U'"], arrows: "0-2,5-7"},
+            {id: "V", name: "V Perm", recog: "2x2 block", hold: "Block front-left", algs: ["[R' U R' U'] [x2 y'] [R' U R' U'] [l R U'] [R' U R] U", "[R' U R' d'] R' F' R2 U' R' U R' F R F"], arrows: "0-8,1-5"},
+            {id: "Y", name: "Y Perm", recog: "Two 2x1 blocks", hold: "Corners swap front-left/back-right", algs: ["[F R U' R' U' R U R' F'] [R U R' U'] [R' F R F']"], arrows: "0-8,1-3"},
+            {id: "Na", name: "Na Perm", recog: "Two 2x2 blocks", hold: "Blocks on left/right", algs: ["{L U' R U2 L' U R'} {L U' R U2 L' U R'} U", "(y) {L U' R U2 L' U R'} {L U' R U2 L' U R'} U'", "(y) [R U' R' U] l U F U' R' F' R U' R U l' U R'", "(z) D R' U R2 D' R D U' R' U R2 D' R U' R", "{R' U L' U2 R U' L} {R' U L' U2 R U' L} U'"], arrows: "0-8,1-7"},
+            {id: "Nb", name: "Nb Perm", recog: "Two 2x2 blocks", hold: "Blocks front/back", algs: ["(y) {R' U L' U2 R U' L} {R' U L' U2 R U' L} U", "(z) U' R D' R2' U R' D U' R D' R2' U R' D R'", "(y) R' U R' F R F' R U' R' F' U F R U R' U' R"], arrows: "1-7,2-6"},
+            {id: "Ga", name: "Ga Perm", recog: "Headlights left, block front-right", hold: "Headlights left", algs: ["[R2 u] R' U R' U' R u' R2 y' [R' U R]"], arrows: "0->2,1->3,2->6,3->5,5->1,6->0"},
+            {id: "Gb", name: "Gb Perm", recog: "Headlights left, block back-right", hold: "Headlights left", algs: ["[L' U' L] y' {R2 u R' U R U' R u' R2}", "(y2) [R' U' R] y {R2 u R' U R U' R u' R2}"], arrows: "0->8,1->5,2->0,5->7,7->1,8->2"},
+            {id: "Gc", name: "Gc Perm", recog: "Headlights left, block front-left", hold: "Headlights left", algs: ["[R2 u'] R U' R U R' u R2 y [R U' R']"], arrows: "0->6,3->5,5->7,6->8,7->3,8->0"},
             {id: "Gd", name: "Gd Perm", recog: "Headlights left, block back-left", hold: "Headlights left", algs: ["[R U R'] y' R2 u' R U' R' U R' u R2"], arrows: "0->2,1->3,2->6,3->7,6->0,7->1"}
         ];
-
-        // Firebase (unchanged)
-        let db, auth, currentUser, appId, firestoreAPI;
-        async function initCloud() { /* exact same as last working */ 
-            // ... (full Firebase init code)
-        }
-        function listenToLeaderboard() { /* exact same */ }
-        function updateCloudScore() { /* exact same */ }
-
-        // Gamification
-        function updateUsername(newName) {
-            userName = newName.trim() || "SpeedCuber";
-            localStorage.setItem('cubeTrainerName', userName);
-            renderLeaderboard();
-            updateCloudScore();
-        }
-        function awardPoint() {
-            userScore++;
-            localStorage.setItem('cubeTrainerScore', userScore);
-            document.getElementById('header-score').innerText = userScore;
-            document.getElementById('profile-score').innerText = userScore;
-            const headerBadge = document.getElementById('header-score').parentElement;
-            headerBadge.classList.add('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]');
-            setTimeout(() => headerBadge.classList.remove('scale-125', 'border-yellow-400', 'shadow-[0_0_20px_rgba(249,115,22,0.8)]'), 300);
-            renderLeaderboard();
-            updateCloudScore();
-        }
-        function renderLeaderboard() { /* exact same as last working */ }
-
-        // Core Utilities, rotateMask, getPllSignature, saveFavorites, toggleFavorite, etc. (all unchanged)
-        function rotateMask(mask) { /* exact */ }
-        function getPllSignature(arrows) { /* exact */ }
-        function saveFavorites() { /* exact */ }
-        function toggleFavorite(type) { /* exact */ }
-        function updateFavoriteButton(type, match) { /* exact */ }
-        function addToHistory(type, match) { /* exact */ }
-
-        // Grid & Preview Rendering (all functions from last working)
-        function getArrowsSvgString(arrowsToDraw, isMini) { /* exact */ }
-        function createNet(isOLL) { /* exact */ }
-        function initPllInteractions() { /* exact */ }
-        function togglePllArrow(from, to) { /* exact */ }
-        function renderPllGrid() { /* exact */ }
-        function renderPreview(isOLL, containerId, maskString = null, arrowArray = null) { /* exact */ }
-        function buildAlgBlock(alg) { /* exact */ }
-        function buildAlgBlockString(alg) { /* exact */ }
-
-        // Submit Functions (exact)
-        function submitOLL() { /* exact from last working */ }
-        function submitPLL() { /* exact from last working */ }
-        function copyAlg(btn) { /* exact */ }
-        function resetOLL() { /* exact */ }
-        function resetPLL() { /* exact */ }
-        function generateFullMini(uMask) { /* exact */ }
-        function generateListHtml(cases, isOLL, emptyMessage = "Nothing to show.") { /* exact */ }
-        function renderHistory(type) { /* exact */ }
-        function renderFavorites(type) { /* exact */ }
-        function populateLists() { /* exact */ }
-        function filterList(inputEl, listSelector, syncClass) { /* exact */ }
-        function toggleList(contentId, chevronId) { /* exact */ }
-
-        function switchTab(n) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            const contents = ['content-f2l', 'content-oll', 'content-pll', 'content-rank'];
-            document.getElementById(contents[n]).classList.remove('hidden');
-            const activeClass = "flex-1 py-3 rounded-2xl font-bold text-[10px] sm:text-sm leading-tight bg-gradient-to-r from-yellow-400 to-orange-500 text-zinc-950 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-400/50";
-            const inactiveClass = "flex-1 py-3 rounded-2xl font-semibold text-[10px] sm:text-sm leading-tight bg-zinc-900/50 border border-zinc-800 text-zinc-500 hover:text-white transition";
-            document.getElementById('tab-f2l').className = n === 0 ? activeClass : inactiveClass;
-            document.getElementById('tab-oll').className = n === 1 ? activeClass : inactiveClass;
-            document.getElementById('tab-pll').className = n === 2 ? activeClass : inactiveClass;
-            document.getElementById('tab-rank').className = n === 3 ? activeClass : inactiveClass;
-            if (n === 0) switchF2LMode(0);   // ← IMPORTANT: auto-open first F2L mode
-        }
-
-        window.onload = () => {
-            document.getElementById('header-score').innerText = userScore;
-            document.getElementById('profile-score').innerText = userScore;
-            document.getElementById('username-input').value = userName;
-            
-            // Init OLL/PLL nets
-            pllSides.back = [0,0,0]; pllSides.right = [1,1,1]; pllSides.front = [2,2,2]; pllSides.left = [3,3,3];
-            createNet(true); createNet(false);
-            initPllInteractions(); 
-            populateLists();
-            
-            switchTab(1); // Default to OLL (you can change to 0 if you want F2L default)
-            
-            // Cloud
-            initCloud();
-        };
     </script>
 </body>
 </html>
