@@ -555,6 +555,246 @@
             {id: "Gc", name: "Gc Perm", recog: "Headlights left, block front-left", hold: "Headlights left", algs: ["[R2 u'] R U' R U R' u R2 y [R U' R']"], arrows: "0->6,3->5,5->7,6->8,7->3,8->0"},
             {id: "Gd", name: "Gd Perm", recog: "Headlights left, block back-left", hold: "Headlights left", algs: ["[R U R'] y' R2 u' R U' R' U R' u R2"], arrows: "0->2,1->3,2->6,3->7,6->0,7->1"}
         ];
+        // ==================== PERFECT F2L JAVASCRIPT (paste here) ====================
+
+const C_W = '#f8fafc'; // White
+const C_R = '#ef4444'; // Red
+const C_B = '#3b82f6'; // Blue
+const C_Y = '#facc15'; // Yellow
+const C_X = '#3f3f46'; // Empty
+
+const f2lCases = [
+    { id: 1, type: "insert", group: "Basic Insert", name: "Right Setup Insert", recog: "White faces Right, Edge matches Front.", tip: "Pair is perfectly set up. Insert it directly.", algs: ["U (R U' R')"], top: {8: C_W, 5: C_B}, front: {2: C_R}, right: {1: C_R, 2: C_B} },
+    { id: 2, type: "insert", group: "Basic Insert", name: "Front Setup Insert", recog: "White faces Front, Edge matches Right.", tip: "Pair is perfectly set up. Insert from front.", algs: ["y' U' (R' U R)"], top: {8: C_W, 7: C_R}, front: {1: C_B, 2: C_R}, right: {2: C_B} },
+    { id: 3, type: "split", group: "Split Pair", name: "Different Top Colors", recog: "White on Right, Top colors mismatch.", tip: "Hide the corner in the back, slide the edge over, unhide.", algs: ["U' (R U R') U (R U' R')"], top: {8: C_R, 3: C_B}, front: {2: C_W}, right: {2: C_B}, left: {1: C_R} },
+    { id: 4, type: "split", group: "Split Pair", name: "Same Top Colors", recog: "Top colors are the same. White on side.", tip: "Hide the corner, push the edge far away (U2), unhide.", algs: ["(R U2 R') U' (R U R')"], top: {8: C_B, 1: C_B}, front: {2: C_W}, right: {2: C_R}, back: {1: C_R} },
+    { id: 5, type: "top", group: "White on Top", name: "White Top, Edge Right", recog: "White points to sky. Edge is matched to center.", tip: "Move edge to match center, hide it away, place corner on top, bring back.", algs: ["U (R U' R') U' (F' U F)"], top: {8: C_W, 5: C_R}, front: {2: C_B}, right: {1: C_B, 2: C_R} },
+    { id: 6, type: "stuck", group: "Stuck in Slot", name: "Flipped in Slot", recog: "Both pieces in slot, but reversed/flipped.", tip: "Take them out using an empty slot technique, split, then insert.", algs: ["(R U R') d (R' U' R) U' (R' U' R)"], top: {}, front: {2: C_B}, right: {2: C_R} }
+];
+
+let currentF2LCase = null;
+let f2lTimerInterval = null;
+let f2lStartTime = 0;
+let f2lPracticeIdx = 0;
+let rushTimerInterval = null;
+let rushTimeLeft = 60;
+let rushScore = 0;
+
+function getF2LSvg(caseObj) {
+    let t = Object.assign({0:C_Y,1:C_Y,2:C_Y,3:C_Y,4:C_Y,5:C_Y,6:C_Y,7:C_Y,8:C_Y}, caseObj.top || {});
+    let f = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.front || {});
+    let r = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.right || {});
+    let l = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.left || {});
+    let b = Object.assign({0:C_X,1:C_X,2:C_X}, caseObj.back || {});
+    let uHTML = '';
+    for(let i=0; i<9; i++) uHTML += `<div class="mini-square" style="background:${t[i]}; border-color:#52525b"></div>`;
+    let stripHTML = (stripArr) => `<div class="mini-square" style="background:${stripArr[0]}; border-color:#52525b"></div><div class="mini-square" style="background:${stripArr[1]}; border-color:#52525b"></div><div class="mini-square" style="background:${stripArr[2]}; border-color:#52525b"></div>`;
+    return `
+        <div class="mini-cross-container transform scale-[0.8] origin-center">
+            <div class="side-strip" style="grid-area: top;">${stripHTML(b)}</div>
+            <div class="vertical-strip" style="grid-area: left;">${stripHTML(l)}</div>
+            <div class="mini-u-face"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px">${uHTML}</div></div>
+            <div class="vertical-strip" style="grid-area: right;">${stripHTML(r)}</div>
+            <div class="side-strip" style="grid-area: bottom;">${stripHTML(f)}</div>
+        </div>
+    `;
+}
+
+function switchF2LMode(n) {
+    document.querySelectorAll('.f2l-view').forEach(v => v.classList.add('hidden'));
+    document.getElementById(`f2l-mode-${n}`).classList.remove('hidden');
+    for(let i=0; i<4; i++) {
+        let btn = document.getElementById(`f2l-nav-${i}`);
+        if(i===n) btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-bold text-xs sm:text-sm bg-zinc-800 text-white shadow-md transition-all whitespace-nowrap border border-zinc-700";
+        else btn.className = "flex-1 min-w-[120px] snap-center py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all whitespace-nowrap";
+    }
+    if (n === 1) nextF2LQuiz();
+    if (n === 2) { f2lPracticeIdx = 0; renderF2LPractice(); }
+    clearInterval(f2lTimerInterval);
+    clearInterval(rushTimerInterval);
+    document.getElementById('f2l-btn-spin').classList.remove('hidden');
+    document.getElementById('f2l-btn-start').classList.add('hidden');
+    document.getElementById('f2l-btn-stop').classList.add('hidden');
+    document.getElementById('f2l-drill-result').classList.add('hidden');
+    document.getElementById('f2l-timer').innerText = "0.00s";
+    document.getElementById('f2l-rush-controls').classList.add('hidden');
+    document.getElementById('f2l-btn-rush-start').classList.remove('hidden');
+    document.getElementById('f2l-rush-time').innerText = "60";
+    document.getElementById('f2l-rush-score').innerText = "0";
+    document.getElementById('f2l-rush-visual').innerHTML = "";
+}
+
+function fireConfetti(isMega = false) {
+    if (typeof confetti === 'undefined') return;
+    const duration = isMega ? 3000 : 1000;
+    const end = Date.now() + duration;
+    (function frame() {
+        confetti({particleCount: isMega ? 5 : 3, angle: 60, spread: 55, origin: { x: 0, y: 0.8 }, colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']});
+        confetti({particleCount: isMega ? 5 : 3, angle: 120, spread: 55, origin: { x: 1, y: 0.8 }, colors: ['#facc15', '#f97316', '#3b82f6', '#ef4444']});
+        if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+}
+
+function spinF2LPair() {
+    const visual = document.getElementById('f2l-drill-visual');
+    const btnSpin = document.getElementById('f2l-btn-spin');
+    const btnStart = document.getElementById('f2l-btn-start');
+    btnSpin.classList.add('hidden');
+    document.getElementById('f2l-drill-result').classList.add('hidden');
+    document.getElementById('f2l-timer').innerText = "0.00s";
+    let shuffles = 0;
+    let shuffleInterval = setInterval(() => {
+        let randomCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
+        visual.innerHTML = getF2LSvg(randomCase);
+        shuffles++;
+        if (shuffles > 15) {
+            clearInterval(shuffleInterval);
+            currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
+            visual.innerHTML = getF2LSvg(currentF2LCase);
+            btnStart.classList.remove('hidden');
+        }
+    }, 50);
+}
+
+function startF2LTimer() {
+    document.getElementById('f2l-btn-start').classList.add('hidden');
+    document.getElementById('f2l-btn-stop').classList.remove('hidden');
+    f2lStartTime = Date.now();
+    const timerEl = document.getElementById('f2l-timer');
+    f2lTimerInterval = setInterval(() => {
+        let diff = (Date.now() - f2lStartTime) / 1000;
+        timerEl.innerText = diff.toFixed(2) + "s";
+    }, 10);
+}
+
+function stopF2LTimer() {
+    clearInterval(f2lTimerInterval);
+    document.getElementById('f2l-btn-stop').classList.add('hidden');
+    let timeTaken = (Date.now() - f2lStartTime) / 1000;
+    const timerEl = document.getElementById('f2l-timer');
+    timerEl.classList.replace('text-white', 'text-emerald-400');
+    let points = 5;
+    let isMega = false;
+    if (timeTaken < 3) { points = 50; isMega = true; }
+    else if (timeTaken < 5) points = 25;
+    else if (timeTaken < 8) points = 10;
+    for(let i=0; i<Math.ceil(points/5); i++) awardPoint();
+    if (isMega) fireConfetti(true); else fireConfetti(false);
+    const res = document.getElementById('f2l-drill-result');
+    res.classList.remove('hidden');
+    setTimeout(() => res.classList.replace('opacity-0', 'opacity-100'), 10);
+    document.getElementById('f2l-drill-name').innerText = currentF2LCase.name;
+    document.getElementById('f2l-drill-score').innerText = `+${points} PTS!`;
+    document.getElementById('f2l-drill-alg').innerText = currentF2LCase.algs[0];
+    document.getElementById('f2l-drill-tip').innerText = currentF2LCase.tip;
+    document.getElementById('f2l-btn-spin').innerText = "NEXT PAIR";
+    document.getElementById('f2l-btn-spin').classList.remove('hidden');
+}
+
+function nextF2LQuiz() {
+    const visual = document.getElementById('f2l-quiz-visual');
+    const optionsBox = document.getElementById('f2l-quiz-options');
+    currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
+    visual.innerHTML = getF2LSvg(currentF2LCase);
+    const types = ["insert", "split", "top", "stuck"];
+    const labels = {"insert": "Basic Insert (Ready)", "split": "Split Pair (Colors mismatch)", "top": "White facing up", "stuck": "Stuck in a slot"};
+    let html = '';
+    types.forEach(t => html += `<button onclick="answerF2LQuiz('${t}', this)" class="w-full py-4 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white rounded-2xl font-bold transition-all">${labels[t]}</button>`);
+    optionsBox.innerHTML = html;
+}
+
+function answerF2LQuiz(guessType, btnEl) {
+    const isCorrect = guessType === currentF2LCase.type;
+    const options = document.getElementById('f2l-quiz-options').children;
+    for (let btn of options) btn.disabled = true;
+    if (isCorrect) {
+        btnEl.classList.replace('bg-zinc-800', 'bg-emerald-600');
+        btnEl.classList.replace('border-zinc-700', 'border-emerald-400');
+        fireConfetti(false);
+        awardPoint(); awardPoint();
+        setTimeout(nextF2LQuiz, 1000);
+    } else {
+        btnEl.classList.replace('bg-zinc-800', 'bg-red-600');
+        for (let btn of options) {
+            if (btn.innerText.includes(currentF2LCase.type === 'insert' ? 'Basic' : currentF2LCase.type === 'top' ? 'up' : currentF2LCase.type === 'split' ? 'Split' : 'Stuck')) btn.classList.replace('bg-zinc-800', 'bg-emerald-600');
+        }
+        setTimeout(nextF2LQuiz, 1500);
+    }
+}
+
+function renderF2LPractice() {
+    const c = f2lCases[f2lPracticeIdx];
+    document.getElementById('f2l-prac-counter').innerText = `Case ${f2lPracticeIdx + 1}/${f2lCases.length}`;
+    document.getElementById('f2l-prac-group').innerText = c.group;
+    document.getElementById('f2l-prac-visual').innerHTML = getF2LSvg(c);
+    document.getElementById('f2l-prac-reveal').classList.add('hidden');
+    document.getElementById('f2l-btn-reveal').classList.remove('hidden');
+}
+
+function revealF2LPractice() {
+    const c = f2lCases[f2lPracticeIdx];
+    document.getElementById('f2l-prac-reveal').classList.remove('hidden');
+    document.getElementById('f2l-btn-reveal').classList.add('hidden');
+    document.getElementById('f2l-prac-name').innerText = c.name;
+    document.getElementById('f2l-prac-tip').innerHTML = `<i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i> ${c.recog}<br><br><i class="fa-solid fa-hand text-blue-400 mr-2"></i> ${c.tip}`;
+    document.getElementById('f2l-prac-alg').innerText = c.algs[0];
+}
+
+function nextF2LPractice() {
+    f2lPracticeIdx = (f2lPracticeIdx + 1) % f2lCases.length;
+    renderF2LPractice();
+}
+
+function startF2LRush() {
+    document.getElementById('f2l-btn-rush-start').classList.add('hidden');
+    document.getElementById('f2l-rush-controls').classList.remove('hidden');
+    rushScore = 0;
+    rushTimeLeft = 60;
+    document.getElementById('f2l-rush-score').innerText = "0";
+    document.getElementById('f2l-rush-time').innerText = "60";
+    document.getElementById('f2l-rush-time').classList.replace('text-red-500', 'text-white');
+    nextRushCase();
+    rushTimerInterval = setInterval(() => {
+        rushTimeLeft--;
+        document.getElementById('f2l-rush-time').innerText = rushTimeLeft;
+        if (rushTimeLeft <= 10) document.getElementById('f2l-rush-time').classList.replace('text-white', 'text-red-500');
+        if (rushTimeLeft <= 0) { clearInterval(rushTimerInterval); endRush(); }
+    }, 1000);
+}
+
+function nextRushCase() {
+    currentF2LCase = f2lCases[Math.floor(Math.random() * f2lCases.length)];
+    document.getElementById('f2l-rush-visual').innerHTML = getF2LSvg(currentF2LCase);
+}
+
+function nextRush(success) {
+    if (rushTimeLeft <= 0) return;
+    if (success) {
+        rushScore++;
+        document.getElementById('f2l-rush-score').innerText = rushScore;
+        awardPoint();
+        nextRushCase();
+    } else {
+        rushTimeLeft -= 2;
+        const bg = document.getElementById('f2l-rush-bg');
+        bg.classList.add('bg-red-500/40');
+        setTimeout(() => bg.classList.remove('bg-red-500/40'), 300);
+        nextRushCase();
+    }
+}
+
+function endRush() {
+    document.getElementById('f2l-rush-controls').classList.add('hidden');
+    document.getElementById('f2l-btn-rush-start').classList.remove('hidden');
+    document.getElementById('f2l-btn-rush-start').innerText = "TRY AGAIN";
+    document.getElementById('f2l-rush-visual').innerHTML = `
+        <div class="text-center">
+            <div class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 to-orange-500 mb-2">${rushScore}</div>
+            <div class="text-sm font-bold text-zinc-500 uppercase tracking-widest">Pairs Recognized</div>
+        </div>
+    `;
+    if (rushScore > 10) fireConfetti(true);
+}
 
         // --- Firebase Global Integration ---
         let db, auth, currentUser, appId, firestoreAPI;
@@ -1456,6 +1696,7 @@
             document.getElementById('tab-oll').className = n === 1 ? activeClass : inactiveClass;
             document.getElementById('tab-pll').className = n === 2 ? activeClass : inactiveClass;
             document.getElementById('tab-rank').className = n === 3 ? activeClass : inactiveClass;
+            if (n === 0) switchF2LMode(0);
         }
 
         window.onload = () => {
